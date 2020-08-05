@@ -15,7 +15,7 @@
         <div class="title">{{ product.title }}</div>
         <div class="price-wrapper">
           <div class="price">{{ product.price | priceFormat }}</div>
-          <div class="origin-price">{{ product.origin_price | priceFormat }}</div>
+          <div class="origin-price" v-show="0.85 > product.price/product.origin_price">{{ product.origin_price | priceFormat }}</div>
         </div>
         <div class="discount" v-show="0.85 > product.price/product.origin_price">
           <div class="badge">

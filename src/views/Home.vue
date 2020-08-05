@@ -221,6 +221,7 @@ $light-gray: #a8a8ab;
           align-items: center;
           height: 180px;
           .card-title {
+            width: 100%;
             flex-grow: 3;
             font-size: 16px;
             font-weight: 700;
