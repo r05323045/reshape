@@ -27,7 +27,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-8 cart-board">
+        <div class="col-8 cart-board" ref="cartboard">
           <div class="table-wrapper d-flex flex-column">
             <table class="table">
               <tbody v-if="cart.length">
@@ -157,8 +157,8 @@ export default {
     },
     quantityUpdata (id, num) {
       const loader = this.$loading.show({
-        container: this.$refs.cart,
-        opacity: 1,
+        container: this.$refs.cartboard,
+        opacity: 0.8,
         isFullPage: true
       })
       if (!/^[0-9]+$/.test(num) || num < 1) {
@@ -175,8 +175,8 @@ export default {
     },
     removeAllCartItem () {
       const loader = this.$loading.show({
-        container: this.$refs.cart,
-        opacity: 1,
+        container: this.$refs.cartboard,
+        opacity: 0.8,
         isFullPage: true
       })
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/shopping/all/product`
@@ -187,8 +187,8 @@ export default {
     },
     removeCartItem (id) {
       const loader = this.$loading.show({
-        container: this.$refs.cart,
-        opacity: 1,
+        container: this.$refs.cartboard,
+        opacity: 0.8,
         isFullPage: true
       })
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/shopping/${id}`
@@ -209,6 +209,7 @@ export default {
 .cart {
   margin-top: 80px;
   height: 100%;
+  overflow: visible;
   width: 100vw;
   max-width: 1140px;
   background: #ffffff;
