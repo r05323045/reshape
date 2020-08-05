@@ -315,6 +315,12 @@ $light-gray: #a8a8ab;
   }
   .images {
     padding: 36px;
+    .main-img {
+      height: 100%;
+      background: #a8a8ab;
+      display: flex;
+      align-items: center;
+    }
   }
 }
 </style>
