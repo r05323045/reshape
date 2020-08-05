@@ -1,24 +1,17 @@
 # vue_cli_try
 
-## Project setup
-```
-npm install
-```
+<a href="https://r05323045.github.io/vue_cli_try/dist/">demo page</a>
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Frontend
 
-### Compiles and minifies for production
-```
-npm run build
-```
+<p align="center">
+  <img src="./public/images/demo_frontend.gif" />
+</p>
 
-### Lints and fixes files
-```
-npm run lint
-```
+---
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Backend
+
+<p align="center">
+  <img src="./public/images/demo_backend.gif" />
+</p>
