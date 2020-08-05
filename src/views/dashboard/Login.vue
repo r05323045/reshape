@@ -1,5 +1,6 @@
 <template>
   <div>
+    <loading :async="isLoading"></loading>
     <form class="form-signin" @submit.prevent="signin">
       <h1 class="h3 mb-3 font-weight-normal">
         請先登入
@@ -42,11 +43,13 @@ export default {
         email: '',
         password: ''
       },
-      token: ''
+      token: '',
+      isLoading: false
     }
   },
   methods: {
     signin () {
+      this.isLoading = true
       const api = `${process.env.VUE_APP_APIPATH}api/auth/login`
       this.$http.post(api, this.user).then((response) => {
         const { token } = response.data
@@ -54,14 +57,17 @@ export default {
         // 寫入 cookie token
         // expires 設置有效時間
         document.cookie = `hexToken=${token};expires=${new Date(expired * 1000)};`
-        this.$router.push('/admin')
+        this.isLoading = false
+        this.$router.push('/admin/')
       }).catch((error) => {
         console.log(error)
+        this.isLoading = false
       })
     },
     signout () {
       document.cookie = 'hexToken=;expires=;'
       console.log('token 已清除')
+      this.$router.push('/')
     },
     getData () {
       // 取得 token 的 cookies（注意取得的時間點）

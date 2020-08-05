@@ -1,75 +1,80 @@
 <template>
-  <div class="home mx-auto" ref="home">
-    <navbar :cart="cart" ref="navbar"></navbar>
-    <div class="products" v-if="this.$route.path === '/'">
-      <div class="mt-5 mb-2">
-        <h3 class="title">廚房餐桌</h3>
-      </div>
-      <div v-for="i in 5" :key="`row_${i}`">
-        <div class="card-deck mx-auto" v-if="products.slice((i - 1) * 5, i * 5).length > 0">
-          <div v-for="item in products.slice((i - 1) * 5, i * 5)" :key="item.id" class="card my-5" :id="item.id"  @click="$router.push(`/product/${item.id}`)">
-            <img :src="item.imageUrl[0]" class="card-img-top">
-            <div class="discount-badge" v-show="0.85 > item.price/item.origin_price">{{ `${(item.price/item.origin_price).toFixed(1) * 10} 折` }}
-            </div>
-            <div class="card-body">
-              <p class="card-title">{{ item.title }}</p>
-              <div class="price-wrapper">
-                <span class="price">{{ item.price | priceFormat }}</span>
-                <span class="original-price" v-show="item.origin_price > item.price">{{ item.origin_price | priceFormat }}</span>
+  <div class="home-wrapper">
+    <div class="home mx-auto" ref="home">
+      <navbar :cart="cart" ref="navbar"></navbar>
+      <div class="products" v-if="this.$route.path === '/'">
+        <div class="mt-5 mb-2">
+          <h3 class="title">廚房餐桌</h3>
+        </div>
+        <div v-for="i in 5" :key="`row_${i}`">
+          <div class="card-deck mx-auto" v-if="products.slice((i - 1) * 5, i * 5).length > 0">
+            <div v-for="item in products.slice((i - 1) * 5, i * 5)" :key="item.id" class="card my-5" :id="item.id"  @click="$router.push(`/product/${item.id}`)">
+              <img :src="item.imageUrl[0]" class="card-img-top">
+              <div class="discount-badge" v-show="0.85 > item.price/item.origin_price">{{ `${(item.price/item.origin_price).toFixed(1) * 10} 折` }}
               </div>
-            </div>
-            <b-popover :target="item.id" triggers="hover focus" placement="right" class="product-popper" :ref="`popover-${item.id}`">
-              <div class="popper-wrapper">
-                <div class="popper-title mt-3">
-                    {{ item.title }}
-                </div>
-                <span class="btn btn-light popper-badge"> {{ item.category }} </span>
-                <div class="popper-content mt-2">
-                    {{ item.content }}
-                </div>
-                <div class="popper-star mt-3">
-                  <span v-for="(score, index) in rating()" :class="score" class="star-item" :key="index"></span>
-                </div>
-                <div class="popper-price mt-3">
+              <div class="card-body">
+                <p class="card-title">{{ item.title }}</p>
+                <div class="price-wrapper">
                   <span class="price">{{ item.price | priceFormat }}</span>
                   <span class="original-price" v-show="item.origin_price > item.price">{{ item.origin_price | priceFormat }}</span>
                 </div>
-                <div v-if="!cartId.includes(item.id)" :class="{ addToCart: !cartId.includes(item.id), goToCheckout: cartId.includes(item.id) }" class="btn d-flex justify-content-center mt-3 mb-3" @click="addToCart(item)">
-                  <span>放入購物車</span>
-                </div>
-                <div v-if="cartId.includes(item.id)" :class="{ addToCart: !cartId.includes(item.id), goToCheckout: cartId.includes(item.id) }" class="btn d-flex justify-content-center mt-3 mb-3" @click="$router.push('/cart')">
-                  <span>立刻結帳</span>
-                </div>
-                <div v-if="cartId.includes(item.id)" class="popper-description mt-2">
-                  {{ item.description }}
-                </div>
               </div>
-            </b-popover>
-          </div>
-          <div class="card my-5 border-0" v-for="i in 5 - products.slice((i - 1) * 5, i * 5).length" :key="`surplus_${i}`">
+              <b-popover :target="item.id" triggers="hover focus" placement="right" class="product-popper" :ref="`popover-${item.id}`">
+                <div class="popper-wrapper">
+                  <div class="popper-title mt-3">
+                      {{ item.title }}
+                  </div>
+                  <span class="btn btn-light popper-badge"> {{ item.category }} </span>
+                  <div class="popper-content mt-2">
+                      {{ item.content }}
+                  </div>
+                  <div class="popper-star mt-3">
+                    <span v-for="(score, index) in rating()" :class="score" class="star-item" :key="index"></span>
+                  </div>
+                  <div class="popper-price mt-3">
+                    <span class="price">{{ item.price | priceFormat }}</span>
+                    <span class="original-price" v-show="item.origin_price > item.price">{{ item.origin_price | priceFormat }}</span>
+                  </div>
+                  <div v-if="!cartId.includes(item.id)" :class="{ addToCart: !cartId.includes(item.id), goToCheckout: cartId.includes(item.id) }" class="btn d-flex justify-content-center mt-3 mb-3" @click="addToCart(item)">
+                    <span>放入購物車</span>
+                  </div>
+                  <div v-if="cartId.includes(item.id)" :class="{ addToCart: !cartId.includes(item.id), goToCheckout: cartId.includes(item.id) }" class="btn d-flex justify-content-center mt-3 mb-3" @click="$router.push('/cart')">
+                    <span>立刻結帳</span>
+                  </div>
+                  <div v-if="cartId.includes(item.id)" class="popper-description mt-2">
+                    {{ item.description }}
+                  </div>
+                </div>
+              </b-popover>
+            </div>
+            <div class="card my-5 border-0 no-use" v-for="i in 5 - products.slice((i - 1) * 5, i * 5).length" :key="`surplus_${i}`">
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="modal fade" id="orderModal" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">完成訂購</h5>
-            <button type="button" class="close" data-dismiss="modal">
-              <span>&times;</span>
-            </button>
-          </div>
-          <div class="modal-body text-center">
-            <p>感謝你的購買，請耐心等候到貨通知</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+      <div class="modal fade" id="orderModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">完成訂購</h5>
+              <button type="button" class="close" data-dismiss="modal">
+                <span>&times;</span>
+              </button>
+            </div>
+            <div class="modal-body text-center">
+              <p>感謝你的購買，請耐心等候到貨通知</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+            </div>
           </div>
         </div>
       </div>
+      <pagination :pages="pagination" @emit-pages="getProducts" class="pagination-wrapper my-3" v-if="this.$route.path === '/'"></pagination>
     </div>
-    <pagination :pages="pagination" @emit-pages="getProducts" class="pagination-wrapper my-3" v-if="this.$route.path === '/'"></pagination>
+    <footer class="mt-5 w-100 d-flex justify-content-center align-items-center">
+      <p>© 2020-2020 vue-cli-try · <a class="fab fa-github" href="https://github.com/r05323045/vue_cli_try"></a></p>
+    </footer>
   </div>
 </template>
 
@@ -175,6 +180,11 @@ $navy: #10567b;
 $blue: #2e90b7;
 $gray: #39393e;
 $light-gray: #a8a8ab;
+.home-wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 .home {
   margin-top: 120px;
   max-width: 1140px;
@@ -237,6 +247,9 @@ $light-gray: #a8a8ab;
             }
           }
         }
+      }
+      .no-use {
+        cursor: default;
       }
     }
   }
@@ -317,6 +330,20 @@ $light-gray: #a8a8ab;
   .goToCheckout:hover, .goToCheckout:focus, .goToCheckout:active:hover {
     color: #ffffff;
     background-color: #092c3f;
+  }
+}
+footer {
+  height: 100px;
+  background-color: #f7f7f8;
+  p {
+    height: 100px;
+    margin: auto;
+    line-height: 100px;
+    vertical-align: middle;
+    a {
+      color: black;
+      cursor: pointer;
+    }
   }
 }
 </style>

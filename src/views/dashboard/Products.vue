@@ -83,7 +83,6 @@ export default {
     this.getProducts()
     this.$bus.$on('productUpdate', event => {
       const productsId = this.products.map(product => product.id)
-      console.log(productsId)
       if (productsId.includes(event.product.id)) {
         this.products.forEach((el, idx) => {
           if (el.id === event.product.id) {

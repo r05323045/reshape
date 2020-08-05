@@ -190,8 +190,7 @@ export default {
 .checkout{
   margin-top: 80px;
   height: 100%;
-  overflow: visible;
-  max-height: none;
+  width: 100vw;
   max-width: 1140px;
   background: #ffffff;
   .router-wrapper {
