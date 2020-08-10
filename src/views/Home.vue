@@ -27,7 +27,7 @@
                   </div>
                   <span class="btn btn-light popper-badge"> {{ item.category }} </span>
                   <div class="popper-content mt-2">
-                      {{ item.content }}
+                    <div v-html="item.content"></div>
                   </div>
                   <div class="popper-star mt-3">
                     <span v-for="(score, index) in rating()" :class="score" class="star-item" :key="index"></span>

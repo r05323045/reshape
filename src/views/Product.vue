@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="content">
-            {{ product.content }}
+          <div v-html="product.content"></div>
         </div>
         <div class="rating">
           <span v-for="(score, index) in randomRating.rate" :class="score" class="star-item" :key="index"></span>
