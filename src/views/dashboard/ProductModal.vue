@@ -6,7 +6,7 @@
           <div class="modal-content border-0">
             <div class="modal-header">
               <h5 class="modal-title">
-                {{ modalView.title }}
+                {{ modalTitle }}
               </h5>
               <i class="fa fa-times-circle fa-2x" data-dismiss="modal"></i>
             </div>
@@ -20,6 +20,23 @@
                         placeholder="請輸入圖片連結">
                       <span v-if="errors[0]" class="text-danger">{{ `圖片連結${errors[0].slice(9, errors[0].length)}` }}</span>
                     </validation-provider>
+                  </div>
+                  <div class="form-group">
+                    <label for="customFile">
+                      或 上傳圖片
+                      <i
+                        v-if="status.fileUploading"
+                        class="fas fa-spinner fa-spin"
+                      />
+                    </label>
+                    <input
+                      id="customFile"
+                      ref="file"
+                      type="file"
+                      accept="image/*"
+                      class="form-control"
+                      @change="uploadFile"
+                    >
                   </div>
                   <div class="modal-img-wrapper text-center">
                     <img class="img-fluid product-image" :src="tempProduct.imageUrl[0]" alt>
@@ -72,16 +89,47 @@
                         <input type="text" class="form-control" v-model="tempProduct.id" placeholder="自動產生" disabled>
                       </div>
                     </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <validation-provider v-slot="{ errors, classes }" rules="required">
+                          <label for="subcategory">子分類</label>
+                          <input
+                          id="subcategory"
+                          v-model="options.subcategory"
+                          type="text" class="form-control"
+                          :class="classes"
+                          placeholder="請輸入子分類"
+                          @change="optionsChange">
+                          <span v-if="errors[0]" class="text-danger">{{ `子分類${errors[0].slice(12, errors[0].length)}` }}</span>
+                        </validation-provider>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="event">活動</label>
+                        <input id="event"
+                        v-model="options.event"
+                        type="text"
+                        class="form-control"
+                        placeholder="請使用空白鍵分隔"
+                        @change="optionsChange">
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="col-12">
-                  <div v-for="item in ['description', 'content']" class="form-group" :key="item">
+                  <div class="form-group">
                     <validation-provider v-slot="{ errors }" rules="required">
-                      <label :for="item">{{ modalView.engToZh[item] }}</label>
-                      <textarea :id="item" v-model="tempProduct[item]" type="text" class="form-control"
-                        :placeholder="`請輸入${modalView.engToZh[item]}`">
+                      <label for="description">產品描述</label>
+                      <textarea v-model="tempProduct.description" type="text" class="form-control" placeholder="請輸入產品描述">
                       </textarea>
-                      <span v-if="errors[0]" class="text-danger">{{ `${modalView.engToZh[item]}${errors[0].slice(errors[0].length - 3, errors[0].length)}` }}</span>
+                      <span v-if="errors[0]" class="text-danger">{{ `產品描述${errors[0].slice(12, errors[0].length)}` }}</span>
+                    </validation-provider>
+                  </div>
+                  <div class="form-group">
+                    <validation-provider v-slot="{ errors }" rules="required">
+                      <label for="content">說明內容</label>
+                      <vue-editor v-model="tempProduct.content">
+                      </vue-editor>
+                      <span v-if="errors[0]" class="text-danger">{{ `說明內容${errors[0].slice(8, errors[0].length)}` }}</span>
                     </validation-provider>
                   </div>
                   <div class="form-group">
@@ -117,25 +165,25 @@
 
 <script>
 import $ from 'jquery'
+import { VueEditor } from 'vue2-editor/dist/vue2-editor.core'
 export default {
+  components: {
+    VueEditor
+  },
   data () {
     return {
       tempProduct: {
         imageUrl: [],
-        enabled: false
+        enabled: false,
+        options: {}
       },
-      modalView: {
-        title: '建立新產品',
-        engToZh: {
-          title: '標題',
-          id: 'Id',
-          category: '分類',
-          unit: '單位',
-          origin_price: '原價',
-          price: '價格',
-          description: '產品描述',
-          content: '說明內容'
-        }
+      modalTitle: '建立新產品',
+      status: {
+        fileUploading: false
+      },
+      options: {
+        subcategory: '',
+        event: ''
       }
     }
   },
@@ -155,19 +203,25 @@ export default {
   },
   methods: {
     clearTempProduct () {
-      this.tempProduct = { imageUrl: [], enabled: false }
+      this.tempProduct = { imageUrl: [], enabled: false, options: {} }
       this.$refs.form.reset()
     },
     getProduct (id) {
+      this.options = { subcategory: '', event: '' }
       this.$refs.form.reset()
       if (!this.isNew) {
-        this.modalView.title = '編輯產品'
+        this.modalTitle = '編輯產品'
       }
       const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/admin/ec/product/${id}`
       this.$http.get(api)
         .then((res) => {
           $('#productModal').modal('show')
           this.tempProduct = res.data.data
+          if (!this.tempProduct.options) {
+            this.tempProduct.options = {}
+          } else {
+            this.options = this.tempProduct.options
+          }
         }).catch((error) => {
           console.log(error)
         })
@@ -185,11 +239,14 @@ export default {
       this.axiosMethod(api, httpMethod)
     },
     axiosMethod (url, method) {
-      this.$emit('loading')
+      $('#productModal').modal('hide')
+      setTimeout(() => { this.$emit('loading') }, 500)
       this.$http.defaults.headers.common.Authorization = `Bearer ${this.token}`
+      if (!this.tempProduct.options) {
+        this.tempProduct.options = {}
+      }
       this.$http[method](url, this.tempProduct)
         .then(() => {
-          $('#productModal').modal('hide')
           this.$bus.$emit('productUpdate', {
             product: this.tempProduct
           })
@@ -197,11 +254,37 @@ export default {
         }).catch((error) => {
           console.log(error)
         })
+    },
+    optionsChange () {
+      this.tempProduct.options = this.options
+      console.log(this.tempProduct.options)
+    },
+    uploadFile () {
+      const uploadedFile = this.$refs.file.files[0]
+      const formData = new FormData()
+      formData.append('file', uploadedFile)
+      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/admin/storage`
+      this.status.fileUploading = true
+      this.$http.post(url, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      }).then((response) => {
+        this.status.fileUploading = false
+        if (response.status === 200) {
+          this.tempProduct.imageUrl.push(response.data.data.path)
+        }
+      }).catch((error) => {
+        console.log(error)
+        this.status.fileUploading = false
+      })
     }
   }
 }
 </script>
 <style lang="scss">
+@import '~vue2-editor/dist/vue2-editor.css';
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.bubble.css';
+@import '~quill/dist/quill.snow.css';
 .modal {
   .modal-dialog {
     .modal-content {

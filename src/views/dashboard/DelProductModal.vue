@@ -3,11 +3,11 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content border-0">
           <div class="modal-header">
-            <h5 id="exampleModalLabel" class="modal-title">
+            <h5 class="modal-title">
               <span>刪除產品</span>
             </h5>
             <button type="button" class="close" data-dismiss="modal">
-              <span>&times;</span>
+              <i class="fa fa-times-circle"></i>
             </button>
           </div>
           <div class="modal-body">
@@ -55,10 +55,10 @@ export default {
   methods: {
     // 刪除產品
     delProduct () {
+      $('#delProductModal').modal('hide')
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/admin/ec/product/${this.tempProduct.id}`
       this.$http.defaults.headers.common.Authorization = `Bearer ${this.token}`
       this.$http.delete(url).then(() => {
-        $('#delProductModal').modal('hide')
         this.$emit('update')
       })
     }

@@ -1,56 +1,64 @@
 <template>
-  <div class="backend-products" ref="backend-products">
-    <loading :active.sync="isLoading"></loading>
-    <div class="above-table text-right mt-4">
-      <button class="btn create-product" @click="openModal('new')">
-        ＋ ADD ITEM
-      </button>
+  <div class="backend-products-wrapper">
+    <loading :active.sync="isLoading" loader="bars" :is-full-page="false" :opacity="1" background-color="#e5e5e5"></loading>
+    <div class="backend-products" ref="backend-products">
+      <div class="above-table text-right">
+        <button class="btn create-product" @click="openModal('new')">
+          ＋ ADD ITEM
+        </button>
+      </div>
+      <div class="table-wrapper">
+        <table class="table mt-4">
+          <thead class="thead-dark">
+            <tr>
+              <th></th>
+              <th>分類</th>
+              <th>子分類</th>
+              <th>產品名稱</th>
+              <th>原價</th>
+              <th>售價</th>
+              <th>露出</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in products" :key="item.id">
+              <td class="td-img">
+                <div class="img-wrapper mx-auto my-auto d-flex align-items-center">
+                  <img :src="item.imageUrl" class="product-image">
+                </div>
+              </td>
+              <td>{{ item.category }}</td>
+              <td>
+                <div v-if="item.options">
+                  {{ item.options.subcategory }}
+                </div>
+              </td>
+              <td>{{ item.title }}</td>
+              <td>{{ item.origin_price }}</td>
+              <td>{{ item.price }}</td>
+              <td>
+                <div class="onoffswitch mx-auto align-middle">
+                  <input type="checkbox"  @click="switchToActive(item)" name="onoffswitch" class="onoffswitch-checkbox" :class="{ checked: item.enabled}" :id="`switch-${item.id}`" tabindex="0" checked>
+                  <label class="onoffswitch-label" :for="`switch-${item.id}`"></label>
+                </div>
+              </td>
+              <td class="td-edit">
+                <button class="btn btn-sm" @click="openModal('edit', item)" @mouseover="toolTip" data-toggle="tooltip" title="編輯產品">
+                    <i class="fa fa-edit fa-lg"></i>
+                </button>
+                <button class="btn btn-sm" @click="openModal('delete', item)" @mouseover="toolTip" data-toggle="tooltip" title="刪除產品">
+                    <i class="fa fa-trash fa-lg"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <pagination :pages="pagination" @emit-pages="getProducts" class="pagination-wrapper"></pagination>
+      <product-modal ref="productModel" :is-new="isNew" :token="token" @loading="loadingSwitch"></product-modal>
+      <del-product-modal :temp-product="tempProduct" @update="getProducts" :token="token"></del-product-modal>
     </div>
-    <div class="table-wrapper">
-      <table class="table mt-4">
-        <thead class="thead-dark">
-          <tr>
-            <th></th>
-            <th>分類</th>
-            <th>產品名稱</th>
-            <th>原價</th>
-            <th>售價</th>
-            <th>啟用</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="item in products" :key="item.id">
-            <td class="td-img">
-              <div class="img-wrapper mx-auto my-auto">
-                <img :src="item.imageUrl" class="product-image">
-              </div>
-            </td>
-            <td>{{ item.category }}</td>
-            <td>{{ item.title }}</td>
-            <td>{{ item.origin_price }}</td>
-            <td>{{ item.price }}</td>
-            <td>
-              <div class="onoffswitch mx-auto align-middle">
-                <input type="checkbox"  @click="switchToActive(item)" name="onoffswitch" class="onoffswitch-checkbox" :class="{ checked: item.enabled}" :id="`switch-${item.id}`" tabindex="0" checked>
-                <label class="onoffswitch-label" :for="`switch-${item.id}`"></label>
-              </div>
-            </td>
-            <td>
-              <button class="btn btn-sm" @click="openModal('edit', item)" @mouseover="toolTip" data-toggle="tooltip" title="編輯產品">
-                  <i class="fa fa-edit fa-lg"></i>
-              </button>
-              <button class="btn btn-sm" @click="openModal('delete', item)" @mouseover="toolTip" data-toggle="tooltip" title="刪除產品">
-                  <i class="fa fa-trash fa-lg"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <pagination :pages="pagination" @emit-pages="getProducts" class="pagination-wrapper"></pagination>
-    <product-modal ref="productModel" :is-new="isNew" :token="token" @loading="loadingSwitch"></product-modal>
-    <del-product-modal :temp-product="tempProduct" @update="getProducts" :token="token"></del-product-modal>
   </div>
 </template>
 
@@ -58,7 +66,7 @@
 import $ from 'jquery'
 import productModal from './ProductModal'
 import delProductModal from './DelProductModal'
-import pagination from '.././Pagination'
+import pagination from '@/components/Pagination'
 export default {
   name: 'Products',
   props: ['token'],
@@ -69,7 +77,8 @@ export default {
       isLoading: false,
       tempProduct: {
         imageUrl: [],
-        enabled: false
+        enabled: false,
+        options: {}
       },
       isNew: false
     }
@@ -140,6 +149,14 @@ export default {
 }
 </script>
 <style lang="scss">
+.backend-products-wrapper {
+  margin: auto;
+  position: relative;
+  max-width: 1140px;
+  width: 100%;
+  height: 100%;
+  padding: 50px;
+}
 .backend-products {
   margin: auto;
   max-width: 1140px;
@@ -173,18 +190,21 @@ export default {
       background-color: #FFFFFF;
       thead {
         th {
+          max-width: 3rem;
           text-align: center;
           vertical-align: middle;
         }
       }
       tbody {
         tr {
-          td {
+          td, td div {
+            font-size: 0.95rem;
+            max-width: 5rem;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
             text-align: center;
             vertical-align: middle;
-            .td-img {
-              max-width: 300px;
-            }
             .onoffswitch {
               position: relative; width: 60px;
               -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
@@ -221,36 +241,26 @@ export default {
               }
             }
           }
+          .td-img {
+            max-width: 8rem;
+            .img-wrapper {
+              padding: 10px;
+              width: 5rem;
+              height: 5rem;
+              .product-image {
+                max-width: 100%;
+                max-height: 100%;
+                border-radius: 10px;
+              }
+            }
+          }
+          .td-edit {
+            overflow: visible;
+            text-overflow: none;
+          }
         }
       }
     }
   }
-}
-.modal-content {
-    border-radius: 10px;
-}
-
-.img-wrapper {
-    padding: 10px;
-    width: 200px;
-    height: 100px;
-}
-.modal-img-wrapper {
-    padding: 10px;
-    width: 300px;
-    height: 180px;
-    max-width: 100%;
-    max-height: 100%;
-}
-.product-image {
-    max-width: 100%;
-    max-height: 100%;
-    border-radius: 10px;
-}
-.validation {
-    font-size: 10px;
-}
-.fa-times-circle {
-    cursor: pointer;
 }
 </style>

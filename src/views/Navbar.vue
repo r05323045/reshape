@@ -1,8 +1,9 @@
 <template>
   <div>
-    <div id="nav" class="navbar fixed-top w-100">
-      <div class="navbar-inside w-100 mx-auto d-flex flex-row justify-content-end">
-        <router-link to="/admin/products" class="mr-3">後台列表</router-link>
+    <div id="nav" class="navbar fixed-top w-100 p-0" :class="{'not-top': scrollY > 0}">
+      <announcement></announcement>
+      <div class="navbar-inside w-100 mx-auto d-flex flex-row justify-content-end" :class="{'not-top-inside': scrollY > 0}">
+        <router-link to="/admin/" class="mr-3">後台列表</router-link>
         <router-link to="/cart">
         <div class="d-flex align-items-center nav-shopping-cart-wrapper">
           <div class="badge">
@@ -22,24 +23,35 @@
 </template>
 
 <script>
+import announcement from '@/views/Announcement.vue'
 export default {
   name: 'Navbar',
   data () {
     return {
+      scrollY: 0
     }
+  },
+  mounted () {
+    const that = this
+    window.addEventListener('scroll', function () {
+      that.scrollY = window.scrollY
+    })
+  },
+  components: {
+    announcement
   },
   props: {
     cart: {}
   }
 }
 </script>
-
 <style lang="scss">
 .navbar {
   background-color: #ffffff;
-  height: 80px;
+  height: 7rem;
   border-bottom: 1px solid #a8a8ab;
   .navbar-inside {
+    margin-top: 2rem;
     max-width: 1140px;
     a {
       line-height: 33px;
@@ -80,6 +92,12 @@ export default {
       padding: 8px 10px;
       font-size: 14px;
     }
+  }
+}
+.not-top {
+  height: 5rem;
+  .not-top-inside {
+    margin-top: 0rem;
   }
 }
 </style>

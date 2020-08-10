@@ -31,11 +31,25 @@ const routes = [
     children: [
       {
         path: 'products',
-        component: () => import('../views/dashboard/Products.vue')
+        component: () => import('../views/dashboard/Products.vue'),
+        meta: { requiresAuth: true }
       },
       {
         path: 'orders',
-        component: () => import('../views/dashboard/Orders.vue')
+        component: () => import('../views/dashboard/Orders.vue'),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: 'coupons',
+        name: '優惠券',
+        component: () => import('../views/dashboard/Coupons.vue'),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: 'Storages',
+        name: '圖片頁面',
+        component: () => import('../views/dashboard/Storages.vue'),
+        meta: { requiresAuth: true }
       }
     ]
   }

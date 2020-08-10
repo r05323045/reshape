@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="mt-5 col-4 offset-1 cart-summary" v-if="cart.length">
+      <div class="mt-5 col-4 offset-1 cart-summary" v-if="cart.length && checkoutTotal">
         <div class="card cart-card mx-auto">
           <div class="card-header">
             訂單摘要
@@ -33,13 +33,17 @@
                 <span>運費總計</span>
                 <span>NT$ 0</span>
               </li>
+              <li v-if="coupon && coupon.enabled" class="list-group-item d-flex justify-content-between">
+                <span>{{ coupon.title }}</span>
+                <span class="coupon-discount">{{ - Math.ceil(cartTotal * (1 - coupon.percent / 100)) | priceFormat }}</span>
+              </li>
               <div class="divider-wrapper">
                 <div class="divider"></div>
               </div>
               <div class="list-group-item d-flex w-100 mt-3">
                 <div class="cart-total w-100 d-flex justify-content-between">
                     <span>結帳金額</span>
-                    <span>{{ cartTotal | priceFormat}}</span>
+                    <span>{{ checkoutTotal | priceFormat}}</span>
                 </div>
               </div>
             </ul>
@@ -142,16 +146,10 @@ export default {
     }
   },
   props: {
-    cart: {}
-  },
-  computed: {
-    cartTotal: function () {
-      let total = 0
-      this.cart.forEach((item) => {
-        total += item.product.price * item.quantity
-      })
-      return total
-    }
+    cart: {},
+    cartTotal: Number,
+    checkoutTotal: Number,
+    coupon: {}
   },
   methods: {
     backToCart () {
@@ -159,12 +157,16 @@ export default {
     },
     createOrder () {
       const loader = this.$loading.show({
-        container: this.$refs.checkout,
         opacity: 1,
-        isFullPage: true
+        isFullPage: true,
+        zIndex: 999
       })
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/orders`
-      this.$http.post(url, this.form)
+      const order = { ...this.form }
+      if (this.coupon.enabled) {
+        order.coupon = this.coupon.code
+      }
+      this.$http.post(url, order)
         .then((response) => {
           if (response.data.data.id) {
             Object.keys(this.form).forEach(item => { item = '' })

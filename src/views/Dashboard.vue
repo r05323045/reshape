@@ -9,6 +9,8 @@
           <router-link to="/admin/" class="list-group-item">首頁</router-link>
           <router-link to="/admin/products" class="list-group-item">產品列表</router-link>
           <router-link to="/admin/orders" class="list-group-item">訂單列表</router-link>
+          <router-link to="/admin/coupons" class="list-group-item">優惠券列表</router-link>
+          <router-link to="/admin/storages" class="list-group-item">圖片列表</router-link>
         </div>
       </div>
       <div class="content-wrapper">
@@ -25,11 +27,57 @@
           </div>
         </nav>
         <div class="router-view-wrapper">
-          <div class="not-open d-flex align-items-center justify-content-center" v-if="this.$route.path === '/admin/'">
-            <div>
-              <div class="under-construction mb-5">🚧 Under Construction 🚧</div>
-              請至
-              <router-link to="/admin/products">產品列表</router-link>
+          <div class="report-wrapper" v-if="this.$route.path === '/admin/'">
+            <loading :active.sync="isLoading" loader="bars" :is-full-page="false" :opacity="1" background-color="#e5e5e5"></loading>
+            <div class="report d-flex flex-column justify-content-center">
+              <div class="row">
+                <div class="report-item overview">
+                  <div class="section">
+                    <div class="title">總營收</div>
+                    <div class="content">{{ totalEarning | priceFormat }}</div>
+                  </div>
+                  <div class="section">
+                    <div class="title">銷貨數量</div>
+                    <div class="content">{{ productsNum }} <span class="unit">件</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="report-item">
+                  <div class="title">
+                    付款情形
+                  </div>
+                  <div class="diagram d-flex justify-content-center align-items-center">
+                    <pie-chart :donut="true" :data="paidStatus" :colors="['#00b5e9', '#fa4251']"></pie-chart>
+                  </div>
+                </div>
+                <div class="report-item">
+                  <div class="title">
+                    營業收入
+                  </div>
+                  <div class="diagram d-flex justify-content-center align-items-center" v-if="earning">
+                    <area-chart class="chart" :data="earning" :colors="['#63c76a']"></area-chart>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="report-item">
+                  <div class="title">
+                    訂單數量
+                  </div>
+                  <div class="diagram d-flex justify-content-center align-items-center" v-if="ordersNum">
+                    <area-chart class="chart" :data="ordersNum" :colors="['#3f5efb']"></area-chart>
+                  </div>
+                </div>
+                <div class="report-item">
+                  <div class="title">
+                    支付來源
+                  </div>
+                  <div class="diagram d-flex justify-content-center align-items-center" v-if="paidBy">
+                    <column-chart :data="paidBy" :colors="['#a8a8ab']"></column-chart>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <router-view :token="token" v-if="checkSuccess"></router-view>
@@ -46,11 +94,27 @@ export default {
   data () {
     return {
       token: '',
-      checkSuccess: false
+      checkSuccess: false,
+      isLoading: false,
+      orders: [],
+      ordersNum: {},
+      productsNum: 0,
+      earning: {},
+      paidStatus: {},
+      paidBy: []
+    }
+  },
+  computed: {
+    totalEarning: function () {
+      if (this.earning) {
+        return Math.round(Object.values(this.earning).reduce((acc, cur) => acc + cur, 0))
+      }
+      return 0
     }
   },
   created () {
     this.checkLogin()
+    this.getOrders()
   },
   methods: {
     checkLogin () {
@@ -74,6 +138,48 @@ export default {
       document.cookie = 'hexToken=;expires=;'
       console.log('token 已清除')
       this.$router.push('/login')
+    },
+    getOrders () {
+      this.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/admin/ec/orders`
+      this.$http.get(api).then((response) => {
+        this.orders = response.data.data
+        this.draw()
+        this.isLoading = false
+      })
+    },
+    draw () {
+      const ordersData = {}
+      const earningData = {}
+      const paidData = { paid: 0, unpaid: 0 }
+      const paymentData = {}
+      this.orders.forEach(item => {
+        const dateString = item.created.datetime.slice(0, 10)
+        if (!(dateString in ordersData)) {
+          ordersData[dateString] = 1
+          earningData[dateString] = item.amount
+        } else {
+          ordersData[dateString] += 1
+          earningData[dateString] += item.amount
+        }
+        if (item.paid) {
+          paidData.paid += 1
+        } else {
+          paidData.unpaid += 1
+        }
+        if (!(item.payment in paymentData)) {
+          paymentData[item.payment] = 1
+        } else {
+          paymentData[item.payment] += 1
+        }
+        item.products.forEach(product => {
+          this.productsNum += product.quantity
+        })
+      })
+      this.ordersNum = ordersData
+      this.earning = earningData
+      this.paidStatus = paidData
+      this.paidBy = paymentData
     }
   }
 }
@@ -95,7 +201,7 @@ export default {
       padding: 14px 14px;
       font-size: 1.2rem;
       background: #f5f5f5;
-      box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+      box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
       .logo {
         background: url(https://vuejs.org/images/logo.png);
         background-size: contain;
@@ -134,17 +240,42 @@ export default {
       background: #e5e5e5;
       width: 100%;
       height: 100%;
-      padding: 50px;
-      .not-open {
-        margin: auto;
-        width: 50rem;
-        height: 30rem;
-        background: #ffffff;
-        border-radius: 2rem;
-        box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+.report-wrapper {
+  margin: auto;
+  position: relative;
+  max-width: 1140px;
+  width: 100%;
+  height: 100%;
+  padding: 50px;
+  .report-item {
+    margin: 1rem;
+    width: 30rem;
+    height: 25rem;
+    background: #ffffff;
+    border-radius: 2rem;
+    padding: 2rem;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+    .title {
+      font-size: 1.5rem;
+      margin-bottom: 0.8rem
+    }
+  }
+  .overview {
+    margin-bottom: 2rem;
+    background-image: -webkit-linear-gradient(90deg, #3f5efb 0%, #fc466b 100%);
+    color: #ffffff;
+    width: 20rem;
+    height: 20rem;
+    .section {
+      margin-bottom: 2rem;
+      .content {
         text-align: center;
-        .under-construction {
-          font-size: 3rem;
+        font-size: 2rem;
+        .unit {
+          font-size: 1rem;
         }
       }
     }

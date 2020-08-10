@@ -3,6 +3,9 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import zh from './zh_TW.js'
 import Loading from 'vue-loading-overlay'
+import VueClipboard from 'vue-clipboard2'
+import Chartkick from 'vue-chartkick'
+import Chart from 'chart.js'
 import 'jquery'
 import 'bootstrap'
 import '@fortawesome/fontawesome-free/css/all.css'
@@ -14,9 +17,10 @@ import App from './App.vue'
 import router from './router'
 import './bus'
 
-Vue.config.productionTip = false
-
+Vue.use(Chartkick.use(Chart))
+Vue.use(VueClipboard)
 Vue.use(VueAxios, axios)
+Vue.config.productionTip = false
 
 Object.keys(rules).forEach(rule => {
   extend(rule, rules[rule])

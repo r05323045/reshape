@@ -78,6 +78,7 @@
               訂單摘要
             </div>
             <div class="card-body d-flex flex-column">
+              <loading :active.sync="isLoading" loader="bars" :is-full-page="false" :opacity="1" :z-index="2"></loading>
               <ul class="list-group h-100">
                 <li class="list-group-item d-flex justify-content-between">
                   <span>商品總計</span>
@@ -87,13 +88,41 @@
                   <span>運費總計</span>
                   <span>NT$ 0</span>
                 </li>
+                <li v-if="coupon.enabled" class="list-group-item d-flex justify-content-between">
+                  <span>{{ coupon.title }}</span>
+                  <span class="coupon-discount">{{ - Math.ceil(cartTotal * (1 - coupon.percent / 100)) | priceFormat }}</span>
+                </li>
+                <li class="list-group-item">
+                  <span class="use-coupon" data-toggle="collapse" data-target="#collapseCoupon">使用優惠券</span>
+                  <div class="collapse mt-3" id="collapseCoupon">
+                    <div>
+                      <div class="input-group mb-3 input-group-sm">
+                        <input
+                          v-model="coupon_code"
+                          type="text"
+                          class="form-control"
+                          placeholder="請輸入優惠碼"
+                        >
+                        <div class="input-group-append">
+                          <button
+                            class="btn apply-coupon"
+                            type="button"
+                            @click="addCoupon"
+                          >
+                            使用
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
                 <div class="divider-wrapper">
                   <div class="divider"></div>
                 </div>
                 <div class="list-group-item d-flex w-100 pt-2">
                     <div class="cart-total w-100 d-flex justify-content-between">
                         <span>結帳金額</span>
-                        <span>{{ cartTotal | priceFormat}}</span>
+                        <span>{{ checkoutTotal | priceFormat}}</span>
                     </div>
                 </div>
                 <div class="list-group-item">
@@ -107,7 +136,7 @@
         </div>
       </div>
     </div>
-    <checkout :cart="cart" v-show="checkingout" @backtocart="cartOrCheckout" ref="checkout"></checkout>
+    <checkout :cart="cart" :cartTotal="cartTotal" :checkoutTotal="checkoutTotal" :coupon="coupon" v-show="checkingout" @backtocart="cartOrCheckout" ref="checkout"></checkout>
   </div>
 </template>
 
@@ -118,7 +147,10 @@ export default {
   data () {
     return {
       cart: {},
-      checkingout: false
+      coupon: {},
+      coupon_code: '',
+      checkingout: false,
+      isLoading: false
     }
   },
   components: {
@@ -135,10 +167,18 @@ export default {
   computed: {
     cartTotal: function () {
       let total = 0
-      this.cart.forEach((item) => {
-        total += item.product.price * item.quantity
-      })
+      if (this.cart.length > 0) {
+        this.cart.forEach((item) => {
+          total += item.product.price * item.quantity
+        })
+      }
       return total
+    },
+    checkoutTotal: function () {
+      if (this.coupon.enabled) {
+        return Math.ceil(this.cartTotal * this.coupon.percent / 100)
+      }
+      return this.cartTotal
     }
   },
   methods: {
@@ -200,6 +240,30 @@ export default {
       this.checkingout = !this.checkingout
       this.$refs.checkout.$refs.formvalidation.reset()
       this.$refs.checkout.$refs.checkoutform.reset()
+    },
+    addCoupon () {
+      this.isLoading = true
+      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/coupon/search`
+      // 輸入 coupon 之前必須先戳一下 api/{{ uuid }}/coupon/search API 確定該 coupon 是存在的
+      this.$http.post(url, { code: this.coupon_code }).then((response) => {
+        // 若 coupon 存在就回寫回去到 this.coupon
+        // 該資料會是一個物件格式，詳情可見 API 文件
+        // https://course-ec-api.hexschool.io/document#frontend-search-coupon-code-code
+        this.coupon = response.data.data
+        this.isLoading = false
+      }).catch((error) => {
+        const errorData = error.response.data.errors
+        if (errorData) {
+          errorData.code.forEach((err) => {
+            console.log(err)
+          })
+          this.isLoading = false
+        } else {
+          const { message } = error.response.data
+          console.log(message)
+          this.isLoading = false
+        }
+      })
     }
   }
 }
@@ -355,6 +419,32 @@ export default {
     }
     .list-group-item {
       border: none !important;
+      font-size: 0.9rem;
+      .coupon-discount {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #f16c5d;
+      }
+      .use-coupon {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #2e90b7;
+      }
+      .use-coupon:hover {
+        cursor: pointer;
+        color: #10567b;
+      }
+      #collapseCoupon {
+        .apply-coupon {
+            z-index: 1;
+            background-color: #10567b;
+            color: #ffffff;
+          }
+        }
+      .cart-total {
+        font-size: 1rem;
+        font-weight: 500;
+      }
       .goToCheckout {
         color: #ffffff;
         background-color: #10567b;

@@ -8,7 +8,7 @@
         </div>
         <div v-for="i in 5" :key="`row_${i}`">
           <div class="card-deck mx-auto" v-if="products.slice((i - 1) * 5, i * 5).length > 0">
-            <div v-for="item in products.slice((i - 1) * 5, i * 5)" :key="item.id" class="card my-5" :id="item.id"  @click="$router.push(`/product/${item.id}`)">
+            <div v-for="item in products.slice((i - 1) * 5, i * 5)" :key="item.id" class="card my-5" :id="item.id"  @click="$router.push(`/product/${item.id}`)" @mouseover="getDescription(item)">
               <img :src="item.imageUrl[0]" class="card-img-top">
               <div class="discount-badge" v-show="0.85 > item.price/item.origin_price">{{ `${(item.price/item.origin_price).toFixed(1) * 10} 折` }}
               </div>
@@ -20,6 +20,7 @@
                 </div>
               </div>
               <b-popover :target="item.id" triggers="hover focus" placement="right" class="product-popper" :ref="`popover-${item.id}`">
+                <loading :active.sync="isLoading" loader="bars"></loading>
                 <div class="popper-wrapper">
                   <div class="popper-title mt-3">
                       {{ item.title }}
@@ -80,7 +81,7 @@
 
 <script>
 import navbar from './Navbar.vue'
-import pagination from './Pagination.vue'
+import pagination from '@/components/Pagination'
 import { BPopover } from 'bootstrap-vue'
 export default {
   name: 'home',
@@ -88,7 +89,8 @@ export default {
     return {
       products: [],
       cart: {},
-      pagination: {}
+      pagination: {},
+      isLoading: false
     }
   },
   components: {
@@ -115,9 +117,9 @@ export default {
     getProducts (page = 1) {
       const loader = this.$loading.show({
         container: this.$refs.home,
-        opacity: 0.8
+        opacity: 1
       })
-      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/products?page=${page}`
+      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/products?paged=25&page=${page}`
       this.$http.get(url)
         .then((res) => {
           this.products = res.data.data
@@ -151,7 +153,7 @@ export default {
           this.$refs[`popover-${item.id}`][0].$emit('close')
         })
         .catch((error) => {
-          console.log(error.response.data.errors)
+          console.log(error)
         })
     },
     rating () {
@@ -167,6 +169,25 @@ export default {
         result.push('off')
       }
       return result
+    },
+    getDescription (item) {
+      if (!item.description) {
+        if (this.cartId.includes(item.id)) {
+          this.isLoading = true
+          const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/product/${item.id}`
+          const that = this
+          this.$http.get(url)
+            .then((res) => {
+              const product = res.data.data
+              that.products.forEach((el, idx) => {
+                if (el.id === item.id) {
+                  that.products[idx].description = product.description
+                }
+              })
+              this.isLoading = false
+            })
+        }
+      }
     }
   }
 }
@@ -181,13 +202,14 @@ $blue: #2e90b7;
 $gray: #39393e;
 $light-gray: #a8a8ab;
 .home-wrapper {
-  height: 100vh;
   display: flex;
   flex-direction: column;
 }
 .home {
   margin-top: 120px;
   max-width: 1140px;
+  width: 100%;
+  min-height: 100vh;
   .router-link-active {
     color: $blue;
   }
@@ -313,6 +335,7 @@ $light-gray: #a8a8ab;
   }
   .popper-description {
     font-size: 10px;
+    min-height: 10px;
   }
   .addToCart {
     color: #ffffff;
