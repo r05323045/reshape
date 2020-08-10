@@ -4,27 +4,17 @@
 
 An plattform for design products, wish that we can make this world more texture and better
 
-##Features
-
-As a user... you can
-
-- **Add item to shoppin cart**
-
 <p align="center">
   <img src="./public/images/demo_frontend_home.gif" />
 </p>
 
+## Features
+
+As a user... you can
+
+- **Add item to shoppin cart**
 - **Chenk details of product**
-
-<p align="center">
-  <img src="./public/images/demo_frontend_product.gif" />
-</p>
-
 - **Apply coupon code**
-
-<p align="center">
-  <img src="./public/images/demo_frontend_coupon.gif" />
-</p>
 
 ---
 
