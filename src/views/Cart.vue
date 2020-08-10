@@ -114,6 +114,9 @@
                         </div>
                       </div>
                     </div>
+                    <div v-if="couponExpire || coupon.enabled === false" class="coupon-fail">
+                      優惠碼無法使用
+                    </div>
                   </div>
                 </li>
                 <div class="divider-wrapper">
@@ -150,7 +153,8 @@ export default {
       coupon: {},
       coupon_code: '',
       checkingout: false,
-      isLoading: false
+      isLoading: false,
+      couponExpire: false
     }
   },
   components: {
@@ -250,8 +254,10 @@ export default {
         // 該資料會是一個物件格式，詳情可見 API 文件
         // https://course-ec-api.hexschool.io/document#frontend-search-coupon-code-code
         this.coupon = response.data.data
+        this.couponExpire = false
         this.isLoading = false
       }).catch((error) => {
+        this.couponExpire = true
         const errorData = error.response.data.errors
         if (errorData) {
           errorData.code.forEach((err) => {
@@ -439,8 +445,11 @@ export default {
             z-index: 1;
             background-color: #10567b;
             color: #ffffff;
-          }
         }
+        .coupon-fail {
+          color: #ec5252;
+        }
+      }
       .cart-total {
         font-size: 1rem;
         font-weight: 500;

@@ -47,6 +47,7 @@ export default {
 </script>
 <style lang="scss">
 .navbar {
+  z-index: 999;
   background-color: #ffffff;
   height: 7rem;
   border-bottom: 1px solid #a8a8ab;
