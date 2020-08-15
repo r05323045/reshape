@@ -277,6 +277,7 @@ export default {
 
 <style lang="scss">
 .cart {
+  margin: auto;
   margin-top: 80px;
   height: 100%;
   overflow: visible;

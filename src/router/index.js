@@ -6,8 +6,13 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    component: () => import('../views/Home.vue'),
+    component: () => import('../views/Navbar.vue'),
     children: [
+      {
+        path: '/',
+        name: '首頁',
+        component: () => import('../views/Homepage.vue')
+      },
       {
         path: '/product/:id',
         name: '產品頁面',
@@ -17,6 +22,11 @@ const routes = [
         path: '/cart',
         name: '購物車',
         component: () => import('../views/Cart.vue')
+      },
+      {
+        path: '/home',
+        name: '廚房餐桌',
+        component: () => import('../views/Home.vue')
       }
     ]
   },

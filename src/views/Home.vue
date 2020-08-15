@@ -1,9 +1,8 @@
 <template>
-  <div class="home-wrapper">
+  <div class="home-wrapper" ref="home-warpper">
     <div class="home mx-auto" ref="home">
-      <navbar :cart="cart" ref="navbar"></navbar>
-      <div class="products" v-if="this.$route.path === '/'">
-        <div class="mt-5 mb-2">
+      <div class="products">
+        <div class="mb-2">
           <h3 class="title">廚房餐桌</h3>
         </div>
         <div v-for="i in 5" :key="`row_${i}`">
@@ -71,16 +70,12 @@
           </div>
         </div>
       </div>
-      <pagination :pages="pagination" @emit-pages="getProducts" class="pagination-wrapper my-3" v-if="this.$route.path === '/'"></pagination>
+      <pagination :pages="pagination" @emit-pages="getProducts" class="pagination-wrapper my-3"></pagination>
     </div>
-    <footer class="mt-5 w-100 d-flex justify-content-center align-items-center">
-      <p>© 2020-2020 vue-cli-try · <a class="fab fa-github" href="https://github.com/r05323045/vue_cli_try"></a></p>
-    </footer>
   </div>
 </template>
 
 <script>
-import navbar from './Navbar.vue'
 import pagination from '@/components/Pagination'
 import { BPopover } from 'bootstrap-vue'
 export default {
@@ -94,7 +89,6 @@ export default {
     }
   },
   components: {
-    navbar,
     pagination,
     'b-popover': BPopover
   },
@@ -116,7 +110,8 @@ export default {
   methods: {
     getProducts (page = 1) {
       const loader = this.$loading.show({
-        container: this.$refs.home,
+        container: this.$refs.homeWrapper,
+        isFullPage: false,
         opacity: 1
       })
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/products?paged=25&page=${page}`
@@ -139,8 +134,9 @@ export default {
     },
     addToCart (item, quantity = 1) {
       const loader = this.$loading.show({
-        container: this.$refs.home,
-        opacity: 0.8
+        container: this.$refs.homeWrapper,
+        isFullPage: true,
+        opacity: 1
       })
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/shopping`
       const cart = {
@@ -206,14 +202,15 @@ $light-gray: #a8a8ab;
   flex-direction: column;
 }
 .home {
-  margin-top: 120px;
-  max-width: 1140px;
   width: 100%;
   min-height: 100vh;
+  overflow: hidden;
   .router-link-active {
     color: $blue;
   }
   .products {
+    max-width: 1140px;
+    margin: 2rem auto;
     .card-deck {
       .card {
         cursor: pointer;

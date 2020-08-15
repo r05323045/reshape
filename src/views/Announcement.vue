@@ -13,12 +13,6 @@ export default {
     return {
       scrollY: 0
     }
-  },
-  mounted () {
-    const that = this
-    window.addEventListener('scroll', function () {
-      that.scrollY = window.scrollY
-    })
   }
 }
 </script>
