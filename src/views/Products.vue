@@ -41,13 +41,13 @@
           <div class="col-10">
             <div class="hot-sales w-100 row d-flex align-items-center" v-if="products.length > 0">
               <div class="col-6">
-                <hot-swiper :products="products"></hot-swiper>
+                <hot-swiper :products="hotProducts"></hot-swiper>
               </div>
               <div class="col-6">
                 <div class="title">本月熱賣 TOP 5</div>
                 <ul class="list-group list-group-flush">
                   <li
-                    v-for="(item,index) in products.slice(0, 5)"
+                    v-for="(item,index) in hotProducts"
                     class="list-group-item d-flex flex-row"
                     :key="`top-5-${item.id}`"
                     @click="$router.push(`/product/${item.id}`)"
@@ -112,7 +112,7 @@
                 </div>
               </div>
             </div>
-            <pagination :pages="pagination" @emit-pages="getProducts" class="pagination-wrapper my-3"></pagination>
+            <pagination :pages="pagination" @emit-pages="getProducts" class="pagination-wrapper"></pagination>
           </div>
         </div>
       </div>
@@ -149,6 +149,7 @@ export default {
   data () {
     return {
       products: [],
+      hotProducts: [],
       cart: {},
       pagination: {},
       isLoading: false,
@@ -202,10 +203,13 @@ export default {
         isFullPage: false,
         opacity: 1
       })
-      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/products?paged=25&page=${page}`
+      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/products?paged=16&page=${page}`
       this.$http.get(url)
         .then((res) => {
           this.products = res.data.data
+          if (page === 1) {
+            this.hotProducts = this.products.slice(0, 5)
+          }
           this.products.forEach(item => {
             item.rating = this.rating()
           })
@@ -475,6 +479,9 @@ $light-gray: #a8a8ab;
       .no-use {
         cursor: default;
       }
+    }
+    .pagination-wrapper {
+      margin: 8rem auto 0 auto;
     }
   }
 }
