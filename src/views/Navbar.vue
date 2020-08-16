@@ -36,12 +36,12 @@
         </div>
       </div>
       <div class="navbar-navigation w-100 mx-auto d-flex flex-row justify-content-between">
-        <router-link to="/home" class="mr-3">廚房餐桌</router-link>
+        <router-link to="/" class="mr-3">廚房餐桌</router-link>
         <router-link to="/" class="mr-3">空間佈置</router-link>
         <router-link to="/" class="mr-3">質感生活</router-link>
         <router-link to="/" class="mr-3">品味衣著</router-link>
-        <router-link to="/" class="mr-3">文具小物</router-link>
-        <router-link to="/" class="mr-3">食品飲料</router-link>
+        <router-link to="/products" class="mr-3">所有分類</router-link>
+        <router-link to="/" class="mr-3">關於我們</router-link>
       </div>
     </div>
     <router-view></router-view>
@@ -192,6 +192,20 @@ export default {
     a {
       font-size: 0.9rem;
       color: #39393e !important;
+    }
+  }
+}
+footer {
+  height: 100px;
+  background-color: #f7f7f8;
+  p {
+    height: 100px;
+    margin: auto;
+    line-height: 100px;
+    vertical-align: middle;
+    a {
+      color: black;
+      cursor: pointer;
     }
   }
 }

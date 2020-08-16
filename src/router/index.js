@@ -24,9 +24,9 @@ const routes = [
         component: () => import('../views/Cart.vue')
       },
       {
-        path: '/home',
+        path: '/products',
         name: '廚房餐桌',
-        component: () => import('../views/Home.vue')
+        component: () => import('../views/Products.vue')
       }
     ]
   },

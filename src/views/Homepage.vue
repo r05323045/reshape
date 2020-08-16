@@ -61,6 +61,10 @@ export default {
         centeredSlides: true,
         loop: true,
         speed: 800,
+        autoplay: {
+          delay: 2500,
+          disableOnInteraction: false
+        },
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev'
@@ -156,11 +160,15 @@ export default {
       .swiper-pagination {
         left: 0%;
       }
+      .swiper-pagination-bullet {
+        width: 8px;
+        height: 8px;
+      }
     }
   }
   .section-wrapper {
     margin: auto;
-    margin-top: 80px;
+    margin-top: 3rem;
     height: 100%;
     overflow: visible;
     width: 100vw;

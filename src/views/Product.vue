@@ -183,11 +183,15 @@ $blue: #2e90b7;
 $gray: #39393e;
 $light-gray: #a8a8ab;
 .product {
+  margin: auto;
   margin-top: 80px;
   height: 100%;
   overflow: visible;
   max-height: none;
   max-width: 1140px;
+  .router {
+    color: $blue;
+  }
   .info {
     padding: 36px;
     .title {

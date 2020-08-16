@@ -4,9 +4,16 @@
     <div class="swiper-container-wrapper">
       <div class="swiper-container card-swiper-container">
         <div class="swiper-wrapper">
-          <div v-for="item in products.slice(0, 10)" class="swiper-slide" :key="`silder-${item.id}`">
+          <div
+            v-for="item in products.slice(0, 10)"
+            class="swiper-slide"
+            :key="`silder-${item.id}`"
+            @click="$router.push(`/product/${item.id}`)"
+           >
             <div class="card">
-              <img :src="item.imageUrl[0]" class="card-img-top">
+              <div class="img-wrapper">
+                <div :style="`background: url(${item.imageUrl[0]}) no-repeat center/contain;`" class="card-img-top"></div>
+              </div>
               <div class="discount-badge" v-show="0.85 > item.price/item.origin_price">{{ `${(item.price/item.origin_price).toFixed(1) * 10} 折` }}
               </div>
               <div class="card-body">
@@ -42,7 +49,7 @@ export default {
     // eslint-disable-next-line no-unused-vars
     const cardSwiper = new Swiper('.swiper-container.card-swiper-container', {
       slidesPerView: 5,
-      spaceBetween: 30,
+      spaceBetween: 15,
       slidesPerGroup: 5,
       loop: true,
       navigation: {
@@ -68,14 +75,14 @@ $light-gray: #a8a8ab;
   .title {
     font-size: 1.5rem;
     font-weight: 500;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
   .swiper-container-wrapper {
     background: #ffffff;
     .card-swiper-container {
       width: 100%;
       height: 20rem;
-      padding: 0 1rem;
+      padding: 0 1rem 0 1rem;
       position: relative;
       overflow: visible;
       .swiper-wrapper {
@@ -90,10 +97,19 @@ $light-gray: #a8a8ab;
           max-width: 720px;
           .card {
             border: none;
+            width: 12.5rem;
             cursor: pointer;
-            height: 300px;
-            .card-img-top {
-              height: 160px;
+            height: 18rem;
+            .img-wrapper{
+              margin-bottom: 1rem;
+              height: 12.5rem;
+              width: 12.5rem;
+              background: #e1e1e6;
+              display: flex;
+              align-items: center;
+              .card-img-top {
+                height: 12.5rem;
+              }
             }
             .discount-badge {
               position: absolute;
@@ -116,6 +132,7 @@ $light-gray: #a8a8ab;
               justify-content: center;
               align-items: center;
               height: 180px;
+              padding: 1rem;
               .card-title {
                 text-align: start;
                 width: 100%;
@@ -172,17 +189,17 @@ $light-gray: #a8a8ab;
       }
       .swiper-button-prev:hover,
       .swiper-button-next:hover {
-        transform: scale(1.25) translateY(-1rem);
+        transform: scale(1.2) translateY(-1rem);
         opacity: 1;
-        box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.3);
+        box-shadow: 1px 1px 2px 0.5px rgba(0,0,0,0.3);
       }
       .swiper-button-prev {
-        top: 40%;
-        left: 0.35rem;
+        top: 45%;
+        left: 0.3rem;
       }
       .swiper-button-next {
-        right: 0.35rem;
-        top: 40%;
+        right: 0.3rem;
+        top: 45%;
       }
       .swiper-pagination {
         position: absolute;
