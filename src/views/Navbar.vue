@@ -380,7 +380,7 @@ export default {
           display: inline-block;
           min-height: 100%;
           width: 100%;
-          opacity: 80%;
+          opacity: 0.8;
         }
       }
     }
@@ -472,11 +472,13 @@ export default {
         display: inline-block;
         min-height: 100%;
         width: 100%;
-        opacity: 80% !important;
+        opacity: 0.8;
       }
       .navbar-navigation {
         height: 100%;
         background: #ffffff;
+        overflow-y: scroll;
+        overflow-x: hidden;
         @media (min-width: 768px) {
           max-width: 768px;
           position: static !important;

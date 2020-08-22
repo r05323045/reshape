@@ -20,7 +20,6 @@ export default {
   methods: {
     onScroll (e) {
       this.scrollY = window.top.scrollY
-      console.log(this.scrollY)
     }
   }
 }
