@@ -250,7 +250,6 @@ export default {
           this.$bus.$emit('productUpdate', {
             product: this.tempProduct
           })
-          this.tempProduct = {}
           this.$emit('loading')
         }).catch((error) => {
           console.log(error)

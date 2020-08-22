@@ -13,6 +13,15 @@ export default {
     return {
       scrollY: 0
     }
+  },
+  mounted () {
+    window.addEventListener('scroll', this.onScroll)
+  },
+  methods: {
+    onScroll (e) {
+      this.scrollY = window.top.scrollY
+      console.log(this.scrollY)
+    }
   }
 }
 </script>

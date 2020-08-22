@@ -62,7 +62,7 @@
             <h3 class="title">熱賣商品</h3>
             <div v-for="i in 5" :key="`row_${i}`">
               <div class="card-deck" v-if="products.slice((i - 1) * 4, i * 4).length > 0">
-                <div v-for="item in products.slice((i - 1) * 4, i * 4)" :key="item.id" class="card my-5" :id="item.id"  @click="$router.push(`/product/${item.id}`)" @mouseover="getDescription(item)">
+                <div v-for="item in products.slice((i - 1) * 4, i * 4)" :key="item.id" class="card my-5" :id="item.id"  @click="$router.push(`/product/${item.id}`)"> <!-- @mouseover="getDescription(item)" -->
                   <div class="img-wrapper">
                     <div :style="`background: url(${item.imageUrl[0]}) no-repeat center/contain;`" class="card-img-top"></div>
                   </div>
@@ -102,9 +102,11 @@
                       <div v-if="cartId.includes(item.id)" :class="{ addToCart: !cartId.includes(item.id), goToCheckout: cartId.includes(item.id) }" class="btn d-flex justify-content-center mt-3 mb-3" @click="$router.push('/cart')">
                         <span>立刻結帳</span>
                       </div>
+                      <!--
                       <div v-if="cartId.includes(item.id)" class="popper-description mt-2">
                         {{ item.description }}
                       </div>
+                      -->
                     </div>
                   </b-popover>
                 </div>
@@ -324,6 +326,7 @@ $light-gray: #a8a8ab;
           cursor: pointer;
           .svg-inline--fa {
             margin-right: 0.5rem;
+            width: 20px;
             path {
               fill: #ffffff;
               stroke: #000000;

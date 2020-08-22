@@ -19,10 +19,10 @@
           <cardSwiper title="編輯嚴選" :products="products.slice(0, 10)"></cardSwiper>
         </div>
         <div class="section-wrapper">
-          <cardSwiper title="最近熱門" :products="products.slice(0, 10)"></cardSwiper>
+          <cardSwiper title="最近熱門" :products="products.slice(5, 20)"></cardSwiper>
         </div>
         <div class="section-wrapper">
-          <cardSwiper title="限時免運" :products="products.slice(0, 10)"></cardSwiper>
+          <cardSwiper title="限時免運" :products="products.slice(15, 25)"></cardSwiper>
         </div>
       </div>
     </div>
@@ -104,9 +104,10 @@ export default {
 .homepage{
   overflow: hidden;
   .swiper-container-wrapper {
+    margin-top: 6rem;
     .jumbo-swiper-container {
       width: 100%;
-      height: 25rem;
+      overflow: hidden;
       .swiper-slide {
         text-align: center;
         font-size: 18px;

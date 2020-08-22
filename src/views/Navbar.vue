@@ -1,26 +1,34 @@
 <template>
   <div>
-    <div id="nav" class="navbar w-100 p-0 d-flex justify-content-center">
+    <div id="nav" class="navbar w-100 p-0 d-flex justify-content-md-center" :class="{'windowTop' : scrollY === 0}">
       <announcement></announcement>
-      <div class="nav-header w-100 mx-auto flex-row">
-        <router-link to="/" class="mr-3 brand-name">Reshape</router-link>
-        <div class="search-bar input-group align-items-center">
-          <input type="text" class="form-control" placeholder="重塑你的生活">
-          <div class="input-group-append">
-            <button class="btn" type="button">
-              搜尋
-            </button>
+      <div class="nav-header w-100 mx-md-auto flex-row">
+        <router-link to="/" class="brand-name">Reshape</router-link>
+        <nav class="navbar-expand-md search-expand">
+          <div class="search-bar input-group align-items-md-center collapse navbar-collapse" id="searchBar">
+            <div class="input-wrapper d-flex flex-row align-items-center">
+              <i class="fas fa-search"></i>
+              <input type="text" class="form-control" placeholder="重塑你的生活">
+            </div>
+            <div class="input-group-append">
+              <button class="btn" type="button">
+                搜尋
+              </button>
+            </div>
+            <div class="search-advice">
+              <span class="text">玻璃杯</span>
+              <span class="text">夏日嚴選</span>
+              <span class="text">免運</span>
+              <span class="text">抒壓小物</span>
+              <span class="text">工程師必備</span>
+            </div>
+            <div class="collapse-bottom d-md-none" @click="collapseToggle('searchBar')"></div>
           </div>
-          <div class="search-advice">
-            <span class="text">玻璃杯</span>
-            <span class="text">夏日嚴選</span>
-            <span class="text">免運</span>
-            <span class="text">抒壓小物</span>
-            <span class="text">工程師必備</span>
-          </div>
-        </div>
-        <div class="header-right d-flex flex-row justify-content-center align-items-center">
-          <router-link class="text mr-3" to="/admin/">後台列表</router-link>
+        </nav>
+        <div class="header-right d-flex flex-row">
+          <button class="navbar-toggler d-md-none" type="button" data-toggle="collapse" data-target="#searchBar">
+            <span><i class="fas fa-search"></i></span>
+          </button>
           <router-link class="icon" to="/cart">
             <div class="d-flex align-items-center nav-shopping-cart-wrapper">
               <div class="badge">
@@ -33,16 +41,126 @@
               </div>
             </div>
           </router-link>
+          <button class="navbar-toggler d-md-none" type="button" data-toggle="collapse" data-target="#navbarCategory">
+            <span><i class="fas fa-align-justify"></i></span>
+          </button>
         </div>
       </div>
-      <div class="navbar-navigation w-100 mx-auto d-flex flex-row justify-content-between">
-        <router-link to="/" class="mr-3">廚房餐桌</router-link>
-        <router-link to="/" class="mr-3">空間佈置</router-link>
-        <router-link to="/" class="mr-3">質感生活</router-link>
-        <router-link to="/" class="mr-3">品味衣著</router-link>
-        <router-link to="/products" class="mr-3">所有分類</router-link>
-        <router-link to="/" class="mr-3">關於我們</router-link>
-      </div>
+      <nav class="navbar-expand-md category-expand">
+        <div class="collapse navbar-collapse category-collapse" id="navbarCategory">
+          <div class="navbar-navigation w-100 d-flex flex-column flex-md-row mx-md-auto">
+            <div class="laptop">
+              <router-link to="/" class="router-link mr-3">廚房餐桌</router-link>
+              <router-link to="/" class="router-link mr-3">空間佈置</router-link>
+              <router-link to="/" class="router-link mr-3">質感生活</router-link>
+              <router-link to="/" class="router-link mr-3">品味衣著</router-link>
+              <router-link to="/products" class="router-link mr-3">所有分類</router-link>
+              <router-link to="/" class="router-link mr-3">關於我們</router-link>
+            </div>
+            <div class="mobile">
+              <ul class="list-group section">
+                <li class="list-group-item">
+                  <router-link to="/" class="router-link mr-3">登入 / 註冊</router-link>
+                </li>
+              </ul>
+              <ul class="list-group section">
+                <div class="section-title">
+                  <li class="list-group-item">
+                    主題活動
+                  </li>
+                </div>
+                <li class="list-group-item">
+                  <router-link to="/" class="router-link mr-3">
+                    <span class="badge hot">Hot</span>
+                    熱門排行
+                  </router-link>
+                </li>
+                <li class="list-group-item">
+                  <router-link to="/" class="router-link mr-3">
+                  <span class="badge new">New</span>
+                    新品上架
+                  </router-link>
+                </li>
+                <li class="list-group-item">
+                  <router-link to="/" class="router-link mr-3">
+                    免運專區
+                  </router-link>
+                </li>
+              </ul>
+              <ul class="list-group section">
+                <div class="section-title">
+                  <li class="list-group-item">
+                    所有分類
+                  </li>
+                </div>
+                <li class="list-group-item">
+                  <i class="fas fa-utensils"></i>
+                  <router-link to="/" class="router-link mr-3">
+                    廚房餐桌
+                    <i class="fas fa-angle-right"></i>
+                  </router-link>
+                </li>
+                <li class="list-group-item">
+                  <i class="fas fa-couch"></i>
+                  <router-link to="/" class="router-link mr-3">
+                    空間佈置
+                    <i class="fas fa-angle-right"></i>
+                  </router-link>
+                </li>
+                <li class="list-group-item">
+                  <i class="fas fa-laptop-house"></i>
+                  <router-link to="/" class="router-link mr-3">
+                    質感生活
+                    <i class="fas fa-angle-right"></i>
+                  </router-link>
+                </li>
+                <li class="list-group-item">
+                  <i class="fas fa-tshirt"></i>
+                  <router-link to="/" class="router-link mr-3">
+                    品味衣著
+                    <i class="fas fa-angle-right"></i>
+                  </router-link>
+                </li>
+                <li class="list-group-item">
+                  <i class="fas fa-pencil-ruler"></i>
+                  <router-link to="/" class="router-link mr-3">
+                    文具小物
+                    <i class="fas fa-angle-right"></i>
+                  </router-link>
+                </li>
+                <li class="list-group-item">
+                  <i class="fas fa-cocktail"></i>
+                  <router-link to="/" class="router-link mr-3">
+                    食品飲料
+                    <i class="fas fa-angle-right"></i>
+                  </router-link>
+                </li>
+                <li class="list-group-item">
+                  <i class="fas fa-hiking"></i>
+                  <router-link to="/" class="router-link mr-3">
+                    戶外休閒
+                    <i class="fas fa-angle-right"></i>
+                  </router-link>
+                </li>
+              </ul>
+              <ul class="list-group section">
+                <div class="section-title">
+                  <li class="list-group-item">
+                      關於我們
+                  </li>
+                </div>
+                <li class="list-group-item">
+                  <router-link to="/" class="router-link mr-3">品牌故事</router-link>
+                </li>
+                <li class="list-group-item">
+                  <router-link to="/" class="router-link mr-3">作者</router-link>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="collapse-right d-md-none" @click="collapseToggle('navbarCategory')"></div>
+        </div>
+      </nav>
     </div>
     <router-view></router-view>
     <footer class="mt-5 w-100 d-flex justify-content-center align-items-center">
@@ -53,12 +171,17 @@
 
 <script>
 import announcement from '@/views/Announcement.vue'
+import $ from 'jquery'
 export default {
   name: 'Navbar',
   data () {
     return {
-      cart: {}
+      cart: {},
+      scrollY: 0
     }
+  },
+  mounted () {
+    window.addEventListener('scroll', this.onScroll)
   },
   components: {
     announcement
@@ -76,76 +199,193 @@ export default {
             loader.hide()
           }
         })
+    },
+    collapseToggle (id) {
+      $(`#${id}`).collapse('toggle')
+    },
+    onScroll (e) {
+      this.scrollY = window.top.scrollY
     }
   }
 }
 </script>
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
-.navbar {
-  background-color: #ffffff;
-  border-bottom: 1px solid #a8a8ab;
-  height: 11rem;
+.navbar.windowTop {
+  height: 6rem;
+  @media (min-width: 768px) {
+    height: 10.5rem;
+  }
   .nav-header {
-    margin: 2rem 2rem 0rem 2rem !important;
-    max-width: 1140px;
-    height: 2rem;
+    margin-top: 2.5rem;
+    .search-expand {
+      .search-bar {
+        top: 2.5rem;
+        @media (min-width: 768px) {
+          top: 30%;
+        }
+        .input-wrapper {
+          height: 3.5rem;
+          @media (min-width: 768px) {
+            height: 2.5rem;
+            padding: 0;
+          }
+        }
+      }
+    }
+  }
+}
+#nav {
+  a {
+    font-weight: 400;
+  }
+}
+.navbar {
+  position: fixed;
+  background: #ffffff;
+  height: 3.5rem;
+  z-index: 999;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.06);
+  @media (min-width: 768px) {
+    height: 10.5em;
+    position: static !important;
+  }
+  .nav-header {
+    margin: 0 2rem;
+    margin-top: 0;
+    height: 3.5rem;
     position : relative;
+    display: flex;
+    align-items: center;
+    @media (min-width: 768px) {
+      margin: 2rem 2rem 1rem 2rem !important;
+      height: 2rem;
+      max-width: 768px;
+    }
+    @media (min-width: 1200px) {
+      max-width: 992px;
+    }
+    @media (min-width: 1441px) {
+      max-width: 1200px;
+    }
     .brand-name {
-      height: 3rem;
-      position: absolute;
-      top: 30%;
-      font-size: 2rem;
+      font-size: 1.5rem;
       font-family: 'Comfortaa', cursive;
       color: #10567b !important;
+      @media (min-width: 768px) {
+        height: 3rem;
+        margin-right: 3rem;
+        position: absolute;
+        top: 30%;
+        font-size: 2rem;
+      }
     }
     .brand-name:hover {
       text-decoration: none;
     }
-    .search-bar {
-      width: 20rem;
-      position: absolute;
-      left: 10rem;
-      top: 30%;
-      height: 3rem;
-      .form-control {
-        height: 2rem;
-        font-size: 0.8rem;
-        border: 1px solid #d3d3d5;
-        outline: none;
-      }
-      .form-control:focus {
-        border-color: #d3d3d5;
-        -webkit-box-shadow: none !important;
-        box-shadow: none !important;
-        outline: none !important;
-      }
-      .btn {
-        height: 2rem;
-        background: #10567b;
-        font-size: 0.8rem;
-        color: #ffffff;
-      }
-      .search-advice {
-        position: absolute;
-        bottom: -1rem;
-        font-size: 0.6rem;
-        .text{
-          margin-left: 0.5rem;
-          color: #39393e;
+    .search-expand {
+      .search-bar {
+        transition: all 0.4s ease;
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 1001;
+        align-items: flex-start;
+        @media (min-width: 768px) {
+          width: 20rem;
+          position: absolute;
+          left: 10rem;
+          top: 30%;
+          height: 3rem;
         }
-        .text:hover {
-          text-decoration: underline;
-          cursor: pointer;
+        .input-wrapper {
+          background: #ffffff;
+          height: 3.5rem;
+          padding: 0 2rem;
+          width: 100%;
+          @media (min-width: 768px) {
+            height: auto;
+            width: 16rem;
+            padding: 0;
+          }
+          .fa-search {
+            margin-right: 0.5rem;
+            @media (min-width: 768px) {
+              display: none;
+            }
+          }
+          .form-control {
+            height: 2rem;
+            font-size: 1rem;
+            border: none;
+            border-bottom: 1px solid #d3d3d5;
+            padding: 0;
+            @media (min-width: 768px) {
+              padding: 0.375rem 0.75rem;
+              height: 2rem;
+              font-size: 0.8rem;
+              border: 1px solid #d3d3d5;
+              outline: none;
+            }
+          }
+          .form-control:focus {
+            border-color: #d3d3d5;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            outline: none !important;
+          }
+        }
+        .btn {
+          display: none;
+          @media (min-width: 768px) {
+            display: inline;
+            height: 2rem;
+            background: #10567b;
+            font-size: 0.8rem;
+            color: #ffffff;
+          }
+        }
+        .search-advice {
+          display: none;
+          @media (min-width: 768px) {
+            display: block;
+            position: absolute;
+            bottom: -1rem;
+            font-size: 0.6rem;
+            .text{
+              margin-left: 0.5rem;
+              color: #39393e;
+            }
+            .text:hover {
+              text-decoration: underline;
+              cursor: pointer;
+            }
+          }
+        }
+        .collapse-bottom {
+          transition: all 0.4s ease;
+          position: absolute;
+          top: 3.5rem;
+          background: #a8a8ab;
+          display: inline-block;
+          min-height: 100%;
+          width: 100%;
+          opacity: 80%;
         }
       }
     }
     .header-right {
-      height: 2rem;
-      width: 10rem;
-      position: absolute;
-      top: 50%;
-      right: 0;
+      justify-content: flex-end;
+      width: 100%;
+      @media (min-width: 768px) {
+        height: 2rem;
+        width: 10rem;
+        position: absolute;
+        top: 50%;
+        right: 0;
+      }
       .text {
         line-height: 33px;
         vertical-align: middle;
@@ -183,15 +423,158 @@ export default {
           }
         }
       }
+      .navbar-toggler {
+        outline: none;
+      }
     }
   }
-  .navbar-navigation {
-    padding: 1rem 4rem 0 4rem;
-    max-width: 1140px;
-    margin: 2.5rem 0 0.5rem 0;
-    a {
-      font-size: 0.9rem;
-      color: #39393e !important;
+  .category-expand {
+    z-index: 2;
+    padding: 0;
+    width: 100%;
+    max-width: 1200px;
+    .category-collapse {
+      z-index: 3;
+      width: 100%;
+      transition: all 0.4s ease;
+      position: fixed;
+      top: 0;
+      height: 100%;
+      z-index: 1000;
+      @media (min-width: 768px) {
+        position: static !important;
+        z-index: 1;
+        max-width: 768px;
+        margin: auto;
+        padding: 0 2rem;
+      }
+      @media (min-width: 1200px) {
+        max-width: 992px;
+        margin: auto;
+      }
+      @media (min-width: 1441px) {
+        max-width: 1200px;
+        margin: auto;
+      }
+      .collapse-right {
+        position: absolute;
+        right: -100%;
+        top: 0;
+        background: #a8a8ab;
+        display: inline-block;
+        min-height: 100%;
+        width: 100%;
+        opacity: 80%;
+      }
+      .navbar-navigation {
+        height: 100%;
+        background: #ffffff;
+        @media (min-width: 768px) {
+          max-width: 768px;
+          position: static !important;
+          margin: 1.5rem 3rem 0.5rem 3rem;
+        }
+        @media (min-width: 1200px) {
+          max-width: 992px;
+        }
+        @media (min-width: 1441px) {
+          max-width: 1200px;
+        }
+        .laptop {
+          display: none;
+          @media (min-width: 768px) {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+          }
+          .router-link {
+            @media (min-width: 768px) {
+              font-weight: 700 !important;
+              font-size: 0.9rem;
+              color: #39393e !important;
+            }
+          }
+        }
+        .mobile {
+          @media (min-width: 768px) {
+            display: none;
+          }
+          .section {
+            .section-title {
+              font-weight: 500;
+              width: 100%;
+              background-color: #f7f7f7;
+              padding-left: 1rem;
+              .list-group-item {
+                margin-left: 0;
+                background-color: #f7f7f7;
+              }
+            }
+            .list-group-item {
+              margin-left: 1rem;
+              border: 0 none;
+              font-size: 1rem;
+              padding: 0.75rem 0.75rem;
+              cursor: pointer;
+              .svg-inline--fa {
+                margin-right: 0.5rem;
+                width: 20px;
+                path {
+                  fill: #ffffff;
+                  stroke: #000000;
+                  stroke-width: 18px;
+                }
+              }
+              .fa-angle-right {
+                position: absolute;
+                height: 33%;
+                top: 33%;
+                right: 2rem;
+                path {
+                  fill: #39393e;
+                  stroke: #39393e;
+                  stroke-width: 18px;
+                }
+              }
+              .router-link {
+                color: #39393e !important;
+                font-weight: 100;
+              }
+              .badge {
+                background: #10567b;
+                color: #ffffff;
+                width: 2.5rem;
+              }
+            }
+            .list-group-item:hover {
+              .router-link {
+                color: #ee847d !important;
+                font-weight: 100;
+                text-decoration: none;
+              }
+              .svg-inline--fa {
+                path {
+                  stroke: #ee847d;
+                  fill: #ee847d;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .category-collapse.collapsing {
+      min-height: 100%;
+      margin-right: 50%;
+      right: 50%;
+      transition: all 0.4s ease;
+    }
+    .category-collapse.show {
+      width: 80%;
+      transition: all 0.4s ease;
+      height: 100%;
+      right: 0;
+      margin-right: 20%;
     }
   }
 }
