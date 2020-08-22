@@ -17,10 +17,12 @@
               <div class="discount-badge" v-show="0.85 > item.price/item.origin_price">{{ `${(item.price/item.origin_price).toFixed(1) * 10} 折` }}
               </div>
               <div class="card-body">
-                <p class="card-title">{{ item.title }}</p>
-                <div class="price-wrapper">
-                  <span class="price">{{ item.price | priceFormat }}</span>
-                  <span class="original-price" v-show="item.origin_price > item.price">{{ item.origin_price | priceFormat }}</span>
+                <div class="card-content">
+                  <p class="card-title">{{ item.title }}</p>
+                  <div class="price-wrapper">
+                    <span class="price">{{ item.price | priceFormat }}</span>
+                    <span class="original-price" v-show="item.origin_price > item.price">{{ item.origin_price | priceFormat }}</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -48,8 +50,8 @@ export default {
   mounted () {
     // eslint-disable-next-line no-unused-vars
     const cardSwiper = new Swiper('.swiper-container.card-swiper-container', {
-      slidesPerView: 5,
-      spaceBetween: 15,
+      slidesPerView: 2.1,
+      spaceBetween: '3%',
       slidesPerGroup: 5,
       loop: true,
       navigation: {
@@ -59,6 +61,36 @@ export default {
       pagination: {
         el: '.swiper-pagination',
         type: 'fraction'
+      },
+      breakpoints: {
+        375: {
+          slidesPerView: 2.5,
+          spaceBetween: '15%'
+        },
+        576: {
+          slidesPerView: 3.1,
+          spaceBetween: '15%'
+        },
+        768: {
+          slidesPerView: 3.5,
+          spaceBetween: '15%'
+        },
+        834: {
+          slidesPerView: 3.8,
+          spaceBetween: '15%'
+        },
+        900: {
+          slidesPerView: 4.1,
+          spaceBetween: '15%'
+        },
+        992: {
+          slidesPerView: 4.5,
+          spaceBetween: '15%'
+        },
+        1200: {
+          slidesPerView: 5,
+          spaceBetween: '18%'
+        }
       }
     })
   }
@@ -73,12 +105,16 @@ $light-gray: #a8a8ab;
 .card-section{
   overflow: hidden;
   .title {
-    font-size: 1.5rem;
+    margin: 1rem;
+    font-size: 1.25rem;
     font-weight: 500;
-    margin-bottom: 1rem;
+    @media (min-width: 768px) {
+      font-size: 1.5rem;
+    }
   }
   .swiper-container-wrapper {
     background: #ffffff;
+    margin-top: 2rem !important;
     .card-swiper-container {
       width: 100%;
       height: 20rem;
@@ -93,22 +129,31 @@ $light-gray: #a8a8ab;
           display: flex;
           justify-content: center;
           align-items: center;
-          width: 60%;
+          width: 100%;
           max-width: 720px;
           .card {
             border: none;
-            width: 12.5rem;
+            width: 100%;
+            height: 20rem;
+            @media (min-width: 576px) {
+            }
             cursor: pointer;
-            height: 18rem;
             .img-wrapper{
-              margin-bottom: 1rem;
-              height: 12.5rem;
-              width: 12.5rem;
+              position: relative;
+              width: 100%;
               background: #e1e1e6;
               display: flex;
               align-items: center;
-              .card-img-top {
+              @media (min-width: 768px) {
                 height: 12.5rem;
+                width: 12.5rem;
+              }
+              .card-img-top {
+                width: 100%;
+                padding-top: 100%;
+                @media (min-width: 768px) {
+                  height: 12.5rem;
+                }
               }
             }
             .discount-badge {
@@ -131,35 +176,64 @@ $light-gray: #a8a8ab;
               flex-direction: column;
               justify-content: center;
               align-items: center;
-              height: 180px;
-              padding: 1rem;
-              .card-title {
-                text-align: start;
-                width: 100%;
-                flex-grow: 3;
-                font-size: 16px;
-                font-weight: 700;
-                color: $gray;
-                margin-bottom: 15px;
-              }
-              .price-wrapper {
-                text-align: start;
-                flex-grow: 1;
-                width: 100%;
-                bottom: 10px;
-                .price {
-                  vertical-align: middle;
-                  font-weight: 500;
-                  font-size: 16px;
-                  margin-right: 6px;
-                  color: $navy;
+              padding: 0.5rem;
+              display: inline-block;
+              position: relative;
+              width: 100%;
+              padding-bottom: 100%;
+              position: relative;
+              .card-content {
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                top: 0;
+                margin-top: 1rem;
+                .card-title {
+                  text-align: start;
+                  font-size: 0.9rem;
+                  font-weight: 700;
+                  color: $gray;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  display: -webkit-box;
+                  visibility: visible;
+                  -webkit-line-clamp: 3;
+                  -webkit-box-orient: vertical;
+                  @media (min-width: 576px) {
+                    overflow: visible;
+                    font-size: 16px;
+                  }
                 }
-                .original-price {
-                  vertical-align: middle;
-                  text-decoration: line-through;
-                  font-size: 14px;
-                  line-height: 20px;
-                  color: $light-gray;
+                .price-wrapper {
+                  width: 100%;
+                  text-align: start;
+                  flex-grow: 1;
+                  bottom: 10px;
+                  .price {
+                    display: inline-block;
+                    width: 100%;
+                    vertical-align: middle;
+                    font-weight: 500;
+                    font-size: 0.9rem;
+                    margin-right: 6px;
+                    color: $navy;
+                    @media (min-width: 576px) {
+                      width: auto;
+                      font-size: 16px;
+                    }
+                  }
+                  .original-price {
+                    vertical-align: middle;
+                    text-decoration: line-through;
+                    font-size: 0.8rem;
+                    line-height: 20px;
+                    color: $light-gray;
+                    @media (min-width: 576px) {
+                      width: auto;
+                      font-size: 14px;
+                    }
+                  }
                 }
               }
             }
@@ -168,16 +242,19 @@ $light-gray: #a8a8ab;
       }
       .swiper-button-prev,
       .swiper-button-next {
-        display: inline-block;
-        transform: translate(0,-50%);
-        box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.2);
-        height: 2rem;
-        width: 2rem;
-        border-radius: 50%;
-        text-align: center;
-        background: #ffffff;
-        opacity: 0.8;
-        transition: 0.25s ease-in-out;
+        display: none;
+        @media (min-width: 768px) {
+          display: inline-block;
+          transform: translate(0,-50%);
+          box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.2);
+          height: 2rem;
+          width: 2rem;
+          border-radius: 50%;
+          text-align: center;
+          background: #ffffff;
+          opacity: 0.8;
+          transition: 0.25s ease-in-out;
+        }
       }
       .swiper-button-prev:after,
       .swiper-button-next:after {
@@ -202,12 +279,17 @@ $light-gray: #a8a8ab;
         top: 45%;
       }
       .swiper-pagination {
-        position: absolute;
-        width: 100px;
-        height: 50px;
-        top: -2rem;
-        left: 92%;
-        font-size: 0.8rem;
+        display: none;
+        @media (min-width: 1200px) {
+          display: block;
+          position: absolute;
+          width: 100px;
+          height: 50px;
+          top: -2rem;
+          left: 92%;
+          font-size: 0.8rem;
+          padding-right: 1rem;
+        }
       }
     }
   }

@@ -168,7 +168,9 @@ export default {
           if (loader) {
             loader.hide()
           }
-          console.log()
+          this.$bus.$emit('cartUpdate', {
+            cart: this.cart
+          })
         })
     }
   }
@@ -188,7 +190,15 @@ $light-gray: #a8a8ab;
   height: 100%;
   overflow: visible;
   max-height: none;
-  max-width: 1140px;
+  @media (min-width: 768px) {
+    max-width: 768px;
+  }
+  @media (min-width: 1200px) {
+    max-width: 992px;
+  }
+  @media (min-width: 1441px) {
+    max-width: 1200px;
+  }
   .router {
     color: $blue;
   }

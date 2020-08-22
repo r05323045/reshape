@@ -177,9 +177,6 @@ export default {
   created () {
     this.getProducts()
     this.getCart()
-    this.$bus.$on('cartUpdate', event => {
-      this.cart = event.cart
-    })
   },
   methods: {
     getSwiper () {
@@ -308,8 +305,16 @@ $light-gray: #a8a8ab;
     color: $blue;
   }
   .products {
-    max-width: 1140px;
     margin: 5rem auto 2rem auto;
+    @media (min-width: 768px) {
+      max-width: 768px;
+    }
+    @media (min-width: 1200px) {
+      max-width: 992px;
+    }
+    @media (min-width: 1441px) {
+      max-width: 1200px;
+    }
     .category {
       .title {
         font-size: 16px;
@@ -397,8 +402,31 @@ $light-gray: #a8a8ab;
           background: #e1e1e6;
           display: flex;
           align-items: center;
-          .card-img-top {
+          @media (min-width: 768px) {
+            height: 9rem;
+            width: 9rem;
+          }
+          @media (min-width: 1200px) {
+            height: 12rem;
+            width: 12rem;
+          }
+          @media (min-width: 1441px) {
             height: 13.5rem;
+            width: 13.5rem;
+          }
+          .card-img-top {
+            @media (min-width: 768px) {
+            height: 9rem;
+            width: 9rem;
+            }
+            @media (min-width: 1200px) {
+              height: 12rem;
+              width: 12rem;
+            }
+            @media (min-width: 1441px) {
+              height: 13.5rem;
+              width: 13.5rem;
+            }
           }
         }
         .discount-badge {
@@ -427,8 +455,15 @@ $light-gray: #a8a8ab;
             font-size: 16px;
             font-weight: 700;
             color: $gray;
-            flex-grow: 3;
-            height: 2.5rem;
+            height: 3rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            @media (min-width: 1441px) {
+              -webkit-line-clamp: 1;
+            }
           }
           .rating {
             margin-bottom: 0.5rem;

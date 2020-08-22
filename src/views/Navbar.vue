@@ -29,18 +29,14 @@
           <button class="navbar-toggler d-md-none" type="button" data-toggle="collapse" data-target="#searchBar">
             <span><i class="fas fa-search"></i></span>
           </button>
-          <router-link class="icon" to="/cart">
-            <div class="d-flex align-items-center nav-shopping-cart-wrapper">
-              <div class="badge">
-                <span class="badge-wrapper" v-if="cart.length">
-                  {{ cart.length }}
-                </span>
-              </div>
-              <div class="fa-wrapper">
-                <i class="fas fa-shopping-cart"></i>
-              </div>
-            </div>
-          </router-link>
+          <button class="fa-wrapper navbar-toggler" type="button" @click="$router.push('/cart')">
+            <i class="fas fa-shopping-cart"></i>
+          </button>
+          <div class="badge">
+            <span class="badge-wrapper" v-if="cart.length">
+              {{ cart.length }}
+            </span>
+          </div>
           <button class="navbar-toggler d-md-none" type="button" data-toggle="collapse" data-target="#navbarCategory">
             <span><i class="fas fa-align-justify"></i></span>
           </button>
@@ -188,6 +184,9 @@ export default {
   },
   created () {
     this.getCart()
+    this.$bus.$on('cartUpdate', event => {
+      this.cart = event.cart
+    })
   },
   methods: {
     getCart (loader) {
@@ -220,12 +219,17 @@ export default {
   z-index: 1;
 }
 .navbar.windowTop {
-  height: 6rem;
+  height: 3.5rem;
+  @media (min-width: 576px) {
+    height: 6rem;
+  }
   @media (min-width: 768px) {
     height: 10.5rem;
   }
   .nav-header {
-    margin-top: 2.5rem;
+    @media (min-width: 576px) {
+      margin-top: 2.5rem;
+    }
     .search-expand {
       .search-bar {
         top: 2.5rem;
@@ -259,7 +263,7 @@ export default {
     position: static !important;
   }
   .nav-header {
-    margin: 0 2rem;
+    margin: 0 0.5rem;
     margin-top: 0;
     height: 3.5rem;
     position : relative;
@@ -330,6 +334,7 @@ export default {
             border: none;
             border-bottom: 1px solid #d3d3d5;
             padding: 0;
+            border-radius: 0;
             @media (min-width: 768px) {
               padding: 0.375rem 0.75rem;
               height: 2rem;
@@ -399,40 +404,37 @@ export default {
         vertical-align: middle;
         font-size: 0.9rem;
       }
-      .icon {
-        line-height: 33px;
-        vertical-align: middle;
-      }
-      .nav-shopping-cart-wrapper {
-        cursor: pointer;
-        width: 45px;
-        position: relative;
+      .badge {
+        top: 0;
+        right: 3rem;
+        position: absolute;
+        @media (min-width: 768px) {
+          right: 0;
+        }
         .badge-wrapper {
-          top: -2px;
-          right: -2px;
-          position: absolute;
           display: inline-block;
           background-color: #f16c5d;
           color: #ffffff;
           border-radius: 50%;
           padding: 3px;
           width: 20px;
-          height: 18px;
+          height: 20px;
         }
-        .fa-wrapper {
-          vertical-align: middle;
-          font-size: 18px;
-          .fa-shopping-cart {
-            path {
-              fill: #ffffff;
-              stroke: #000000;
-              stroke-width: 18px;
-            }
+      }
+      .fa-wrapper {
+        background: none;
+        border: none;
+        .fa-shopping-cart {
+          path {
+            fill: #ffffff;
+            stroke: #000000;
+            stroke-width: 18px;
           }
         }
       }
       .navbar-toggler {
-        outline: none;
+        width: 3rem;
+        height: 3rem;
       }
     }
   }

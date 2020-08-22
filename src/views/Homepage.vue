@@ -57,7 +57,7 @@ export default {
     getSwiper () {
       this.mySwiper = new Swiper('.jumbo-swiper-container', {
         slidesPerView: 'auto',
-        spaceBetween: 20,
+        spaceBetween: '3%',
         centeredSlides: true,
         loop: true,
         speed: 800,
@@ -104,7 +104,10 @@ export default {
 .homepage{
   overflow: hidden;
   .swiper-container-wrapper {
-    margin-top: 6rem;
+    margin-top: 5rem;
+    @media (min-width: 768px) {
+      margin-top: 0;
+    }
     .jumbo-swiper-container {
       width: 100%;
       overflow: hidden;
@@ -115,9 +118,12 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 60%;
-        max-width: 720px;
+        width: 90%;
         -webkit-filter: opacity(.2);
+        @media (min-width: 768px) {
+          width: 60%;
+          max-width: 720px;
+        }
         .swiper-button-prev,
         .swiper-button-next {
           display: none;
@@ -125,19 +131,25 @@ export default {
       }
       .swiper-slide-active,
       .swiper-slide-duplicate-active {
-        width: 60%;
-        max-width: 720px;
+        width: 90%;
         -webkit-filter: opacity(1);
+        @media (min-width: 768px) {
+          width: 60%;
+          max-width: 720px;
+        }
         .swiper-button-prev,
         .swiper-button-next {
-          display: inline-block;
-          transform: translate(0,-50%);
-          box-shadow: -1px 1px 2px 0 rgba(0,0,0,0.1);
-          height: 4rem;
-          width: 2rem;
-          background: #fff;
-          opacity: 0.8;
-          border-radius: 0.5rem;
+          display: none;
+          @media (min-width: 768px) {
+            display: inline-block;
+            transform: translate(0,-50%);
+            box-shadow: -1px 1px 2px 0 rgba(0,0,0,0.1);
+            height: 4rem;
+            width: 2rem;
+            background: #fff;
+            opacity: 0.8;
+            border-radius: 0.5rem;
+          }
         }
         .swiper-button-prev:after,
         .swiper-button-next:after {
@@ -162,8 +174,11 @@ export default {
         left: 0%;
       }
       .swiper-pagination-bullet {
-        width: 8px;
-        height: 8px;
+        display: none;
+        @media (min-width: 768px) {
+          width: 8px;
+          height: 8px;
+        }
       }
     }
   }
