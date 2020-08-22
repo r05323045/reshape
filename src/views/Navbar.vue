@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page-content">
     <div id="nav" class="navbar w-100 p-0 d-flex justify-content-md-center" :class="{'windowTop' : scrollY === 0}">
       <announcement></announcement>
       <div class="nav-header w-100 mx-md-auto flex-row">
@@ -211,6 +211,14 @@ export default {
 </script>
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
+.page-content {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
 .navbar.windowTop {
   height: 6rem;
   @media (min-width: 768px) {
@@ -464,7 +472,7 @@ export default {
         display: inline-block;
         min-height: 100%;
         width: 100%;
-        opacity: 80%;
+        opacity: 80% !important;
       }
       .navbar-navigation {
         height: 100%;
