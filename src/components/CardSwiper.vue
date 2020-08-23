@@ -52,7 +52,6 @@ export default {
     const cardSwiper = new Swiper('.swiper-container.card-swiper-container', {
       slidesPerView: 2.1,
       spaceBetween: '3%',
-      slidesPerGroup: 5,
       loop: true,
       navigation: {
         nextEl: '.swiper-button-next.card-swiper-button-next',
@@ -65,11 +64,13 @@ export default {
       breakpoints: {
         375: {
           slidesPerView: 2.5,
-          spaceBetween: '15%'
+          spaceBetween: '15%',
+          slidesPerGroup: 1
         },
         576: {
           slidesPerView: 3.1,
-          spaceBetween: '15%'
+          spaceBetween: '15%',
+          slidesPerGroup: 1
         },
         768: {
           slidesPerView: 3.5,
@@ -89,7 +90,8 @@ export default {
         },
         1200: {
           slidesPerView: 5,
-          spaceBetween: '18%'
+          spaceBetween: '18%',
+          slidesPerGroup: 5
         }
       }
     })
@@ -117,7 +119,6 @@ $light-gray: #a8a8ab;
     margin-top: 2rem !important;
     .card-swiper-container {
       width: 100%;
-      height: 20rem;
       padding: 0 1rem 0 1rem;
       position: relative;
       overflow: visible;
@@ -130,30 +131,23 @@ $light-gray: #a8a8ab;
           justify-content: center;
           align-items: center;
           width: 100%;
-          max-width: 720px;
           .card {
             border: none;
             width: 100%;
-            height: 20rem;
-            @media (min-width: 576px) {
-            }
+            height: 18rem;
             cursor: pointer;
+            @media (min-width: 376px) {
+              height: 20rem;
+            }
             .img-wrapper{
               position: relative;
               width: 100%;
               background: #e1e1e6;
               display: flex;
               align-items: center;
-              @media (min-width: 768px) {
-                height: 12.5rem;
-                width: 12.5rem;
-              }
               .card-img-top {
                 width: 100%;
                 padding-top: 100%;
-                @media (min-width: 768px) {
-                  height: 12.5rem;
-                }
               }
             }
             .discount-badge {
@@ -201,7 +195,7 @@ $light-gray: #a8a8ab;
                   -webkit-line-clamp: 3;
                   -webkit-box-orient: vertical;
                   @media (min-width: 576px) {
-                    overflow: visible;
+                    overflow: default;
                     font-size: 16px;
                   }
                 }

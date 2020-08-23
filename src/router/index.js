@@ -15,7 +15,7 @@ const routes = [
       },
       {
         path: '/product/:id',
-        name: '產品頁面',
+        name: '商品頁面',
         component: () => import('../views/Product.vue')
       },
       {
@@ -25,7 +25,7 @@ const routes = [
       },
       {
         path: '/products',
-        name: '廚房餐桌',
+        name: '商品分類',
         component: () => import('../views/Products.vue')
       }
     ]

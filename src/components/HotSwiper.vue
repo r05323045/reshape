@@ -31,7 +31,6 @@ export default {
     products: Array
   },
   mounted () {
-    console.log(this.products)
     // eslint-disable-next-line no-unused-vars
     const mySwiper = new Swiper('.swiper-container', {
       centeredSlides: true,
@@ -59,9 +58,11 @@ $gray: #39393e;
 $light-gray: #a8a8ab;
 .swiper-container {
   width: 100%;
-  height: 100%;
-  height: 25rem;
+  height: 20rem;
   position: relative;
+  @media (min-width: 414px) {
+    height: 25rem;
+  }
   .swiper-wrapper {
     .swiper-slide:hover {
       -webkit-filter: opacity(0.8)
@@ -75,32 +76,54 @@ $light-gray: #a8a8ab;
         padding: 1rem;
         position: absolute;
         top: 20%;
-        left: 10%;
+        left: 20%;
         max-width: 80%;
+        @media (min-width: 576px) {
+          left: 10%;
+        }
         .rank {
-          font-size: 1.5rem;
+          font-size: 1rem;
           margin-bottom: 0.5rem;
           font-weight: 500;
+          @media (min-width: 992px) {
+            font-size: 1.25rem;
+          }
         }
         .name {
           font-weight: 500;
+          font-size: 0.9rem;
+          @media (min-width: 992px) {
+            font-size: 1rem;
+          }
         }
       }
     }
   }
-  .swiper-pagination-bullet {
-    width: 20px;
-    height: 20px;
-    text-align: center;
-    line-height: 20px;
-    font-size: 12px;
-    color:#000;
-    opacity: 1;
-    background: rgba(0,0,0,0.2);
-  }
-  .swiper-pagination-bullet-active {
-    color:#fff;
-    background: $navy;
+  .swiper-pagination {
+    display: none;
+    @media (min-width: 576px) {
+      display: inline-block;
+    }
+    .swiper-pagination-bullet {
+      width: 0.8rem;
+      height: 0.8rem;
+      text-align: center;
+      line-height: 0.8rem;
+      font-size: 0.8rem;
+      color:#000;
+      opacity: 1;
+      background: rgba(0,0,0,0.2);
+      @media (min-width: 992px) {
+        width: 1rem;
+        height: 1rem;
+        line-height: 1rem;
+        font-size: 0.8rem;
+      }
+    }
+    .swiper-pagination-bullet-active {
+      color:#fff;
+      background: $navy;
+    }
   }
 }
 </style>

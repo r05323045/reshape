@@ -66,15 +66,15 @@
                   </li>
                 </div>
                 <li class="list-group-item">
-                  <router-link to="/" class="router-link mr-3">
+                  <router-link to="/products" class="router-link mr-3">
                     <span class="badge hot">Hot</span>
-                    熱門排行
+                    <span class="text">熱門排行</span>
                   </router-link>
                 </li>
                 <li class="list-group-item">
                   <router-link to="/" class="router-link mr-3">
-                  <span class="badge new">New</span>
-                    新品上架
+                    <span class="badge new">New</span>
+                    <span class="text">新品上架</span>
                   </router-link>
                 </li>
                 <li class="list-group-item">
@@ -86,7 +86,7 @@
               <ul class="list-group section">
                 <div class="section-title">
                   <li class="list-group-item">
-                    所有分類
+                    商品分類
                   </li>
                 </div>
                 <li class="list-group-item">
@@ -232,7 +232,9 @@ export default {
     }
     .search-expand {
       .search-bar {
-        top: 2.5rem;
+        @media (min-width: 576px) {
+          top: 2.5rem;
+        }
         @media (min-width: 768px) {
           top: 30%;
         }
@@ -416,9 +418,10 @@ export default {
           background-color: #f16c5d;
           color: #ffffff;
           border-radius: 50%;
-          padding: 3px;
           width: 20px;
           height: 20px;
+          line-height: 20px;
+          vertical-align: middle;
         }
       }
       .fa-wrapper {
@@ -551,11 +554,17 @@ export default {
               .router-link {
                 color: #39393e !important;
                 font-weight: 100;
-              }
-              .badge {
-                background: #10567b;
-                color: #ffffff;
-                width: 2.5rem;
+                position: relative;
+                .badge {
+                  background: #10567b;
+                  color: #ffffff;
+                  width: 2.5rem;
+                  position: absolute;
+                  top: 0;
+                }
+                .text {
+                  margin-left: 3rem;
+                }
               }
             }
             .list-group-item:hover {

@@ -3,7 +3,7 @@
     <div class="home mx-auto" ref="home">
       <div class="products">
         <div class="row">
-          <div class="col-2">
+          <div class="col-3 col-lg-2 category-wrapper">
             <div class="category">
               <div class="title">商品分類</div>
               <ul class="list-group list-group-flush">
@@ -38,12 +38,13 @@
               </ul>
             </div>
           </div>
-          <div class="col-10">
+          <div class="col-12 col-md-9 col-lg-10 d-flex justify-content-center">
             <div class="hot-sales w-100 row d-flex align-items-center" v-if="products.length > 0">
-              <div class="col-6">
+              <div class="col-12 col-sm-6 hot-swiper-wrapper">
+                <div class="outer-title">本月熱賣 TOP 5</div>
                 <hot-swiper :products="hotProducts"></hot-swiper>
               </div>
-              <div class="col-6">
+              <div class="col-12 col-sm-6 rank-wrapper">
                 <div class="title">本月熱賣 TOP 5</div>
                 <ul class="list-group list-group-flush">
                   <li
@@ -53,30 +54,39 @@
                     @click="$router.push(`/product/${item.id}`)"
                   >
                     <div class="rank">{{ `0${index + 1}` }}</div>
-                    <div class="image" :style="`background: url(${item.imageUrl[0]}) no-repeat center/contain;`"></div>
+                    <div class="image-wrapper">
+                      <div class="image" :style="`background: url(${item.imageUrl[0]}) no-repeat center/contain;`"></div>
+                    </div>
                     <span class="title">{{ item.title }}</span>
                   </li>
                 </ul>
               </div>
             </div>
-            <h3 class="title">熱賣商品</h3>
+          </div>
+        </div>
+        <div class="row w-100">
+          <div class="col-0 col-xl-2"></div>
+          <div class="card-decks-wrapper col-12 col-xl-10">
+            <div class="title">熱賣商品</div>
             <div v-for="i in 5" :key="`row_${i}`">
-              <div class="card-deck" v-if="products.slice((i - 1) * 4, i * 4).length > 0">
-                <div v-for="item in products.slice((i - 1) * 4, i * 4)" :key="item.id" class="card my-5" :id="item.id"  @click="$router.push(`/product/${item.id}`)"> <!-- @mouseover="getDescription(item)" -->
+              <div class="card-deck" v-if="products.slice((i - 1) * numCardsRow, i * numCardsRow).length > 0">
+                <div v-for="item in products.slice((i - 1) * numCardsRow, i * numCardsRow)" :key="item.id" class="card my-5" :id="item.id"  @click="$router.push(`/product/${item.id}`)"> <!-- @mouseover="getDescription(item)" -->
                   <div class="img-wrapper">
                     <div :style="`background: url(${item.imageUrl[0]}) no-repeat center/contain;`" class="card-img-top"></div>
                   </div>
                   <div class="discount-badge" v-show="0.85 > item.price/item.origin_price">{{ `${(item.price/item.origin_price).toFixed(1) * 10} 折` }}
                   </div>
                   <div class="card-body">
-                    <p class="card-title">{{ item.title }}</p>
-                    <div class="rating w-100 d-flex align-items-center">
-                      <span v-for="(score, index) in item.rating.rate" :class="score" class="star-item" :key="index"></span>
-                      <span class="count">{{ `(${item.rating.count})`  }}</span>
-                    </div>
-                    <div class="price-wrapper">
-                      <span class="price">{{ item.price | priceFormat }}</span>
-                      <span class="original-price" v-show="item.origin_price > item.price">{{ item.origin_price | priceFormat }}</span>
+                    <div class="card-content">
+                      <p class="card-title">{{ item.title }}</p>
+                      <div class="rating w-100 d-flex align-items-center">
+                        <span v-for="(score, index) in item.rating.rate" :class="score" class="star-item" :key="index"></span>
+                        <span class="count">{{ `(${item.rating.count})`  }}</span>
+                      </div>
+                      <div class="price-wrapper">
+                        <span class="price">{{ item.price | priceFormat }}</span>
+                        <span class="original-price" v-show="item.origin_price > item.price">{{ item.origin_price | priceFormat }}</span>
+                      </div>
                     </div>
                   </div>
                   <b-popover :target="item.id" triggers="hover focus" placement="right" class="product-popper" :ref="`popover-${item.id}`">
@@ -110,7 +120,7 @@
                     </div>
                   </b-popover>
                 </div>
-                <div class="card my-5 border-0 no-use" v-for="i in 4 - products.slice((i - 1) * 4, i * 4).length" :key="`surplus_${i}`">
+                <div class="card my-5 border-0 no-use" v-for="i in numCardsRow - products.slice((i - 1) * numCardsRow, i * numCardsRow).length" :key="`surplus_${i}`">
                 </div>
               </div>
             </div>
@@ -147,7 +157,7 @@ import 'swiper/swiper-bundle.css'
 import pagination from '@/components/Pagination'
 import hotSwiper from '@/components/HotSwiper.vue'
 export default {
-  name: 'home',
+  name: 'products',
   data () {
     return {
       products: [],
@@ -158,7 +168,8 @@ export default {
       randomRating: {
         rate: [],
         count: Number
-      }
+      },
+      windowWidth: window.innerWidth
     }
   },
   components: {
@@ -172,11 +183,22 @@ export default {
         return this.cart.map(item => item.product.id)
       }
       return []
+    },
+    numCardsRow: function () {
+      if (this.windowWidth >= 576 && this.windowWidth < 768) {
+        return 3
+      } else if (this.windowWidth >= 768) {
+        return 4
+      }
+      return 2
     }
   },
   created () {
     this.getProducts()
     this.getCart()
+    window.addEventListener('resize', () => {
+      this.windowWidth = window.innerWidth
+    })
   },
   methods: {
     getSwiper () {
@@ -305,9 +327,10 @@ $light-gray: #a8a8ab;
     color: $blue;
   }
   .products {
-    margin: 5rem auto 2rem auto;
+    margin: 2rem auto 2rem auto;
     @media (min-width: 768px) {
-      max-width: 768px;
+      margin-top: 3rem;
+      max-width: 992px;
     }
     @media (min-width: 1200px) {
       max-width: 992px;
@@ -315,217 +338,314 @@ $light-gray: #a8a8ab;
     @media (min-width: 1441px) {
       max-width: 1200px;
     }
-    .category {
-      .title {
-        font-size: 16px;
-        color: #39393e;
-        font-weight: 500;
-        margin-bottom: 10px;
+    .category-wrapper{
+      display: none;
+      @media (min-width: 768px) {
+        display: flex;
       }
-      .list-group {
-        width: 80%;
-        .list-group-item {
-          font-size: 14px;
+      .category {
+        margin-left: 2rem;
+        @media (min-width: 992px) {
+          margin-left: 1rem;
+        }
+        @media (min-width: 1200px) {
+          margin-left: 0rem;
+        }
+        .title {
+          font-size: 1rem;
+          color: #39393e;
           font-weight: 500;
-          padding: 0.75rem 0.75rem;
-          cursor: pointer;
-          .svg-inline--fa {
-            margin-right: 0.5rem;
-            width: 20px;
-            path {
-              fill: #ffffff;
-              stroke: #000000;
-              stroke-width: 18px;
-            }
+          margin-bottom: 0.5rem;
+          @media (min-width: 992px) {
+            font-size: 1.25rem;
           }
         }
-        .list-group-item:hover {
-          color: $pink;
-          .svg-inline--fa {
-            path {
-              stroke: $pink;
+        .list-group {
+          width: 100%;
+          .list-group-item {
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 0.75rem 0.75rem;
+            cursor: pointer;
+            @media (min-width: 992px) {
+              font-size: 0.9rem;
+            }
+            .svg-inline--fa {
+              margin-right: 0.5rem;
+              width: 20px;
+              path {
+                fill: #ffffff;
+                stroke: #000000;
+                stroke-width: 18px;
+              }
+            }
+          }
+          .list-group-item:hover {
+            color: $pink;
+            .svg-inline--fa {
+              path {
+                stroke: $pink;
+              }
             }
           }
         }
       }
     }
     .hot-sales {
-      height: 30rem;
       width: 100%;
       margin-bottom: 3rem;
-      .title {
-        font-size: 1.25rem;
-        font-weight: 500;
-        margin-right: 0.5rem;
-      }
-      .list-group-item:hover {
-        -webkit-filter: opacity(0.8)
-      }
-      .list-group-item {
-        margin: 0.1rem 0;
-        height: 100%;
-        cursor: pointer;
-        .image {
-          height: 60px;
-          width: 60px;
+      .hot-swiper-wrapper {
+        margin-bottom: 1rem;
+        @media (min-width: 375px) {
+          margin-bottom: 2rem;
         }
-        .rank {
-          color: $light-gray;
-          font-size: 1.25rem;
+        @media (min-width: 576px) {
+          margin-bottom: 0;
+        }
+        .outer-title {
+          font-size: 1rem;
           font-weight: 500;
-          margin-right: 0.5rem;
+          margin-left: 1rem;
+          margin-bottom: 1rem;
+          @media (min-width: 375px) {
+            margin-bottom: 2rem;
+          }
+          @media (min-width: 576px) {
+            display: none;
+          }
         }
+      }
+      .rank-wrapper {
         .title {
-          font-size: 0.9rem;
-          font-weight: 500;
-          margin: 0 1rem;
-        }
-        .rank, .title {
-          line-height: 60px;
-          height: 60px;
-          vertical-align: center;
-        }
-      }
-    }
-    .card-deck {
-      height: 23rem;
-      margin: 0rem 0;
-      .card {
-        margin: 0 0.5rem 0.5rem 0.5rem;
-        cursor: pointer;
-        height: 21rem;
-        width: 15rem;
-        border: none;
-        .img-wrapper{
-          height: 13.5rem;
-          width: 13.5rem;
-          background: #e1e1e6;
-          display: flex;
-          align-items: center;
-          @media (min-width: 768px) {
-            height: 9rem;
-            width: 9rem;
+          display: none;
+          @media (min-width: 576px) {
+            display: inline-block;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
           }
-          @media (min-width: 1200px) {
-            height: 12rem;
-            width: 12rem;
-          }
-          @media (min-width: 1441px) {
-            height: 13.5rem;
-            width: 13.5rem;
-          }
-          .card-img-top {
-            @media (min-width: 768px) {
-            height: 9rem;
-            width: 9rem;
-            }
-            @media (min-width: 1200px) {
-              height: 12rem;
-              width: 12rem;
-            }
-            @media (min-width: 1441px) {
-              height: 13.5rem;
-              width: 13.5rem;
-            }
+          @media (min-width: 992px) {
+            font-size: 1.25rem;
           }
         }
-        .discount-badge {
-          position: absolute;
-          top: 0;
-          left: 0;
-          border-radius: 2px 0 2px 0;
-          z-index: 5;
-          background: $pink;
-          font-weight: 700;
-          font-size: 14px;
-          color: #ffffff;
-          box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.2);
-          text-align: center;
-          padding: 5px 6px;
-          line-height: 1;
+        .list-group-item:hover {
+          -webkit-filter: opacity(0.8)
         }
-        .card-body {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          padding: 1rem;
-          .card-title {
-            width: 100%;
-            font-size: 16px;
-            font-weight: 700;
-            color: $gray;
+        .list-group-item {
+          margin: 0.1rem 0;
+          height: 100%;
+          cursor: pointer;
+          .image-wrapper {
             height: 3rem;
+            min-width: 3rem;
+            width: 3rem;
+            background: #e1e1e6;
+            display: flex;
+            align-items: center;
+            .image {
+              width: 100%;
+              padding-top: 100%;
+            }
+          }
+          .rank {
+            color: $light-gray;
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            line-height: 3rem;
+            height: 3rem;
+            vertical-align: middle;
+          }
+          .title {
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin: 0 1rem;
+            line-height: 1.5em;
+            height: 3em;
+            width: 100%;
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
+            visibility: visible;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
-            @media (min-width: 1441px) {
-              -webkit-line-clamp: 1;
-            }
-          }
-          .rating {
-            margin-bottom: 0.5rem;
-            .star-item{
-              display: inline-block;
-              width: 10px;
-              height: 10px;
-              margin-right: 3px;
-              background-repeat: no-repeat;
-              background-size: 10px 10px;
-            }
-            .star-item:last-child{
-              margin-right: 0;
-            }
-            .on{
-              background-image: url('../../public/images/star/star24_on@2x.png')
-            }
-            .off{
-              background-image: url('../../public/images/star/star24_off@2x.png')
-            }
-            .half{
-              background-image: url('../../public/images/star/star24_half@2x.png')
-            }
-            .count {
-              margin-left: 5px;
-              font-size: 10px;
-              font-weight: 500;
-            }
-          }
-          .price-wrapper {
-            flex-grow: 1;
-            width: 100%;
-            bottom: 10px;
-            .price {
-              vertical-align: middle;
-              font-weight: 500;
-              font-size: 16px;
-              margin-right: 6px;
-              color: $navy;
-            }
-            .original-price {
-              vertical-align: middle;
-              text-decoration: line-through;
-              font-size: 14px;
-              line-height: 20px;
-              color: $light-gray;
+            @media (min-width: 992px) {
+              font-size: 0.9rem;
             }
           }
         }
       }
-      .no-use {
-        cursor: default;
-      }
     }
-    .pagination-wrapper {
-      margin: 8rem auto 0 auto;
+    .card-decks-wrapper {
+      width: 100%;
+      .title {
+        margin-left: 1rem;
+        font-size: 1rem;
+        font-weight: 500;
+        @media (min-width: 576px) {
+          margin-left: 2rem;
+        }
+        @media (min-width: 992px) {
+          font-size: 1.25rem;
+        }
+      }
+      .card-deck {
+        width: 100%;
+        margin: 1rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        @media (min-width: 576px) {
+          margin: 1rem 1rem;
+        }
+        .card {
+          border: none;
+          width: 48%;
+          height: 18rem;
+          cursor: pointer;
+          @media (min-width: 376px) {
+            height: 20rem;
+          }
+          @media (min-width: 576px) {
+            width: 100%;
+          }
+          .img-wrapper{
+            position: relative;
+            width: 100%;
+            background: #e1e1e6;
+            display: flex;
+            align-items: center;
+            .card-img-top {
+              width: 100%;
+              padding-top: 100%;
+            }
+          }
+          .discount-badge {
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 2px 0 2px 0;
+            z-index: 5;
+            background: $pink;
+            font-weight: 700;
+            font-size: 14px;
+            color: #ffffff;
+            box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.2);
+            text-align: center;
+            padding: 5px 6px;
+            line-height: 1;
+          }
+          .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0.5rem;
+            display: inline-block;
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%;
+            position: relative;
+            .card-content {
+              position: absolute;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              top: 0;
+              margin-top: 1rem;
+              .card-title {
+                text-align: start;
+                font-size: 0.8rem;
+                font-weight: 700;
+                color: $gray;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                visibility: visible;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                @media (min-width: 992px) {
+                  width: auto;
+                  font-size: 16px;
+                }
+              }
+              .price-wrapper {
+                width: 100%;
+                text-align: start;
+                flex-grow: 1;
+                bottom: 10px;
+                .price {
+                  display: inline-block;
+                  width: 100%;
+                  vertical-align: middle;
+                  font-weight: 500;
+                  font-size: 0.9rem;
+                  margin-right: 6px;
+                  color: $navy;
+                  @media (min-width: 992px) {
+                    width: auto;
+                    font-size: 16px;
+                  }
+                }
+                .original-price {
+                  vertical-align: middle;
+                  text-decoration: line-through;
+                  font-size: 0.8rem;
+                  line-height: 20px;
+                  color: $light-gray;
+                  @media (min-width: 992px) {
+                    width: auto;
+                    font-size: 14px;
+                  }
+                }
+              }
+              .rating {
+                margin-bottom: 0.5rem;
+                .star-item{
+                  display: inline-block;
+                  width: 10px;
+                  height: 10px;
+                  margin-right: 3px;
+                  background-repeat: no-repeat;
+                  background-size: 10px 10px;
+                }
+                .star-item:last-child{
+                  margin-right: 0;
+                }
+                .on{
+                  background-image: url('../../public/images/star/star24_on@2x.png')
+                }
+                .off{
+                  background-image: url('../../public/images/star/star24_off@2x.png')
+                }
+                .half{
+                  background-image: url('../../public/images/star/star24_half@2x.png')
+                }
+                .count {
+                  margin-left: 5px;
+                  font-size: 10px;
+                  font-weight: 500;
+                }
+              }
+            }
+          }
+        }
+        .no-use {
+          cursor: default;
+        }
+      }
     }
   }
 }
 .popper-wrapper {
-  border-radius: 30%;
-  padding: 15px;
+  display: none;
+  @media (min-width: 992px) {
+    display: block;
+    border-radius: 30%;
+    padding: 1.5rem;
+    width: 16rem;
+    height: 25rem;
+  }
   .popper-badge {
     display: inline-block;
     white-space: nowrap;
@@ -535,10 +655,19 @@ $light-gray: #a8a8ab;
     color: #919191;
   }
   .popper-title {
-    font-size: 16px;
+    margin: auto;
+    height: 2rem;
+    line-height: 1rem;
+    font-size: 1rem;
     font-weight: 700;
     color: #39393e;
     margin-bottom: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    visibility: visible;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
   .popper-star {
     font-size: 0;
@@ -567,21 +696,29 @@ $light-gray: #a8a8ab;
     .price {
       vertical-align: middle;
       font-weight: 500;
-      font-size: 16px;
+      font-size: 1rem;
       margin-right: 6px;
       color: $navy;
     }
     .original-price {
       vertical-align: middle;
       text-decoration: line-through;
-      font-size: 14px;
-      line-height: 20px;
+      font-size: 0.9rem;
+      line-height: 0.9rem;
       color: $light-gray;
     }
   }
-  .popper-description {
-    font-size: 10px;
-    min-height: 10px;
+  .popper-content {
+    min-height: 8.4rem;
+    max-height: 8.4rem;
+    max-width: 100%;
+    line-height: 1.2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    visibility: visible;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
   }
   .addToCart {
     color: #ffffff;
