@@ -469,12 +469,13 @@ $light-gray: #a8a8ab;
         .card {
           border: none;
           width: 48%;
-          height: 15rem;
+          height: 18rem;
           cursor: pointer;
-          @media (min-width: 414px) {
-            height: 18rem;
+          @media (min-width: 376px) {
+            height: 20rem;
           }
           @media (min-width: 576px) {
+            width: 100%;
           }
           .img-wrapper{
             position: relative;
