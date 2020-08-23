@@ -280,10 +280,13 @@ $light-gray: #a8a8ab;
     max-width: 1200px;
   }
   .product {
-    margin: 2rem;
+    margin: 2rem 1rem;
     height: 100%;
     overflow: visible;
     max-height: none;
+    @media (min-width: 576px) {
+       margin: 2rem;
+    }
     .router-wrapper {
       margin: 2rem 0rem;
       .router {
@@ -291,7 +294,7 @@ $light-gray: #a8a8ab;
       }
     }
     .info {
-      padding: 2rem;
+      padding: 1rem;
       @media (min-width: 576px) {
         padding: 3rem;
       }
@@ -425,7 +428,6 @@ $light-gray: #a8a8ab;
       }
     }
     .images {
-      padding: 2rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -446,38 +448,23 @@ $light-gray: #a8a8ab;
       }
     }
     .card-decks-wrapper {
+      margin-top: 1rem;
       width: 100%;
       .title {
-        margin-left: 1rem;
         font-size: 1rem;
         font-weight: 500;
-        @media (min-width: 576px) {
-          margin-top: 2rem;
-        }
         @media (min-width: 768px) {
           font-size: 1.25rem;
-          margin-top: 3rem;
         }
         @media (min-width: 992px) {
           font-size: 1.5rem;
-          margin-top: 4rem;
         }
       }
       .card-deck {
-        margin: 1rem 1rem;
         display: flex;
         justify-content: space-between;
         @media (min-width: 375px) {
-          margin: 2rem 0rem;
-        }
-        @media (min-width: 576px) {
-          margin: 3rem 0rem;
-        }
-        @media (min-width: 768px) {
-          margin: 0rem 0rem;
-        }
-        @media (min-width: 1200px) {
-          margin: 3rem 0rem;
+          margin: 1rem 0rem;
         }
         .card {
           border: none;

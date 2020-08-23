@@ -188,6 +188,11 @@ export default {
       this.cart = event.cart
     })
   },
+  watch: {
+    $route () {
+      $('#navbarCategory').collapse('hide')
+    }
+  },
   methods: {
     getCart (loader) {
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/shopping`
