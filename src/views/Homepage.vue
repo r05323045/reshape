@@ -110,6 +110,7 @@ export default {
       margin-top: 0;
     }
     .jumbo-swiper-container {
+      height: auto !important;
       width: 100%;
       overflow: hidden;
       .swiper-slide {

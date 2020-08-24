@@ -65,19 +65,19 @@
                     主題活動
                   </li>
                 </div>
-                <li class="list-group-item">
+                <li class="list-group-item" @click="$router.push('/products')">
                   <router-link to="/products" class="router-link mr-3">
                     <span class="badge hot">Hot</span>
                     <span class="text">熱門排行</span>
                   </router-link>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item" @click="$router.push('/')">
                   <router-link to="/" class="router-link mr-3">
                     <span class="badge new">New</span>
                     <span class="text">新品上架</span>
                   </router-link>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item" @click="$router.push('/')">
                   <router-link to="/" class="router-link mr-3">
                     免運專區
                   </router-link>
@@ -89,49 +89,49 @@
                     商品分類
                   </li>
                 </div>
-                <li class="list-group-item">
+                <li class="list-group-item" @click="$router.push('/')">
                   <i class="fas fa-utensils"></i>
                   <router-link to="/" class="router-link mr-3">
                     廚房餐桌
                     <i class="fas fa-angle-right"></i>
                   </router-link>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item" @click="$router.push('/')">
                   <i class="fas fa-couch"></i>
                   <router-link to="/" class="router-link mr-3">
                     空間佈置
                     <i class="fas fa-angle-right"></i>
                   </router-link>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item" @click="$router.push('/')">
                   <i class="fas fa-laptop-house"></i>
                   <router-link to="/" class="router-link mr-3">
                     質感生活
                     <i class="fas fa-angle-right"></i>
                   </router-link>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item" @click="$router.push('/')">
                   <i class="fas fa-tshirt"></i>
                   <router-link to="/" class="router-link mr-3">
                     品味衣著
                     <i class="fas fa-angle-right"></i>
                   </router-link>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item" @click="$router.push('/')">
                   <i class="fas fa-pencil-ruler"></i>
                   <router-link to="/" class="router-link mr-3">
                     文具小物
                     <i class="fas fa-angle-right"></i>
                   </router-link>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item" @click="$router.push('/')">
                   <i class="fas fa-cocktail"></i>
                   <router-link to="/" class="router-link mr-3">
                     食品飲料
                     <i class="fas fa-angle-right"></i>
                   </router-link>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item" @click="$router.push('/')">
                   <i class="fas fa-hiking"></i>
                   <router-link to="/" class="router-link mr-3">
                     戶外休閒
@@ -145,10 +145,10 @@
                       關於我們
                   </li>
                 </div>
-                <li class="list-group-item">
+                <li class="list-group-item" @click="$router.push('/')">
                   <router-link to="/" class="router-link mr-3">品牌故事</router-link>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item" @click="$router.push('/')">
                   <router-link to="/" class="router-link mr-3">作者</router-link>
                 </li>
               </ul>
@@ -260,7 +260,7 @@ export default {
   }
 }
 .navbar {
-  position: fixed;
+  position: fixed !important;
   background: #ffffff;
   height: 3.5rem;
   z-index: 999;
@@ -436,7 +436,7 @@ export default {
           path {
             fill: #ffffff;
             stroke: #000000;
-            stroke-width: 18px;
+            stroke-width: 3rem;
           }
         }
       }
