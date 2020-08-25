@@ -1,5 +1,6 @@
 <template>
   <div class="page-content">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <div id="nav" class="navbar w-100 p-0 d-flex justify-content-md-center" :class="{'windowTop' : scrollY === 0}">
       <announcement></announcement>
       <div class="nav-header w-100 mx-md-auto flex-row">
