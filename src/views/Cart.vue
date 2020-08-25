@@ -281,6 +281,7 @@ export default {
 
 <style lang="scss">
 .cart-wrapper {
+  overflow-x: hidden;
   margin: auto;
   @media (min-width: 768px) {
     max-width: 768px;
