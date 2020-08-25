@@ -280,7 +280,7 @@ $light-gray: #a8a8ab;
     max-width: 1200px;
   }
   .product {
-    margin: 2rem 1rem;
+    margin: 5rem 1rem 2rem 1rem;
     height: 100%;
     overflow: visible;
     max-height: none;

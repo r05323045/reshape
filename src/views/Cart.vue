@@ -1,20 +1,20 @@
 <template>
-  <div>
+  <div class="cart-wrapper">
     <div class="cart" v-show="!checkingout" ref="cart">
       <div class="router-wrapper mt-3">
         <router-link to="/"><span class="mr-2 router">首頁</span></router-link>
-        <i class="fas fa-chevron-right"></i>
+        <i class="fas fa-angle-right"></i>
         <span class="ml-2">購物車</span>
       </div>
-      <div class="my-5 cart-step-wrapper d-flex justify-content-center mx-auto" v-if="cart.length">
-        <div class="cart-step row">
+      <div class="cart-step-wrapper row" v-if="cart.length">
+        <div class="cart-step">
           <div class="cart-step-icon">1</div>
           <div class="cart-step-text">
               <div>購買品項</div>
           </div>
-          <div class="connector-line"></div>
         </div>
-        <div class="checkout-step row">
+        <div class="connector-line"></div>
+        <div class="checkout-step">
           <div class="checkout-step-icon">2</div>
           <div class="checkout-step-text">填寫地址與結帳</div>
         </div>
@@ -26,53 +26,57 @@
           <router-link to="/"><div class="btn mt-5 ml-3 back-to-homepage">我不要</div></router-link>
         </div>
       </div>
-      <div class="row">
-        <div class="col-8 cart-board" ref="cartboard">
-          <div class="table-wrapper d-flex flex-column">
-            <table class="table">
-              <tbody v-if="cart.length">
-                <tr v-for="item in cart" :key="item.id">
-                <td class="td-img" :class="{ borderless : cart.length === 1}">
-                  <div class="img-wrapper mx-auto my-auto">
-                  <img :src="item.product.imageUrl" class="cart-image" @click="$router.push(`/product/${item.product.id}`)">
+      <div class="row m-0">
+        <div class="col-12 col-md-7 col-lg-8 cart-board" ref="cartboard">
+          <ul class="list-group">
+            <li v-for="item in cart" :key="item.id"  class="list-group-item">
+              <div class="row my-3">
+                <div class="col-12 col-md-7 col-xl-8">
+                  <div class="row mt-2">
+                    <div class="img col-4" :class="{ borderless : cart.length === 1}">
+                      <div class="img-wrapper mx-auto my-auto">
+                        <div :style="`background: url(${item.product.imageUrl[0]}) no-repeat center/contain;`" class="cart-image" @click="$router.push(`/product/${item.product.id}`)"></div>
+                      </div>
+                    </div>
+                    <div class="title col-8" :class="{ borderless : cart.length === 1}">
+                        {{ item.product.title }}
+                    </div>
                   </div>
-                </td>
-                <td class="align-middle td-title" :class="{ borderless : cart.length === 1}">
-                    {{ item.product.title }}
-                </td>
-                <td class="align-middle td-quantity" :class="{ borderless : cart.length === 1}">
-                  <select class="form-control" v-if="item.quantity <= 4" v-model="item.quantity" @change="quantityUpdata(item.product.id, item.quantity)">
-                    <option v-for="integer in Array.from(Array(4).keys())" :key="integer">
-                        {{ integer + 1 }}
-                    </option>
-                    <option value="5">5+</option>
-                  </select>
-                  <validation-observer>
-                    <form @submit.prevent="">
-                      <validation-provider v-slot="{ errors }" rules="required|numeric|min_value:1">
-                        <input :id="`quantity-input-${item.product.id}`" type="text" class="form-control" v-model.lazy="item.quantity" @change="quantityUpdata(item.product.id, item.quantity)" v-show="item.quantity > 4">
-                        <span v-if="errors[0]" class="text-danger td-quantity-error">{{ `數量${errors[0].slice((item.product.id.length + 16), errors[0].length)}` }}</span>
-                      </validation-provider>
-                    </form>
-                  </validation-observer>
-                </td>
-                <td class="align-middle text-right td-amount" :class="{ borderless : cart.length === 1}">
-                  {{ item.product.price * item.quantity | priceFormat }}
-                </td>
-                <td class="align-middle" :class="{ borderless : cart.length === 1}">
-                  <button class="btn" @click="removeCartItem(item.product.id)">
-                    <i class="fa fa-times"></i>
-                  </button>
-                </td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="clear-cart-wrapper mb-3 flex-grow-1 d-flex align-items-end" v-if="cart.length">
-              <div class="clear-cart" @click="removeAllCartItem()">清空購物車</div>
-            </div>
+                </div>
+                <div class="col-12 col-md-5 col-xl-4 mt-4 mt-md-2">
+                  <div class="row">
+                    <div class="col-4 col-md-3 col-xl-4 quantity d-flex justify-content-center">
+                      <select class="form-control" v-if="item.quantity <= 4" v-model="item.quantity" @change="quantityUpdata(item.product.id, item.quantity)">
+                        <option v-for="integer in Array.from(Array(4).keys())" :key="integer">
+                            {{ integer + 1 }}
+                        </option>
+                        <option value="5">5+</option>
+                      </select>
+                      <validation-observer>
+                        <form @submit.prevent="">
+                          <validation-provider v-slot="{ errors }" rules="required|numeric|min_value:1">
+                            <input :id="`quantity-input-${item.product.id}`" type="text" class="form-control" v-model.lazy="item.quantity" @change="quantityUpdata(item.product.id, item.quantity)" v-show="item.quantity > 4">
+                            <span v-if="errors[0]" class="text-danger quantity-error">{{ `數量${errors[0].slice((item.product.id.length + 16), errors[0].length)}` }}</span>
+                          </validation-provider>
+                        </form>
+                      </validation-observer>
+                    </div>
+                    <div class="col-8 col-md-9 col-xl-8 price h-100 text-right text-md-center">
+                      {{ item.product.price * item.quantity | priceFormat }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button class="btn" @click="removeCartItem(item.product.id)">
+                <i class="fa fa-times"></i>
+              </button>
+            </li>
+          </ul>
+          <div class="clear-cart-wrapper" v-if="cart.length">
+            <div class="clear-cart" @click="removeAllCartItem()">清空購物車</div>
           </div>
         </div>
-        <div class="col-4 cart-summary" v-if="cart.length">
+        <div class="col-12 col-md-5 col-lg-4 cart-summary" v-if="cart.length">
           <div class="card cart-card mx-auto">
             <div class="card-header">
               訂單摘要
@@ -276,136 +280,247 @@ export default {
 </script>
 
 <style lang="scss">
-.cart {
+.cart-wrapper {
   margin: auto;
-  margin-top: 80px;
-  height: 100%;
-  overflow: visible;
-  width: 100vw;
-  max-width: 1140px;
-  background: #ffffff;
-  .router-wraper {
-    .router {
-      width: 100%;
-      cursor: pointer;
-    }
-    .router:hover {
-      text-decoration: underline;
-    }
+  @media (min-width: 768px) {
+    max-width: 768px;
   }
-  .cart-step-wrapper {
-    .cart-step {
-      width: 300px;
+  @media (min-width: 992px) {
+    max-width: 992px;
+  }
+  @media (min-width: 1200px) {
+    max-width: 992px;
+  }
+  @media (min-width: 1441px) {
+    max-width: 1200px;
+  }
+  .cart {
+    margin: 5rem 1rem 2rem 1rem;
+    height: 100%;
+    overflow-x: hidden;
+    overflow: visible;
+    background: #ffffff;
+    @media (min-width: 768px) {
+      margin: 2rem;
+    }
+    .router-wraper {
+      .router {
+        width: 100%;
+        cursor: pointer;
+      }
+      .router:hover {
+        text-decoration: underline;
+      }
+    }
+    .cart-step-wrapper {
+      text-align: center;
+      margin: 2rem 0;
+      padding: 0 2rem;
+      height: 5rem;
+      width: 100%;
       position: relative;
-    }
-    .cart-step-icon {
-        z-index: 999;
-        text-align: center;
-        vertical-align: middle;
-        line-height: 50px;
-        background-color: #10567b;
-        color: #ffffff;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-    }
-    .cart-step-text {
-        padding-left: 15px;
-        padding-right: 10px;
-        z-index: 999;
-        background-color: #ffffff;
-        display: inline-block;
-        text-align: center;
-        vertical-align: middle;
-        line-height: 50px;
-        height: 50px;
-    }
-    .checkout-step-icon {
-        z-index: 999;
-        text-align: center;
-        vertical-align: middle;
-        line-height: 50px;
-        background-color: #919191;
-        color: #ffffff;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-    }
-    .checkout-step-text {
-        padding-left: 15px;
-        padding-right: 10px;
-        z-index: 999;
-        color: #919191;
-        background-color: #ffffff;
-        display: inline-block;
-        text-align: center;
-        vertical-align: middle;
-        line-height: 50px;
-        height: 50px;
-    }
-    .connector-line {
+      @media (min-width: 576px) {
+        margin: 2rem 10%;
+        width: 80%;
+      }
+      @media (min-width: 768px) {
+        margin: 2rem 15%;
+        width: 70%;
+      }
+      @media (min-width: 992px) {
+        margin: 2rem 20%;
+        width: 60%;
+      }
+      .cart-step {
+        height: 100%;
+        width: 50%;
+        position: relative;
+        .cart-step-icon {
+          z-index: 3;
+          text-align: center;
+          vertical-align: middle;
+          line-height: 3rem;
+          background-color: #10567b;
+          color: #ffffff;
+          border-radius: 50%;
+          position: absolute;
+          left: 1rem;
+          width: 3rem;
+          height: 3rem;
+        }
+        .cart-step-text {
+          text-align: center;
+          z-index: 2;
+          background-color: #ffffff;
+          display: inline-block;
+          text-align: center;
+          vertical-align: middle;
+          line-height: 3rem;
+          height: 3rem;
+          font-size: 0.9rem;
+          width: 5rem;
+          position: absolute;
+          left: 0;
+          top: 3rem;
+        }
+      }
+      .connector-line {
         z-index: 1;
         position: absolute;
-        left: 0;
-        top: 23px;
+        top: 1.5rem;
+        left: 3rem;
+        right: 3rem;
         background-color: #919191;
-        width: 100%;
         height: 2px;
         vertical-align: middle;
-    }
-  }
-  .empty-cart {
-    height: 100%;
-    .back-to-homepage {
-      color: #39393e;
-      border: 1px solid #a8a8ab;
-      padding: 8px
-    }
-    .back-to-homepage:hover, .back-to-homepage:focus, .back-to-homepage:active:hover {
-      color: #ffffff;
-      background-color: #919191;
-    }
-  }
-  .row {
-    .cart-board {
-      .table-wrapper {
-        width: 100%;
+      }
+      .checkout-step {
         height: 100%;
-        box-sizing: border-box;
-        .borderless {
-            border-top: 0 none !important;
+        width: 50%;
+        position: relative;
+        .checkout-step-icon {
+          z-index: 2;
+          text-align: center;
+          vertical-align: middle;
+          line-height: 3rem;
+          background-color: #919191;
+          color: #ffffff;
+          border-radius: 50%;
+          position: absolute;
+          right: 1rem;
+          width: 3rem;
+          height: 3rem;
         }
-        .td-title {
-          max-width: 200px;
+        .checkout-step-text {
+          z-index: 2;
+          color: #919191;
+          background-color: #ffffff;
+          display: inline-block;
+          text-align: center;
+          vertical-align: middle;
+          line-height: 3rem;
+          height: 3rem;
+          font-size: 0.9rem;
+          position: absolute;
+          right: -0.5rem;
+          top: 3rem;
         }
-        .td-img {
-          max-width: 100px;
-          .cart-image {
+      }
+    }
+    .empty-cart {
+      height: 100%;
+      .back-to-homepage {
+        color: #39393e;
+        border: 1px solid #a8a8ab;
+        padding: 8px
+      }
+      .back-to-homepage:hover, .back-to-homepage:focus, .back-to-homepage:active:hover {
+        color: #ffffff;
+        background-color: #919191;
+      }
+    }
+    .row {
+      .cart-board {
+        @media (min-width: 576px) {
+          padding: 0 3rem;
+        }
+        @media (min-width: 768px) {
+          padding: 0;
+        }
+        .img {
+          padding: 0;
+          .img-wrapper{
+            height: 3rem;
+            width: 3rem;
+            @media (min-width: 414px) {
+              height: 4rem;
+              width: 4rem;
+            }
+            @media (min-width: 576px) {
+              height: 5rem;
+              width: 5rem;
+            }
+            @media (min-width: 768px) {
+              height: 4rem;
+              width: 4rem;
+            }
+            @media (min-width: 992px) {
+              height: 5rem;
+              width: 5rem;
+            }
             cursor: pointer;
-            max-width: 100%;
-            max-height: 100%;
-            border-radius: 10px;
+            .cart-image {
+              border-radius: 15%;
+              width: 100%;
+              padding-top: 100%;
+            }
           }
         }
-        .td-quantity {
-          position: relative;
-          width: 80px;
-          .td-quantity-error {
-            top: 60px;
-            width: 100px;
-            position: absolute;
+        .title {
+          padding: 0 1.5rem 0 0;
+          font-size: 0.9rem;
+          @media (min-width: 576px) {
+            font-size: 1rem;
+          }
+          @media (min-width: 768px) {
+            font-size: 0.9rem;
+            padding: 0 1rem;
           }
         }
-        .td-amount {
-          width: 144px;
+        .btn {
+          position: absolute;
+          right: 0;
+          top: 0;
+        }
+        .quantity{
+          .form-control {
+            width: 3.5rem;
+            height: 2rem;
+            font-size: 0.9rem;
+            @media (min-width: 768px) {
+              width: 3rem;
+              font-size: 0.8rem;
+              padding: 0 0.5rem;
+            }
+            @media (min-width: 992px) {
+              width: 3.5rem;
+              font-size: 0.9rem;
+            }
+            .quantity-error {
+              top: 60px;
+              width: 100px;
+              position: absolute;
+            }
+          }
+        }
+        .price {
+          line-height: 2rem;
+          height: 2rem;
+          font-weight: 500;
+          vertical-align: middle;
+          font-size: 1rem;
+          @media (min-width: 576px) {
+            font-size: 1.25rem;
+          }
+          @media (min-width: 768px) {
+            font-size: 0.9rem;
+          }
+          @media (min-width: 992px) {
+            font-size: 1rem;
+          }
         }
         .clear-cart-wrapper {
           position: relative;
+          display: none;
+          @media (min-width: 768px) {
+            display: flex;
+            margin: 2rem 0;
+          }
           .clear-cart {
-            position: absolute;
-            right: 40px;
             cursor: pointer;
             color: #2e90b7;
+            position: absolute;
+            right: 1rem;
           }
           .clear-cart:hover {
             text-decoration: underline;
@@ -416,57 +531,79 @@ export default {
   }
 }
 .cart-summary {
+  margin-top: 2rem;
+  @media (min-width: 576px) {
+    padding: 0 3rem;
+  }
+  @media (min-width: 768px) {
+    margin-top: 0;
+    padding: 0 2rem;
+  }
   .cart-card {
-    width: 300px;
-    .divider {
-      display: block;
-      height: 2px;
-      background-color: #eeeeef;
-      margin-top: 20px;
-    }
-    .list-group-item {
-      border: none !important;
-      font-size: 0.9rem;
-      .coupon-discount {
+    width: 100%;
+    .card-body {
+      @media (min-width: 768px) {
+        padding: 0.5rem;
+      }
+      .divider {
+        display: block;
+        height: 2px;
+        background-color: #eeeeef;
+        margin-top: 20px;
+      }
+      .list-group-item {
+        border: none !important;
         font-size: 0.9rem;
-        font-weight: 700;
-        color: #f16c5d;
-      }
-      .use-coupon {
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: #2e90b7;
-      }
-      .use-coupon:hover {
-        cursor: pointer;
-        color: #10567b;
-      }
-      #collapseCoupon {
-        .apply-coupon {
-            z-index: 1;
-            background-color: #10567b;
-            color: #ffffff;
+        .coupon-discount {
+          font-size: 0.9rem;
+          font-weight: 700;
+          color: #f16c5d;
         }
-        .coupon-fail {
-          color: #ec5252;
+        .use-coupon {
+          font-size: 0.9rem;
+          font-weight: 500;
+          color: #2e90b7;
         }
-      }
-      .cart-total {
-        font-size: 1rem;
-        font-weight: 500;
-      }
-      .goToCheckout {
-        color: #ffffff;
-        background-color: #10567b;
-        text-decoration: none;
-        a {
+        .use-coupon:hover {
+          cursor: pointer;
+          color: #10567b;
+        }
+        #collapseCoupon {
+          .apply-coupon {
+              z-index: 1;
+              background-color: #10567b;
+              color: #ffffff;
+          }
+          .coupon-fail {
+            color: #ec5252;
+          }
+        }
+        .cart-total {
+          font-size: 1rem;
+          font-weight: 500;
+          @media (min-width: 576px) {
+            font-size: 1.25rem;
+          }
+          @media (min-width: 768px) {
+            font-size: 0.9rem;
+          }
+          @media (min-width: 992px) {
+            font-size: 1rem;
+          }
+        }
+        .goToCheckout {
           color: #ffffff;
+          background-color: #10567b;
           text-decoration: none;
+          a {
+            color: #ffffff;
+            text-decoration: none;
+          }
         }
-      }
-      .goToCheckout:hover, .goToCheckout:focus, .goToCheckout:active:hover {
-        color: #ffffff;
-        background-color: #092c3f;
+        .goToCheckout:hover, .goToCheckout:focus, .goToCheckout:active:hover {
+          color: #ffffff;
+          background-color: #092c3f;
+        }
       }
     }
   }

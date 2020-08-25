@@ -93,50 +93,50 @@
                   <i class="fas fa-utensils"></i>
                   <router-link to="/" class="router-link mr-3">
                     廚房餐桌
-                    <i class="fas fa-angle-right"></i>
                   </router-link>
+                  <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/')">
                   <i class="fas fa-couch"></i>
                   <router-link to="/" class="router-link mr-3">
                     空間佈置
-                    <i class="fas fa-angle-right"></i>
                   </router-link>
+                  <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/')">
                   <i class="fas fa-laptop-house"></i>
                   <router-link to="/" class="router-link mr-3">
                     質感生活
-                    <i class="fas fa-angle-right"></i>
                   </router-link>
+                  <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/')">
                   <i class="fas fa-tshirt"></i>
                   <router-link to="/" class="router-link mr-3">
                     品味衣著
-                    <i class="fas fa-angle-right"></i>
                   </router-link>
+                  <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/')">
                   <i class="fas fa-pencil-ruler"></i>
                   <router-link to="/" class="router-link mr-3">
                     文具小物
-                    <i class="fas fa-angle-right"></i>
                   </router-link>
+                  <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/')">
                   <i class="fas fa-cocktail"></i>
                   <router-link to="/" class="router-link mr-3">
                     食品飲料
-                    <i class="fas fa-angle-right"></i>
                   </router-link>
+                  <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/')">
                   <i class="fas fa-hiking"></i>
                   <router-link to="/" class="router-link mr-3">
                     戶外休閒
-                    <i class="fas fa-angle-right"></i>
                   </router-link>
+                  <i class="fas fa-angle-right"></i>
                 </li>
               </ul>
               <ul class="list-group section">
@@ -553,7 +553,7 @@ export default {
                 path {
                   fill: #39393e;
                   stroke: #39393e;
-                  stroke-width: 18px;
+                  stroke-width: 0;
                 }
               }
               .router-link {

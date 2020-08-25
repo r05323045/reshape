@@ -327,7 +327,7 @@ $light-gray: #a8a8ab;
     color: $blue;
   }
   .products {
-    margin: 2rem auto 2rem auto;
+    margin: 5rem auto 2rem auto;
     @media (min-width: 768px) {
       margin-top: 3rem;
       max-width: 992px;

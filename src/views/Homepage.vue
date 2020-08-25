@@ -57,7 +57,7 @@ export default {
     getSwiper () {
       this.mySwiper = new Swiper('.jumbo-swiper-container', {
         slidesPerView: 'auto',
-        spaceBetween: '3%',
+        spaceBetween: '1%',
         centeredSlides: true,
         loop: true,
         speed: 800,
