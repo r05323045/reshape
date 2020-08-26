@@ -41,7 +41,10 @@ Vue.component('ValidationObserver', ValidationObserver)
 Vue.use(Loading, {
   loader: 'spinner',
   opacity: 0.8,
-  isFullPage: false
+  isFullPage: false,
+  height: 32,
+  width: 32,
+  color: '#10567b'
 })
 
 Vue.filter('priceFormat', function (value) {

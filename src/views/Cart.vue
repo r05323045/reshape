@@ -19,15 +19,15 @@
           <div class="checkout-step-text">填寫地址與結帳</div>
         </div>
       </div>
-      <div class="empty-cart w-100 text-center my-5" v-if="!cart.length">
+      <div class="empty-cart w-100 text-center my-auto" v-if="!cart.length">
         <div class="text-align-center">
-          <h1 class="mt-5">你的購物車中沒有商品</h1>
+          <div class="mt-5 text">你的購物車中沒有商品</div>
           <router-link to="/"><div class="btn mt-5 back-to-homepage">回首頁選購</div></router-link>
           <router-link to="/"><div class="btn mt-5 ml-3 back-to-homepage">我不要</div></router-link>
         </div>
       </div>
       <div class="row m-0">
-        <div class="col-12 col-md-7 col-lg-8 cart-board" ref="cartboard">
+        <div class="col-12 col-md-6 col-lg-7 cart-board" ref="cartboard">
           <ul class="list-group">
             <li v-for="item in cart" :key="item.id"  class="list-group-item">
               <div class="row my-3">
@@ -39,7 +39,7 @@
                       </div>
                     </div>
                     <div class="title col-8" :class="{ borderless : cart.length === 1}">
-                        {{ item.product.title }}
+                      {{ item.product.title }}
                     </div>
                   </div>
                 </div>
@@ -76,7 +76,7 @@
             <div class="clear-cart" @click="removeAllCartItem()">清空購物車</div>
           </div>
         </div>
-        <div class="col-12 col-md-5 col-lg-4 cart-summary" v-if="cart.length">
+        <div class="col-12 col-md-6 col-lg-5 cart-summary" v-if="cart.length">
           <div class="card cart-card mx-auto">
             <div class="card-header">
               訂單摘要
@@ -93,7 +93,7 @@
                   <span>NT$ 0</span>
                 </li>
                 <li v-if="coupon.enabled" class="list-group-item d-flex justify-content-between">
-                  <span>{{ coupon.title }}</span>
+                  <span class="coupon-name">{{ coupon.title }}</span>
                   <span class="coupon-discount">{{ - Math.ceil(cartTotal * (1 - coupon.percent / 100)) | priceFormat }}</span>
                 </li>
                 <li class="list-group-item">
@@ -248,6 +248,7 @@ export default {
       this.checkingout = !this.checkingout
       this.$refs.checkout.$refs.formvalidation.reset()
       this.$refs.checkout.$refs.checkoutform.reset()
+      window.scrollTo(0, 0)
     },
     addCoupon () {
       this.isLoading = true
@@ -283,6 +284,7 @@ export default {
 .cart-wrapper {
   overflow-x: hidden;
   margin: auto;
+  min-height: 100vh;
   @media (min-width: 768px) {
     max-width: 768px;
   }
@@ -296,11 +298,13 @@ export default {
     max-width: 1200px;
   }
   .cart {
+    min-height: 50vh;
     margin: 5rem 1rem 2rem 1rem;
     height: 100%;
     overflow-x: hidden;
     overflow: visible;
     background: #ffffff;
+    position: relative;
     @media (min-width: 768px) {
       margin: 2rem;
     }
@@ -410,14 +414,24 @@ export default {
     }
     .empty-cart {
       height: 100%;
+      position: absolute;
+      top: 30%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .text {
+        font-size: 1.5rem;
+      }
       .back-to-homepage {
         color: #39393e;
         border: 1px solid #a8a8ab;
-        padding: 8px
+        padding: 8px;
+        border-radius: 0.5rem;
       }
       .back-to-homepage:hover, .back-to-homepage:focus, .back-to-homepage:active:hover {
         color: #ffffff;
         background-color: #919191;
+        border-radius: 5%;
       }
     }
     .row {
@@ -555,10 +569,26 @@ export default {
       .list-group-item {
         border: none !important;
         font-size: 0.9rem;
+        @media (min-width: 768px) {
+          font-size: 1rem;
+        }
+        .coupon-name {
+          font-size: 0.8rem;
+          max-width: 50%;
+          @media (min-width: 768px) {
+            font-size: 0.9rem;
+          }
+        }
         .coupon-discount {
-          font-size: 0.9rem;
+          text-align: right;
+          width: 50%;
+          max-width: 50%;
+          font-size: 0.8rem;
           font-weight: 700;
           color: #f16c5d;
+          @media (min-width: 768px) {
+            font-size: 0.9rem;
+          }
         }
         .use-coupon {
           font-size: 0.9rem;

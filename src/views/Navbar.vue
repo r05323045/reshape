@@ -9,6 +9,9 @@
             <div class="input-wrapper d-flex flex-row align-items-center">
               <i class="fas fa-search"></i>
               <input type="text" class="form-control" placeholder="重塑你的生活">
+              <button class="close" @click="collapseToggle('searchBar')">
+                <i class="fa fa-times"></i>
+              </button>
             </div>
             <div class="input-group-append">
               <button class="btn" type="button">
@@ -222,6 +225,7 @@ export default {
   height: 100%;
   position: relative;
   z-index: 1;
+  min-height: 100vh;
 }
 .navbar.windowTop {
   height: 3.5rem;
@@ -304,7 +308,7 @@ export default {
     }
     .search-expand {
       .search-bar {
-        transition: all 0.4s ease;
+        transition: all 0.4s ease-in-out;
         position: fixed;
         left: 0;
         top: 0;
@@ -322,7 +326,7 @@ export default {
         .input-wrapper {
           background: #ffffff;
           height: 3.5rem;
-          padding: 0 2rem;
+          padding: 0 1.5rem;
           width: 100%;
           @media (min-width: 768px) {
             height: auto;
@@ -331,16 +335,18 @@ export default {
           }
           .fa-search {
             margin-right: 0.5rem;
+            color: #666;
             @media (min-width: 768px) {
               display: none;
             }
           }
           .form-control {
             height: 2rem;
-            font-size: 1rem;
+            font-size: 0.9rem;
             border: none;
             border-bottom: 1px solid #d3d3d5;
             padding: 0;
+            margin: 0 0.5rem;
             border-radius: 0;
             @media (min-width: 768px) {
               padding: 0.375rem 0.75rem;
@@ -348,6 +354,7 @@ export default {
               font-size: 0.8rem;
               border: 1px solid #d3d3d5;
               outline: none;
+              margin: 0;
             }
           }
           .form-control:focus {
@@ -355,6 +362,15 @@ export default {
             -webkit-box-shadow: none !important;
             box-shadow: none !important;
             outline: none !important;
+          }
+          .close {
+            outline: none;
+            .fa-times {
+              font-size: 1rem;
+              @media (min-width: 768px) {
+                display: none;
+              }
+            }
           }
         }
         .btn {
@@ -388,7 +404,7 @@ export default {
           transition: all 0.4s ease;
           position: absolute;
           top: 3.5rem;
-          background: #a8a8ab;
+          background: #666;
           display: inline-block;
           min-height: 100%;
           width: 100%;
@@ -412,10 +428,11 @@ export default {
         font-size: 0.9rem;
       }
       .badge {
-        top: 0;
-        right: 3rem;
+        top: 0.5rem;
+        right: 2.5rem;
         position: absolute;
         @media (min-width: 768px) {
+          top: -0.25rem;
           right: 0;
         }
         .badge-wrapper {
@@ -423,9 +440,9 @@ export default {
           background-color: #f16c5d;
           color: #ffffff;
           border-radius: 50%;
-          width: 20px;
-          height: 20px;
-          line-height: 20px;
+          width: 1rem;
+          height: 1rem;
+          line-height: 1rem;
           vertical-align: middle;
         }
       }
@@ -433,16 +450,25 @@ export default {
         background: none;
         border: none;
         .fa-shopping-cart {
+          font-size: 1rem;
           path {
             fill: #ffffff;
-            stroke: #000000;
+            stroke: #666;
             stroke-width: 3rem;
           }
         }
       }
+      .fa-search {
+        font-size: 1rem;
+        path {
+          fill: #666;
+        }
+      }
       .navbar-toggler {
-        width: 3rem;
-        height: 3rem;
+        font-size: 1rem;
+        path {
+          fill: #666;
+        }
       }
     }
   }
@@ -478,7 +504,7 @@ export default {
         position: absolute;
         right: -100%;
         top: 0;
-        background: #a8a8ab;
+        background: #666;
         display: inline-block;
         min-height: 100%;
         width: 100%;

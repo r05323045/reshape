@@ -77,7 +77,7 @@ $light-gray: #a8a8ab;
         position: absolute;
         top: 20%;
         left: 20%;
-        max-width: 80%;
+        max-width: 60%;
         @media (min-width: 576px) {
           left: 10%;
         }
@@ -103,6 +103,7 @@ $light-gray: #a8a8ab;
     display: none;
     @media (min-width: 576px) {
       display: inline-block;
+      bottom: 1rem;
     }
     .swiper-pagination-bullet {
       width: 0.8rem;

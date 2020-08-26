@@ -184,6 +184,8 @@ $light-gray: #a8a8ab;
                 top: 0;
                 margin-top: 1rem;
                 .card-title {
+                  height: 2.5rem;
+                  line-height: 1.25rem;
                   text-align: start;
                   font-size: 0.9rem;
                   font-weight: 700;
@@ -192,7 +194,7 @@ $light-gray: #a8a8ab;
                   text-overflow: ellipsis;
                   display: -webkit-box;
                   visibility: visible;
-                  -webkit-line-clamp: 3;
+                  -webkit-line-clamp: 2;
                   -webkit-box-orient: vertical;
                   @media (min-width: 576px) {
                     overflow: default;

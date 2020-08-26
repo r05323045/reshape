@@ -338,6 +338,9 @@ $light-gray: #a8a8ab;
     @media (min-width: 1441px) {
       max-width: 1200px;
     }
+    .row {
+      margin: 0;
+    }
     .category-wrapper{
       display: none;
       @media (min-width: 768px) {
@@ -367,8 +370,8 @@ $light-gray: #a8a8ab;
             font-weight: 500;
             padding: 0.75rem 0.75rem;
             cursor: pointer;
-            @media (min-width: 992px) {
-              font-size: 0.9rem;
+            @media (min-width: 768px) {
+              font-size: 0.9em;
             }
             .svg-inline--fa {
               margin-right: 0.5rem;
@@ -393,14 +396,19 @@ $light-gray: #a8a8ab;
     }
     .hot-sales {
       width: 100%;
-      margin-bottom: 3rem;
+      margin: 3rem 0;
+      @media (min-width: 768px) {
+        margin: 0 0 3rem 0;
+      }
       .hot-swiper-wrapper {
+        padding: 0;
         margin-bottom: 1rem;
         @media (min-width: 375px) {
           margin-bottom: 2rem;
         }
         @media (min-width: 576px) {
           margin-bottom: 0;
+          padding: 1rem;
         }
         .outer-title {
           font-size: 1rem;
@@ -416,14 +424,14 @@ $light-gray: #a8a8ab;
         }
       }
       .rank-wrapper {
+        padding: 0;
         .title {
           display: none;
           @media (min-width: 576px) {
             display: inline-block;
+            padding: 1rem;
             font-size: 1rem;
             font-weight: 500;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
           }
           @media (min-width: 992px) {
             font-size: 1.25rem;
@@ -458,6 +466,7 @@ $light-gray: #a8a8ab;
             vertical-align: middle;
           }
           .title {
+            padding: 0;
             font-size: 0.8rem;
             font-weight: 500;
             margin: 0 1rem;
@@ -479,6 +488,7 @@ $light-gray: #a8a8ab;
     }
     .card-decks-wrapper {
       width: 100%;
+      padding: 0;
       .title {
         margin-left: 1rem;
         font-size: 1rem;
@@ -491,14 +501,14 @@ $light-gray: #a8a8ab;
         }
       }
       .card-deck {
-        width: 100%;
-        margin: 1rem 1rem;
+        padding: 1rem;
         display: flex;
         justify-content: space-between;
         @media (min-width: 576px) {
-          margin: 1rem 1rem;
+          padding: 2rem;
         }
         .card {
+          margin: 1rem 0.5rem !important;
           border: none;
           width: 48%;
           height: 18rem;
@@ -554,15 +564,17 @@ $light-gray: #a8a8ab;
               top: 0;
               margin-top: 1rem;
               .card-title {
+                height: 2.5rem;
+                line-height: 1.25rem;
                 text-align: start;
-                font-size: 0.8rem;
+                font-size: 0.9rem;
                 font-weight: 700;
                 color: $gray;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 display: -webkit-box;
                 visibility: visible;
-                -webkit-line-clamp: 3;
+                -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
                 @media (min-width: 992px) {
                   width: auto;
