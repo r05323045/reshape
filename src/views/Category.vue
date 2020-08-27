@@ -1,38 +1,41 @@
 <template>
   <div class="home mx-auto" ref="home">
     <div class="overlay-loading" ref="overlay-loading"></div>
-    <div class="products">
+    <div class="category">
       <div class="row">
         <div class="col-3 col-lg-2 category-wrapper">
-          <div class="category">
+          <div class="side-category">
             <div class="title">商品分類</div>
             <ul class="list-group list-group-flush">
-              <div class="back">所有分類</div>
-              <li class="list-group-item">
+              <div class="back" @click="$router.push('/products')">
+                <i class="fas fa-angle-left"></i>
+                <span class="text">所有分類</span>
+              </div>
+              <li class="list-group-item" v-if="$route.query.n === '1'">
                 <i class="fas fa-utensils"></i>
                 廚房餐桌
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" v-if="$route.query.n === '2'">
                 <i class="fas fa-couch"></i>
                 空間佈置
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" v-if="$route.query.n === '3'">
                 <i class="fas fa-laptop-house"></i>
                 質感生活
                 </li>
-              <li class="list-group-item">
+              <li class="list-group-item" v-if="$route.query.n === '4'">
                 <i class="fas fa-tshirt"></i>
                 品味衣著
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" v-if="$route.query.n === '5'">
                 <i class="fas fa-pencil-ruler"></i>
                 文具小物
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" v-if="$route.query.n === '6'">
                 <i class="fas fa-cocktail"></i>
                 食品飲料
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" v-if="$route.query.n === '7'">
                 <i class="fas fa-hiking"></i>
                 戶外休閒
               </li>
@@ -131,7 +134,7 @@ import Swiper from 'swiper/swiper-bundle.js'
 import 'swiper/swiper-bundle.css'
 import pagination from '@/components/Pagination'
 export default {
-  name: 'products',
+  name: 'category',
   data () {
     return {
       name: {
@@ -307,7 +310,7 @@ $light-gray: #a8a8ab;
   .router-link-active {
     color: $blue;
   }
-  .products {
+  .category {
     margin: 3.5rem auto 2rem auto;
     @media (min-width: 576px) {
       margin-top: 4rem;
@@ -334,7 +337,7 @@ $light-gray: #a8a8ab;
         display: flex;
         justify-content: center;
       }
-      .category {
+      .side-category {
         .title {
           font-size: 1rem;
           color: #39393e;
@@ -346,10 +349,19 @@ $light-gray: #a8a8ab;
         }
         .list-group {
           width: 100%;
+          .back {
+            margin: 0.5rem;
+            .text {
+              font-size: 0.9rem;
+              font-weight: 500;
+              margin: 0 0.5rem;
+            }
+          }
           .list-group-item {
             font-size: 0.8rem;
             font-weight: 500;
             padding: 0.75rem 0.75rem;
+            color: $pink;
             cursor: pointer;
             @media (min-width: 768px) {
               font-size: 0.9em;
@@ -359,16 +371,8 @@ $light-gray: #a8a8ab;
               width: 20px;
               path {
                 fill: #ffffff;
-                stroke: #000000;
-                stroke-width: 18px;
-              }
-            }
-          }
-          .list-group-item:hover {
-            color: $pink;
-            .svg-inline--fa {
-              path {
                 stroke: $pink;
+                stroke-width: 3rem;
               }
             }
           }
@@ -377,20 +381,20 @@ $light-gray: #a8a8ab;
     }
     .card-decks-wrapper {
       width: 100%;
-      padding: 1rem;
+      padding: 0 1rem 1rem 1rem;
       margin-top: 2rem;
       @media (min-width: 576px) {
         margin-top: 3.5rem;
       }
       @media (min-width: 768px) {
         margin-top: 0;
-        padding: 0;
       }
       @media (min-width: 992px) {
-        padding: 0 3rem;
+        padding-left: 3rem !important;
+        padding-right: 3rem !important;
       }
       .title {
-        margin-left: 1rem;
+        margin: 0 1rem 1rem 1rem;
         font-size: 1.25rem;
         font-weight: 500;
         @media (min-width: 576px) {
@@ -417,7 +421,7 @@ $light-gray: #a8a8ab;
           padding: 1.5rem 0;
         }
         @media (min-width: 768px) {
-          padding: 1rem;
+          padding: 0rem;
         }
         .card {
           margin: 1rem 0.5rem !important;
@@ -560,6 +564,21 @@ $light-gray: #a8a8ab;
       }
     }
     .card-decks-wrapper.only-one {
+      width: 100%;
+      padding: 0 1rem 1rem 1rem;
+      margin-top: 2rem;
+      @media (min-width: 576px) {
+        margin-top: 3.5rem;
+      }
+      @media (min-width: 768px) {
+        margin-top: 0;
+        padding-left: 0rem;
+        padding-right: 0rem;
+      }
+      @media (min-width: 992px) {
+        padding-left: 3rem;
+        padding-right: 3rem;
+      }
       padding-bottom: 25%;
     }
   }

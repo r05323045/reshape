@@ -5,7 +5,7 @@
       <div class="products">
         <div class="row">
           <div class="col-3 col-lg-2 category-wrapper">
-            <div class="category">
+            <div class="products-category">
               <div class="title">商品分類</div>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">
@@ -346,7 +346,7 @@ $light-gray: #a8a8ab;
       @media (min-width: 768px) {
         display: flex;
       }
-      .category {
+      .products-category {
         margin-left: 2rem;
         @media (min-width: 992px) {
           margin-left: 1rem;
