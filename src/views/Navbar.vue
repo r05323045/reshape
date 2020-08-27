@@ -49,10 +49,10 @@
         <div class="collapse navbar-collapse category-collapse" id="navbarCategory">
           <div class="navbar-navigation w-100 d-flex flex-column flex-md-row mx-md-auto">
             <div class="laptop">
-              <router-link to="/" class="router-link mr-3">廚房餐桌</router-link>
-              <router-link to="/" class="router-link mr-3">空間佈置</router-link>
-              <router-link to="/" class="router-link mr-3">質感生活</router-link>
-              <router-link to="/" class="router-link mr-3">品味衣著</router-link>
+              <router-link to="/category?n=1" class="router-link mr-3">廚房餐桌</router-link>
+              <router-link to="/category?n=2" class="router-link mr-3">空間佈置</router-link>
+              <router-link to="/category?n=3" class="router-link mr-3">質感生活</router-link>
+              <router-link to="/category?n=4" class="router-link mr-3">品味衣著</router-link>
               <router-link to="/products" class="router-link mr-3">所有分類</router-link>
               <router-link to="/" class="router-link mr-3">關於我們</router-link>
             </div>
@@ -92,51 +92,51 @@
                     商品分類
                   </li>
                 </div>
-                <li class="list-group-item" @click="$router.push('/')">
+                <li class="list-group-item" @click="$router.push('/category?n=1')">
                   <i class="fas fa-utensils"></i>
-                  <router-link to="/" class="router-link mr-3">
+                  <router-link to="/category?n=1" class="router-link mr-3">
                     廚房餐桌
                   </router-link>
                   <i class="fas fa-angle-right"></i>
                 </li>
-                <li class="list-group-item" @click="$router.push('/')">
+                <li class="list-group-item" @click="$router.push('/category?n=2')">
                   <i class="fas fa-couch"></i>
-                  <router-link to="/" class="router-link mr-3">
+                  <router-link to="/category?n=2" class="router-link mr-3">
                     空間佈置
                   </router-link>
                   <i class="fas fa-angle-right"></i>
                 </li>
-                <li class="list-group-item" @click="$router.push('/')">
+                <li class="list-group-item" @click="$router.push('/category?n=3')">
                   <i class="fas fa-laptop-house"></i>
-                  <router-link to="/" class="router-link mr-3">
+                  <router-link to="/category?n=3" class="router-link mr-3">
                     質感生活
                   </router-link>
                   <i class="fas fa-angle-right"></i>
                 </li>
-                <li class="list-group-item" @click="$router.push('/')">
+                <li class="list-group-item" @click="$router.push('/category?n=4')">
                   <i class="fas fa-tshirt"></i>
-                  <router-link to="/" class="router-link mr-3">
+                  <router-link to="/category?n=4" class="router-link mr-3">
                     品味衣著
                   </router-link>
                   <i class="fas fa-angle-right"></i>
                 </li>
-                <li class="list-group-item" @click="$router.push('/')">
+                <li class="list-group-item" @click="$router.push('/category?n=5')">
                   <i class="fas fa-pencil-ruler"></i>
-                  <router-link to="/" class="router-link mr-3">
+                  <router-link to="/category?n=5" class="router-link mr-3">
                     文具小物
                   </router-link>
                   <i class="fas fa-angle-right"></i>
                 </li>
-                <li class="list-group-item" @click="$router.push('/')">
+                <li class="list-group-item" @click="$router.push('/category?n=6')">
                   <i class="fas fa-cocktail"></i>
-                  <router-link to="/" class="router-link mr-3">
+                  <router-link to="/category?n=6" class="router-link mr-3">
                     食品飲料
                   </router-link>
                   <i class="fas fa-angle-right"></i>
                 </li>
-                <li class="list-group-item" @click="$router.push('/')">
+                <li class="list-group-item" @click="$router.push('/category?n=7')">
                   <i class="fas fa-hiking"></i>
-                  <router-link to="/" class="router-link mr-3">
+                  <router-link to="/category?n=7" class="router-link mr-3">
                     戶外休閒
                   </router-link>
                   <i class="fas fa-angle-right"></i>
@@ -222,7 +222,6 @@ export default {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   box-sizing: border-box;
-  height: 100%;
   position: relative;
   z-index: 1;
   min-height: 100vh;
@@ -631,12 +630,14 @@ export default {
   }
 }
 footer {
-  height: 100px;
+  margin-top: 1rem;
+  bottom: -5rem;
+  height: 5rem;
   background-color: #f7f7f8;
   p {
-    height: 100px;
+    height: 5rem;
     margin: auto;
-    line-height: 100px;
+    line-height: 5rem;
     vertical-align: middle;
     a {
       color: black;

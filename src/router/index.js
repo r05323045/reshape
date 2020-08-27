@@ -25,8 +25,14 @@ const routes = [
       },
       {
         path: '/products',
-        name: '商品分類',
+        name: '所有商品',
         component: () => import('../views/Products.vue')
+      },
+      {
+        path: '/category',
+        name: '分類頁',
+        component: () => import('../views/Category.vue'),
+        props: (route) => ({ query: route.query.n })
       }
     ]
   },

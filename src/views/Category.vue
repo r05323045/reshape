@@ -1,149 +1,123 @@
 <template>
-  <div class="home-wrapper" ref="home-warpper">
+  <div class="home mx-auto" ref="home">
     <div class="overlay-loading" ref="overlay-loading"></div>
-    <div class="home mx-auto" ref="home">
-      <div class="products">
-        <div class="row">
-          <div class="col-3 col-lg-2 category-wrapper">
-            <div class="category">
-              <div class="title">商品分類</div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                  <i class="fas fa-utensils"></i>
-                  廚房餐桌
+    <div class="products">
+      <div class="row">
+        <div class="col-3 col-lg-2 category-wrapper">
+          <div class="category">
+            <div class="title">商品分類</div>
+            <ul class="list-group list-group-flush">
+              <div class="back">所有分類</div>
+              <li class="list-group-item">
+                <i class="fas fa-utensils"></i>
+                廚房餐桌
+              </li>
+              <li class="list-group-item">
+                <i class="fas fa-couch"></i>
+                空間佈置
+              </li>
+              <li class="list-group-item">
+                <i class="fas fa-laptop-house"></i>
+                質感生活
                 </li>
-                <li class="list-group-item">
-                  <i class="fas fa-couch"></i>
-                  空間佈置
-                </li>
-                <li class="list-group-item">
-                  <i class="fas fa-laptop-house"></i>
-                  質感生活
-                  </li>
-                <li class="list-group-item">
-                  <i class="fas fa-tshirt"></i>
-                  品味衣著
-                </li>
-                <li class="list-group-item">
-                  <i class="fas fa-pencil-ruler"></i>
-                  文具小物
-                </li>
-                <li class="list-group-item">
-                  <i class="fas fa-cocktail"></i>
-                  食品飲料
-                </li>
-                <li class="list-group-item">
-                  <i class="fas fa-hiking"></i>
-                  戶外休閒
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-12 col-md-9 col-lg-10 d-flex justify-content-center">
-            <div class="hot-sales w-100 row d-flex align-items-center" v-if="products.length > 0">
-              <div class="col-12 col-sm-6 hot-swiper-wrapper">
-                <div class="outer-title">本月熱賣 TOP 5</div>
-                <hot-swiper :products="hotProducts"></hot-swiper>
-              </div>
-              <div class="col-12 col-sm-6 rank-wrapper">
-                <div class="title">本月熱賣 TOP 5</div>
-                <ul class="list-group list-group-flush">
-                  <li
-                    v-for="(item,index) in hotProducts"
-                    class="list-group-item d-flex flex-row"
-                    :key="`top-5-${item.id}`"
-                    @click="$router.push(`/product/${item.id}`)"
-                  >
-                    <div class="rank">{{ `0${index + 1}` }}</div>
-                    <div class="image-wrapper">
-                      <div class="image" :style="`background: url(${item.imageUrl[0]}) no-repeat center/contain;`"></div>
-                    </div>
-                    <span class="title">{{ item.title }}</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
+              <li class="list-group-item">
+                <i class="fas fa-tshirt"></i>
+                品味衣著
+              </li>
+              <li class="list-group-item">
+                <i class="fas fa-pencil-ruler"></i>
+                文具小物
+              </li>
+              <li class="list-group-item">
+                <i class="fas fa-cocktail"></i>
+                食品飲料
+              </li>
+              <li class="list-group-item">
+                <i class="fas fa-hiking"></i>
+                戶外休閒
+              </li>
+            </ul>
           </div>
         </div>
-        <div class="row w-100">
-          <div class="col-0 col-xl-2"></div>
-          <div class="card-decks-wrapper col-12 col-xl-10">
-            <div class="title">熱賣商品</div>
-            <div v-for="i in 5" :key="`row_${i}`">
-              <div class="card-deck" v-if="products.slice((i - 1) * numCardsRow, i * numCardsRow).length > 0">
-                <div v-for="item in products.slice((i - 1) * numCardsRow, i * numCardsRow)" :key="item.id" class="card my-5" :id="item.id"  @click="$router.push(`/product/${item.id}`)"> <!-- @mouseover="getDescription(item)" -->
-                  <div class="img-wrapper">
-                    <div :style="`background: url(${item.imageUrl[0]}) no-repeat center/contain;`" class="card-img-top"></div>
-                  </div>
-                  <div class="discount-badge" v-show="0.85 > item.price/item.origin_price">{{ `${(item.price/item.origin_price).toFixed(1) * 10} 折` }}
-                  </div>
-                  <div class="card-body">
-                    <div class="card-content">
-                      <p class="card-title">{{ item.title }}</p>
-                      <div class="rating w-100 d-flex align-items-center">
-                        <span v-for="(score, index) in item.rating.rate" :class="score" class="star-item" :key="index"></span>
-                        <span class="count">{{ `(${item.rating.count})`  }}</span>
-                      </div>
-                      <div class="price-wrapper">
-                        <span class="price">{{ item.price | priceFormat }}</span>
-                        <span class="original-price" v-show="item.origin_price > item.price">{{ item.origin_price | priceFormat }}</span>
-                      </div>
+        <div class="col-12 col-md-9 col-lg-10 card-decks-wrapper d-flex flex-column justify-content-center" :class="{'only-one': products.length <= numCardsRow}">
+          <div class="title">{{ name[$route.query.n] }}</div>
+          <div v-for="i in 5" :key="`row_${i}`">
+            <div class="card-deck" v-if="products.slice((i - 1) * numCardsRow, i * numCardsRow).length > 0">
+              <div v-for="item in products.slice((i - 1) * numCardsRow, i * numCardsRow)" :key="item.id" class="card my-5" :id="item.id"  @click="$router.push(`/product/${item.id}`)"> <!-- @mouseover="getDescription(item)" -->
+                <div class="img-wrapper">
+                  <div :style="`background: url(${item.imageUrl[0]}) no-repeat center/contain;`" class="card-img-top"></div>
+                </div>
+                <div class="discount-badge" v-show="0.85 > item.price/item.origin_price">{{ `${(item.price/item.origin_price).toFixed(1) * 10} 折` }}
+                </div>
+                <div class="card-body">
+                  <div class="card-content">
+                    <p class="card-title">{{ item.title }}</p>
+                    <div class="rating w-100 d-flex align-items-center">
+                      <span v-for="(score, index) in item.rating.rate" :class="score" class="star-item" :key="index"></span>
+                      <span class="count">{{ `(${item.rating.count})`  }}</span>
+                    </div>
+                    <div class="price-wrapper">
+                      <span class="price">{{ item.price | priceFormat }}</span>
+                      <span class="original-price" v-show="item.origin_price > item.price">{{ item.origin_price | priceFormat }}</span>
                     </div>
                   </div>
-                  <b-popover :target="item.id" triggers="hover focus" placement="right" class="product-popper" :ref="`popover-${item.id}`">
-                    <loading :active.sync="isLoading" loader="bars"></loading>
-                    <div class="popper-wrapper">
-                      <div class="popper-title mt-3">
-                          {{ item.title }}
-                      </div>
-                      <span class="btn btn-light popper-badge"> {{ item.category }} </span>
-                      <div class="popper-content mt-2">
-                        <div v-html="item.content"></div>
-                      </div>
-                      <div class="popper-star mt-3">
-                        <span v-for="(score, index) in item.rating.rate" :class="score" class="star-item" :key="index"></span>
-                      </div>
-                      <div class="popper-price mt-3">
-                        <span class="price">{{ item.price | priceFormat }}</span>
-                        <span class="original-price" v-show="item.origin_price > item.price">{{ item.origin_price | priceFormat }}</span>
-                      </div>
-                      <div v-if="!cartId.includes(item.id)" :class="{ addToCart: !cartId.includes(item.id), goToCheckout: cartId.includes(item.id) }" class="btn d-flex justify-content-center mt-3 mb-3" @click="addToCart(item)">
-                        <span>放入購物車</span>
-                      </div>
-                      <div v-if="cartId.includes(item.id)" :class="{ addToCart: !cartId.includes(item.id), goToCheckout: cartId.includes(item.id) }" class="btn d-flex justify-content-center mt-3 mb-3" @click="$router.push('/cart')">
-                        <span>立刻結帳</span>
-                      </div>
-                      <!--
-                      <div v-if="cartId.includes(item.id)" class="popper-description mt-2">
-                        {{ item.description }}
-                      </div>
-                      -->
+                </div>
+                <b-popover :target="item.id" triggers="hover focus" placement="right" class="product-popper" :ref="`popover-${item.id}`">
+                  <loading :active.sync="isLoading" loader="bars"></loading>
+                  <div class="popper-wrapper">
+                    <div class="popper-title mt-3">
+                        {{ item.title }}
                     </div>
-                  </b-popover>
-                </div>
-                <div class="card my-5 border-0 no-use" v-for="i in numCardsRow - products.slice((i - 1) * numCardsRow, i * numCardsRow).length" :key="`surplus_${i}`">
-                </div>
+                    <span class="btn btn-light popper-badge"> {{ item.category }} </span>
+                    <div class="popper-content mt-2">
+                      <div v-html="item.content"></div>
+                    </div>
+                    <div class="popper-star mt-3">
+                      <span v-for="(score, index) in item.rating.rate" :class="score" class="star-item" :key="index"></span>
+                    </div>
+                    <div class="popper-price mt-3">
+                      <span class="price">{{ item.price | priceFormat }}</span>
+                      <span class="original-price" v-show="item.origin_price > item.price">{{ item.origin_price | priceFormat }}</span>
+                    </div>
+                    <div v-if="!cartId.includes(item.id)" :class="{ addToCart: !cartId.includes(item.id), goToCheckout: cartId.includes(item.id) }" class="btn d-flex justify-content-center mt-3 mb-3" @click="addToCart(item)">
+                      <span>放入購物車</span>
+                    </div>
+                    <div v-if="cartId.includes(item.id)" :class="{ addToCart: !cartId.includes(item.id), goToCheckout: cartId.includes(item.id) }" class="btn d-flex justify-content-center mt-3 mb-3" @click="$router.push('/cart')">
+                      <span>立刻結帳</span>
+                    </div>
+                    <!--
+                    <div v-if="cartId.includes(item.id)" class="popper-description mt-2">
+                      {{ item.description }}
+                    </div>
+                    -->
+                  </div>
+                </b-popover>
+              </div>
+              <div class="card my-5 border-0 no-use" v-for="i in numCardsRow - products.slice((i - 1) * numCardsRow, i * numCardsRow).length" :key="`surplus_${i}`">
               </div>
             </div>
-            <pagination :pages="pagination" @emit-pages="getProducts" class="pagination-wrapper"></pagination>
           </div>
+          <pagination :pages="pagination" @emit-pages="getProducts" class="pagination-wrapper"></pagination>
         </div>
       </div>
-      <div class="modal fade" id="orderModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">完成訂購</h5>
-              <button type="button" class="close" data-dismiss="modal">
-                <span>&times;</span>
-              </button>
-            </div>
-            <div class="modal-body text-center">
-              <p>感謝你的購買，請耐心等候到貨通知</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-            </div>
+      <div class="row w-100">
+        <div class="col-0 col-xl-2"></div>
+      </div>
+    </div>
+    <div class="modal fade" id="orderModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">完成訂購</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body text-center">
+            <p>感謝你的購買，請耐心等候到貨通知</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
           </div>
         </div>
       </div>
@@ -156,11 +130,19 @@ import { BPopover } from 'bootstrap-vue'
 import Swiper from 'swiper/swiper-bundle.js'
 import 'swiper/swiper-bundle.css'
 import pagination from '@/components/Pagination'
-import hotSwiper from '@/components/HotSwiper.vue'
 export default {
   name: 'products',
   data () {
     return {
+      name: {
+        1: '廚房餐桌',
+        2: '空間佈置',
+        3: '質感生活',
+        4: '品味衣著',
+        5: '文具小物',
+        6: '食品飲料',
+        7: '戶外休閒'
+      },
       products: [],
       hotProducts: [],
       cart: {},
@@ -175,7 +157,6 @@ export default {
   },
   components: {
     pagination,
-    hotSwiper,
     'b-popover': BPopover
   },
   computed: {
@@ -195,11 +176,17 @@ export default {
     }
   },
   created () {
+  },
+  mounted () {
     this.getProducts()
     this.getCart()
     window.addEventListener('resize', () => {
       this.windowWidth = window.innerWidth
     })
+  },
+  beforeRouteUpdate (to, from, next) {
+    next()
+    this.getProducts()
   },
   methods: {
     getSwiper () {
@@ -219,19 +206,17 @@ export default {
         }
       })
     },
-    getProducts (page = 1) {
+    getProducts (name) {
       const loader = this.$loading.show({
         container: this.$refs.overlayLoading,
         isFullPage: true,
         opacity: 1
       })
-      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/products?paged=16&page=${page}`
+      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/products`
       this.$http.get(url)
         .then((res) => {
           this.products = res.data.data
-          if (page === 1) {
-            this.hotProducts = this.products.slice(0, 5)
-          }
+          this.products = this.products.filter(item => item.category === this.name[this.$route.query.n])
           this.products.forEach(item => {
             item.rating = this.rating()
           })
@@ -316,10 +301,6 @@ $navy: #10567b;
 $blue: #2e90b7;
 $gray: #39393e;
 $light-gray: #a8a8ab;
-.home-wrapper {
-  display: flex;
-  flex-direction: column;
-}
 .home {
   width: 100%;
   overflow: hidden;
@@ -328,8 +309,11 @@ $light-gray: #a8a8ab;
   }
   .products {
     margin: 3.5rem auto 2rem auto;
+    @media (min-width: 576px) {
+      margin-top: 4rem;
+    }
     @media (min-width: 768px) {
-      margin-top: 3rem;
+      margin: 1rem auto;
       max-width: 992px;
     }
     @media (min-width: 1200px) {
@@ -340,20 +324,17 @@ $light-gray: #a8a8ab;
     }
     .row {
       margin: 0;
+      @media (min-width: 576px) {
+        padding: 1rem;
+      }
     }
     .category-wrapper{
       display: none;
       @media (min-width: 768px) {
         display: flex;
+        justify-content: center;
       }
       .category {
-        margin-left: 2rem;
-        @media (min-width: 992px) {
-          margin-left: 1rem;
-        }
-        @media (min-width: 1200px) {
-          margin-left: 0rem;
-        }
         .title {
           font-size: 1rem;
           color: #39393e;
@@ -394,118 +375,49 @@ $light-gray: #a8a8ab;
         }
       }
     }
-    .hot-sales {
-      width: 100%;
-      margin: 3rem 0;
-      @media (min-width: 768px) {
-        margin: 0 0 3rem 0;
-      }
-      .hot-swiper-wrapper {
-        padding: 0;
-        margin-bottom: 1rem;
-        @media (min-width: 375px) {
-          margin-bottom: 2rem;
-        }
-        @media (min-width: 576px) {
-          margin-bottom: 0;
-          padding: 1rem;
-        }
-        .outer-title {
-          font-size: 1rem;
-          font-weight: 500;
-          margin-left: 1rem;
-          margin-bottom: 1rem;
-          @media (min-width: 375px) {
-            margin-bottom: 2rem;
-          }
-          @media (min-width: 576px) {
-            display: none;
-          }
-        }
-      }
-      .rank-wrapper {
-        padding: 0;
-        .title {
-          display: none;
-          @media (min-width: 576px) {
-            display: inline-block;
-            padding: 1rem;
-            font-size: 1rem;
-            font-weight: 500;
-          }
-          @media (min-width: 992px) {
-            font-size: 1.25rem;
-          }
-        }
-        .list-group-item:hover {
-          -webkit-filter: opacity(0.8)
-        }
-        .list-group-item {
-          margin: 0.1rem 0;
-          height: 100%;
-          cursor: pointer;
-          .image-wrapper {
-            height: 3rem;
-            min-width: 3rem;
-            width: 3rem;
-            background: #e1e1e6;
-            display: flex;
-            align-items: center;
-            .image {
-              width: 100%;
-              padding-top: 100%;
-            }
-          }
-          .rank {
-            color: $light-gray;
-            font-size: 1.25rem;
-            font-weight: 500;
-            margin-right: 0.5rem;
-            line-height: 3rem;
-            height: 3rem;
-            vertical-align: middle;
-          }
-          .title {
-            padding: 0;
-            font-size: 0.8rem;
-            font-weight: 500;
-            margin: 0 1rem;
-            line-height: 1.5em;
-            height: 3em;
-            width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            visibility: visible;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            @media (min-width: 992px) {
-              font-size: 0.9rem;
-            }
-          }
-        }
-      }
-    }
     .card-decks-wrapper {
       width: 100%;
-      padding: 0;
+      padding: 1rem;
+      margin-top: 2rem;
+      @media (min-width: 576px) {
+        margin-top: 3.5rem;
+      }
+      @media (min-width: 768px) {
+        margin-top: 0;
+        padding: 0;
+      }
+      @media (min-width: 992px) {
+        padding: 0 3rem;
+      }
       .title {
         margin-left: 1rem;
-        font-size: 1rem;
+        font-size: 1.25rem;
         font-weight: 500;
         @media (min-width: 576px) {
-          margin-left: 2rem;
+          margin-left: 0rem;
         }
         @media (min-width: 992px) {
-          font-size: 1.25rem;
+          font-size: 1.5rem;
         }
       }
       .card-deck {
-        padding: 1rem;
+        padding: 1rem 0;
         display: flex;
         justify-content: space-between;
+        @media (min-width: 414px) {
+          padding: 2rem 0;
+        }
+        @media (min-width: 468px) {
+          padding: 3rem 0;
+        }
         @media (min-width: 576px) {
-          padding: 2rem;
+          padding: 0.5rem 0;
+        }
+        @media (min-width: 667px) {
+          padding: 1.5rem 0;
+        }
+        @media (min-width: 768px) {
+          padding: 1rem;
         }
         .card {
           margin: 1rem 0.5rem !important;
@@ -646,6 +558,9 @@ $light-gray: #a8a8ab;
           cursor: default;
         }
       }
+    }
+    .card-decks-wrapper.only-one {
+      padding-bottom: 25%;
     }
   }
 }

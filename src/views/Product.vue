@@ -1,5 +1,6 @@
 <template>
   <div class="product-wrapper">
+    <div class="overlay-loading" ref="overlay-loading"></div>
     <div class="product" ref="product">
       <div class="router-wrapper mt-3">
         <router-link to="/"><span class="mr-2 router">首頁</span></router-link>
@@ -155,8 +156,6 @@ export default {
       this.cartPatch.quantity = num
     }
   },
-  created () {
-  },
   mounted () {
     this.id = this.$route.params.id
     this.getProduct(this.id)
@@ -183,7 +182,8 @@ export default {
     addToCart () {
       const loader = this.$loading.show({
         container: this.$refs.product,
-        opacity: 0.8
+        opacity: 0.8,
+        isFullPage: true
       })
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/shopping`
       let method = 'post'
@@ -224,7 +224,7 @@ export default {
         this.$router.push(`/product/${id}`)
       }
       const loader = this.$loading.show({
-        container: this.$refs.product,
+        container: this.$refs.overlayLoading,
         opacity: 1,
         isFullPage: true
       })
@@ -522,15 +522,17 @@ $light-gray: #a8a8ab;
               top: 0;
               margin-top: 1rem;
               .card-title {
+                height: 2.5rem;
+                line-height: 1.25rem;
                 text-align: start;
-                font-size: 0.8rem;
+                font-size: 0.9rem;
                 font-weight: 700;
                 color: $gray;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 display: -webkit-box;
                 visibility: visible;
-                -webkit-line-clamp: 3;
+                -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
                 @media (min-width: 992px) {
                   width: auto;
@@ -604,5 +606,14 @@ $light-gray: #a8a8ab;
       }
     }
   }
+}
+.overlay-loading {
+  z-index: -999;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  overflow: hidden;
 }
 </style>

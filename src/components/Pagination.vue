@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav aria-label="Page navigation">
+    <nav v-show="pages.total_pages > 1" aria-label="Page navigation">
       <ul class="mt-5 pagination d-flex justify-content-center">
         <li
           v-show="pages.current_page !== 1"
