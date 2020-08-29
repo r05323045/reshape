@@ -33,6 +33,12 @@ const routes = [
         name: '分類頁',
         component: () => import('../views/Category.vue'),
         props: (route) => ({ query: route.query.n })
+      },
+      {
+        path: '/search',
+        name: '搜尋',
+        component: () => import('../views/Search.vue'),
+        props: (route) => ({ query: route.query.key })
       }
     ]
   },

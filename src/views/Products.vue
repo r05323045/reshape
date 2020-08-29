@@ -8,31 +8,31 @@
             <div class="products-category">
               <div class="title">商品分類</div>
               <ul class="list-group list-group-flush">
-                <li class="list-group-item">
+                <li class="list-group-item" @click="$router.push('/category?n=1')">
                   <i class="fas fa-utensils"></i>
                   廚房餐桌
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item" @click="$router.push('/category?n=2')">
                   <i class="fas fa-couch"></i>
                   空間佈置
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item" @click="$router.push('/category?n=3')">
                   <i class="fas fa-laptop-house"></i>
                   質感生活
                   </li>
-                <li class="list-group-item">
+                <li class="list-group-item" @click="$router.push('/category?n=4')">
                   <i class="fas fa-tshirt"></i>
                   品味衣著
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item" @click="$router.push('/category?n=5')">
                   <i class="fas fa-pencil-ruler"></i>
                   文具小物
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item" @click="$router.push('/category?n=6')">
                   <i class="fas fa-cocktail"></i>
                   食品飲料
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item" @click="$router.push('/category?n=7')">
                   <i class="fas fa-hiking"></i>
                   戶外休閒
                 </li>
@@ -96,7 +96,18 @@
                       <div class="popper-title mt-3">
                           {{ item.title }}
                       </div>
-                      <span class="btn btn-light popper-badge"> {{ item.category }} </span>
+                      <div v-if="!item.options.event">
+                        <span class="btn btn-light popper-badge" @click="$router.push(`/search?key=${item.options.subcategory}`)"> {{ item.options.subcategory }} </span>
+                      </div>
+                      <div v-if="item.options.event">
+                        <span class="btn btn-light popper-badge" @click="$router.push(`/search?key=${item.options.subcategory}`)"> {{ item.options.subcategory }} </span>
+                        <span
+                          v-for="(event, index) in item.options.event.split(' ')"
+                          class="btn btn-light popper-badge"
+                          :key="`event_${index}`"
+                          @click="$router.push(`/search?key=${event}`)"
+                        > {{ event }} </span>
+                      </div>
                       <div class="popper-content mt-2">
                         <div v-html="item.content"></div>
                       </div>
@@ -245,6 +256,9 @@ export default {
       this.$http.get(url)
         .then((res) => {
           this.cart = res.data.data
+          this.$bus.$emit('cartUpdate', {
+            cart: this.cart
+          })
           if (loader) {
             loader.hide()
           }
@@ -284,25 +298,6 @@ export default {
       }
       result.count = Math.floor((50 + Math.random() * 500))
       return result
-    },
-    getDescription (item) {
-      if (!item.description) {
-        if (this.cartId.includes(item.id)) {
-          this.isLoading = true
-          const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/product/${item.id}`
-          const that = this
-          this.$http.get(url)
-            .then((res) => {
-              const product = res.data.data
-              that.products.forEach((el, idx) => {
-                if (el.id === item.id) {
-                  that.products[idx].description = product.description
-                }
-              })
-              this.isLoading = false
-            })
-        }
-      }
     }
   }
 }
@@ -321,6 +316,7 @@ $light-gray: #a8a8ab;
   flex-direction: column;
 }
 .home {
+  min-height: calc(100vh - 15.5rem);
   width: 100%;
   overflow: hidden;
   .router-link-active {
@@ -662,7 +658,7 @@ $light-gray: #a8a8ab;
     display: inline-block;
     white-space: nowrap;
     font-size: 12px;
-    margin: 3px;
+    margin: 1px 3px 3px 3px;
     padding: 3px 6px;
     color: #919191;
   }
@@ -682,6 +678,7 @@ $light-gray: #a8a8ab;
     -webkit-box-orient: vertical;
   }
   .popper-star {
+    margin: 1rem 0;
     font-size: 0;
     .star-item{
       display: inline-block;
@@ -721,15 +718,16 @@ $light-gray: #a8a8ab;
     }
   }
   .popper-content {
-    min-height: 8.4rem;
-    max-height: 8.4rem;
+    margin-top: 1rem;
+    min-height: 7.5rem;
+    max-height: 7.5rem;
     max-width: 100%;
-    line-height: 1.2rem;
+    line-height: 1.25rem;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     visibility: visible;
-    -webkit-line-clamp: 7;
+    -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
   }
   .addToCart {

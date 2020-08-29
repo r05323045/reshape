@@ -1,7 +1,7 @@
 <template>
   <div class="cart-wrapper">
     <div class="cart" v-show="!checkingout" ref="cart">
-      <div class="router-wrapper mt-3">
+      <div class="router-wrapper">
         <router-link to="/"><span class="mr-2 router">首頁</span></router-link>
         <i class="fas fa-angle-right"></i>
         <span class="ml-2">購物車</span>
@@ -282,11 +282,13 @@ export default {
 
 <style lang="scss">
 .cart-wrapper {
-  overflow-x: hidden;
+  position: relative;
+  overflow: hidden;
   margin: auto;
-  min-height: 100vh;
+  min-height: calc(100vh - 5rem);
   @media (min-width: 768px) {
     max-width: 768px;
+    margin-top: 1rem;
   }
   @media (min-width: 992px) {
     max-width: 992px;
@@ -298,20 +300,23 @@ export default {
     max-width: 1200px;
   }
   .cart {
-    min-height: 50vh;
     margin: 5rem 1rem 2rem 1rem;
     height: 100%;
     overflow-x: hidden;
-    overflow: visible;
+    overflow-y: visible;
     background: #ffffff;
     position: relative;
+    @media (min-width: 576px) {
+      margin-top: 7.5rem;
+    }
     @media (min-width: 768px) {
       margin: 2rem;
     }
-    .router-wraper {
+    .router-wrapper {
       .router {
         width: 100%;
         cursor: pointer;
+        color: #10567b !important;
       }
       .router:hover {
         text-decoration: underline;
@@ -414,8 +419,6 @@ export default {
     }
     .empty-cart {
       height: 100%;
-      position: absolute;
-      top: 30%;
       display: flex;
       align-items: center;
       justify-content: center;

@@ -1,7 +1,7 @@
 <template>
   <div class="home mx-auto" ref="home">
     <div class="overlay-loading" ref="overlay-loading"></div>
-    <div class="category">
+    <div class="search">
       <div class="row">
         <div class="col-3 col-lg-2 category-wrapper">
           <div class="side-category">
@@ -11,44 +11,11 @@
                 <i class="fas fa-angle-left"></i>
                 <span class="text">所有分類</span>
               </div>
-              <li class="list-group-item" v-if="$route.query.n === '1'">
-                <i class="fas fa-utensils"></i>
-                廚房餐桌
-              </li>
-              <li class="list-group-item" v-if="$route.query.n === '2'">
-                <i class="fas fa-couch"></i>
-                空間佈置
-              </li>
-              <li class="list-group-item" v-if="$route.query.n === '3'">
-                <i class="fas fa-laptop-house"></i>
-                質感生活
-                </li>
-              <li class="list-group-item" v-if="$route.query.n === '4'">
-                <i class="fas fa-tshirt"></i>
-                品味衣著
-              </li>
-              <li class="list-group-item" v-if="$route.query.n === '5'">
-                <i class="fas fa-pencil-ruler"></i>
-                文具小物
-              </li>
-              <li class="list-group-item" v-if="$route.query.n === '6'">
-                <i class="fas fa-cocktail"></i>
-                食品飲料
-              </li>
-              <li class="list-group-item" v-if="$route.query.n === '7'">
-                <i class="fas fa-hiking"></i>
-                戶外休閒
-              </li>
             </ul>
           </div>
         </div>
         <div class="col-12 col-md-9 col-lg-10 card-decks-wrapper d-flex flex-column justify-content-center" :class="{'only-one': products.length <= numCardsRow}">
-          <div class="router-wrapper">
-            <router-link to="/"><span class="mr-2 router">首頁</span></router-link>
-            <i class="fas fa-angle-right"></i>
-            <span class="mx-2">{{ name[$route.query.n] }}</span>
-          </div>
-          <div class="title">{{ name[$route.query.n] }}</div>
+          <div class="title">{{ `找到${products.length}件"${$route.query.key}"的商品` }}</div>
           <div v-for="i in 5" :key="`row_${i}`">
             <div class="card-deck" v-if="products.slice((i - 1) * numCardsRow, i * numCardsRow).length > 0">
               <div v-for="item in products.slice((i - 1) * numCardsRow, i * numCardsRow)" :key="item.id" class="card my-5" :id="item.id"  @click="$router.push(`/product/${item.id}`)"> <!-- @mouseover="getDescription(item)" -->
@@ -72,7 +39,7 @@
                 </div>
                 <b-popover :target="item.id" triggers="hover focus" placement="right" class="product-popper" :ref="`popover-${item.id}`">
                   <div class="popper-wrapper">
-                    <div class="popper-title mt-3">
+                    <div class="popper-title">
                         {{ item.title }}
                     </div>
                     <div v-if="!item.options.event">
@@ -87,13 +54,13 @@
                         @click="$router.push(`/search?key=${event}`)"
                       > {{ event }} </span>
                     </div>
-                    <div class="popper-content mt-2">
+                    <div class="popper-content">
                       <div v-html="item.content"></div>
                     </div>
-                    <div class="popper-star mt-3">
+                    <div class="popper-star">
                       <span v-for="(score, index) in item.rating.rate" :class="score" class="star-item" :key="index"></span>
                     </div>
-                    <div class="popper-price mt-3">
+                    <div class="popper-price">
                       <span class="price">{{ item.price | priceFormat }}</span>
                       <span class="original-price" v-show="item.origin_price > item.price">{{ item.origin_price | priceFormat }}</span>
                     </div>
@@ -130,18 +97,9 @@ import { BPopover } from 'bootstrap-vue'
 import 'swiper/swiper-bundle.css'
 import pagination from '@/components/Pagination'
 export default {
-  name: 'category',
+  name: 'search',
   data () {
     return {
-      name: {
-        1: '廚房餐桌',
-        2: '空間佈置',
-        3: '質感生活',
-        4: '品味衣著',
-        5: '文具小物',
-        6: '食品飲料',
-        7: '戶外休閒'
-      },
       products: [],
       cart: {},
       pagination: {},
@@ -172,8 +130,6 @@ export default {
       return 2
     }
   },
-  created () {
-  },
   mounted () {
     this.getProducts()
     this.getCart()
@@ -196,7 +152,12 @@ export default {
       this.$http.get(url)
         .then((res) => {
           this.products = res.data.data
-          this.products = this.products.filter(item => item.category === this.name[this.$route.query.n])
+          const eventProducts = this.products.filter(item => !(!item.options.event || item.options.event.length === 0))
+          this.products = this.products.filter(item =>
+            (item.title.includes(this.$route.query.key) ||
+            item.options.subcategory.includes(this.$route.query.key))
+          )
+          this.products.push(...eventProducts.filter(item => item.options.event.split(' ').includes(this.$route.query.key)))
           this.products.forEach(item => {
             item.rating = this.rating()
           })
@@ -209,9 +170,6 @@ export default {
       this.$http.get(url)
         .then((res) => {
           this.cart = res.data.data
-          this.$bus.$emit('cartUpdate', {
-            cart: this.cart
-          })
           if (loader) {
             loader.hide()
           }
@@ -271,7 +229,7 @@ $light-gray: #a8a8ab;
   @media (min-width: 768px) {
     min-height: calc(100vh - 15.5rem) !important;
   }
-  .category {
+  .search {
     margin: 5rem auto 2rem auto;
     @media (min-width: 576px) {
       margin-top: 4rem;
@@ -370,13 +328,13 @@ $light-gray: #a8a8ab;
       }
       .title {
         margin: 0 1rem 1rem 1rem;
-        font-size: 1.25rem;
+        font-size: 1rem;
         font-weight: 500;
         @media (min-width: 576px) {
           margin-left: 0rem;
         }
         @media (min-width: 992px) {
-          font-size: 1.5rem;
+          font-size: 1.25rem;
         }
       }
       .card-deck {

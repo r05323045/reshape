@@ -8,22 +8,22 @@
           <div class="search-bar input-group align-items-md-center collapse navbar-collapse" id="searchBar">
             <div class="input-wrapper d-flex flex-row align-items-center">
               <i class="fas fa-search"></i>
-              <input type="text" class="form-control" placeholder="重塑你的生活">
+              <input type="text" class="form-control" placeholder="重塑你的生活" v-model.lazy="searchKey" @change="$router.push(`/search?key=${searchKey}`)">
               <button class="close" @click="collapseToggle('searchBar')">
                 <i class="fa fa-times"></i>
               </button>
             </div>
             <div class="input-group-append">
-              <button class="btn" type="button">
+              <button class="btn" type="button" @click="$router.push(`/search?key=${searchKey}`)">
                 搜尋
               </button>
             </div>
             <div class="search-advice">
-              <span class="text">玻璃杯</span>
-              <span class="text">夏日嚴選</span>
-              <span class="text">免運</span>
-              <span class="text">抒壓小物</span>
-              <span class="text">工程師必備</span>
+              <span class="text" @click="$router.push(`/search?key=玻璃杯`)">玻璃杯</span>
+              <span class="text" @click="$router.push(`/search?key=夏日嚴選`)">夏日嚴選</span>
+              <span class="text" @click="$router.push(`/search?key=免運`)">免運</span>
+              <span class="text" @click="$router.push(`/search?key=抒壓小物`)">抒壓小物</span>
+              <span class="text" @click="$router.push(`/search?key=工程師必備`)">工程師必備</span>
             </div>
             <div class="collapse-bottom d-md-none" @click="collapseToggle('searchBar')"></div>
           </div>
@@ -34,12 +34,12 @@
           </button>
           <button class="fa-wrapper navbar-toggler" type="button" @click="$router.push('/cart')">
             <i class="fas fa-shopping-cart"></i>
+            <div class="badge">
+              <span class="badge-wrapper" v-if="cart.length">
+                {{ cart.length }}
+              </span>
+            </div>
           </button>
-          <div class="badge">
-            <span class="badge-wrapper" v-if="cart.length">
-              {{ cart.length }}
-            </span>
-          </div>
           <button class="navbar-toggler d-md-none" type="button" data-toggle="collapse" data-target="#navbarCategory">
             <span><i class="fas fa-align-justify"></i></span>
           </button>
@@ -162,7 +162,7 @@
       </nav>
     </div>
     <router-view></router-view>
-    <footer class="mt-5 w-100 d-flex justify-content-center align-items-center">
+    <footer class="w-100 d-flex justify-content-center align-items-center">
       <p>© 2020-2020 vue-cli-try · <a class="fab fa-github" href="https://github.com/r05323045/vue_cli_try"></a></p>
     </footer>
   </div>
@@ -176,7 +176,8 @@ export default {
   data () {
     return {
       cart: {},
-      scrollY: 0
+      scrollY: 0,
+      searchKey: ''
     }
   },
   mounted () {
@@ -194,6 +195,8 @@ export default {
   watch: {
     $route () {
       $('#navbarCategory').collapse('hide')
+      $('#searchBar').collapse('hide')
+      this.searchKey = ''
     }
   },
   methods: {
@@ -202,6 +205,9 @@ export default {
       this.$http.get(url)
         .then((res) => {
           this.cart = res.data.data
+          this.$bus.$emit('cartUpdate', {
+            cart: this.cart
+          })
           if (loader) {
             loader.hide()
           }
@@ -224,7 +230,7 @@ export default {
   box-sizing: border-box;
   position: relative;
   z-index: 1;
-  min-height: 100vh;
+  min-height: calc(100% + 5rem)
 }
 .navbar.windowTop {
   height: 3.5rem;
@@ -273,7 +279,7 @@ export default {
     position: static !important;
   }
   .nav-header {
-    margin: 0 0.5rem;
+    margin: 0 1rem;
     margin-top: 0;
     height: 3.5rem;
     position : relative;
@@ -464,6 +470,7 @@ export default {
         }
       }
       .navbar-toggler {
+        margin: 0;
         font-size: 1rem;
         path {
           fill: #666;
@@ -630,8 +637,7 @@ export default {
   }
 }
 footer {
-  margin-top: 1rem;
-  bottom: -5rem;
+  margin-top: 3rem;
   height: 5rem;
   background-color: #f7f7f8;
   p {
