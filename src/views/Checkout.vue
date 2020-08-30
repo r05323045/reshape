@@ -2,8 +2,8 @@
   <div class="checkout" ref="checkout">
     <paid v-show="paid"></paid>
     <div v-show="paid === false">
-      <div class="router-wrapper mt-3">
-          <i class="fas fa-chevron-left" @click="backToCart"></i>
+      <div class="router-wrapper">
+          <i class="fas fa-angle-left" @click="backToCart"></i>
           <span class="mx-2 router" @click="backToCart">返回購物車</span>
       </div>
       <div class="cart-step-wrapper row" v-if="cart.length">
@@ -146,7 +146,7 @@ export default {
         payment: '',
         message: ''
       },
-      paid: true
+      paid: false
     }
   },
   props: {
@@ -195,17 +195,18 @@ export default {
 }
 </script>
 <style lang="scss">
+$pink: #FA7268;
+$navy: #00457C;
+$blue: #0079C1;
+$gray: #484848;
 .checkout {
   z-index: 0;
   padding: 5rem 1rem 2rem 1rem;
   height: 100%;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
   overflow-x: hidden;
   overflow-y: visible;
   background: #ffffff;
+  min-height: calc(100vh - 7rem);
   @media (min-width: 576px) {
     padding-top: 7.5rem;
   }
@@ -216,14 +217,14 @@ export default {
     .router {
       width: 100%;
       cursor: pointer;
-      color: #10567b;
+      color: $navy;
     }
     .router:hover {
       text-decoration: underline;
     }
-    .fa-chevron-left {
+    .fa-angle-left {
       cursor: pointer;
-      color: #2e90b7;
+      color: $navy;
     }
   }
   .cart-step-wrapper {
@@ -254,7 +255,7 @@ export default {
         text-align: center;
         vertical-align: middle;
         line-height: 3rem;
-        background-color: #10567b;
+        background-color: $navy;
         color: #ffffff;
         border-radius: 50%;
         position: absolute;
@@ -284,7 +285,7 @@ export default {
       top: 1.5rem;
       left: 3rem;
       right: 3rem;
-      background-color: #10567b;
+      background-color: $navy;
       height: 2px;
       vertical-align: middle;
     }
@@ -297,7 +298,7 @@ export default {
         text-align: center;
         vertical-align: middle;
         line-height: 3rem;
-        background-color: #10567b;
+        background-color: $navy;
         color: #ffffff;
         border-radius: 50%;
         position: absolute;
@@ -337,7 +338,7 @@ export default {
       .checkout-submit {
         margin-top: 2rem;
         color: #ffffff;
-        background-color: #10567b;
+        background-color: $navy;
         text-decoration: none;
       }
       .checkout-submit:hover, .checkout-submit:focus, .checkout-submit:active:hover {

@@ -70,7 +70,7 @@
                     </div>
                   </div>
                 </div>
-                <b-popover :target="item.id" triggers="hover focus" placement="right" class="product-popper" :ref="`popover-${item.id}`">
+                <b-popover :target="item.id" triggers="hover focus" placement="right" v-if="windowWidth >= 992" :ref="`popover-${item.id}`">
                   <div class="popper-wrapper">
                     <div class="popper-title mt-3">
                         {{ item.title }}
@@ -259,17 +259,17 @@ export default {
 <style lang="scss">
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import 'node_modules/bootstrap-vue/src/index.scss';
-$pink: #ee847d;
-$navy: #10567b;
-$blue: #2e90b7;
-$gray: #39393e;
+$pink: #FA7268;
+$navy: #00457C;
+$blue: #0079C1;
+$gray: #484848;
 $light-gray: #a8a8ab;
 .home {
-  min-height: calc(100vh - 5rem) !important;
+  min-height: calc(100vh - 2rem) !important;
   width: 100%;
   overflow: hidden;
   @media (min-width: 768px) {
-    min-height: calc(100vh - 15.5rem) !important;
+    min-height: calc(100vh - 18.5rem) !important;
   }
   .category {
     margin: 5rem auto 2rem auto;
@@ -301,7 +301,7 @@ $light-gray: #a8a8ab;
       .side-category {
         .title {
           font-size: 1rem;
-          color: #39393e;
+          color: $gray;
           font-weight: 500;
           margin-bottom: 0.5rem;
           @media (min-width: 992px) {
@@ -348,10 +348,6 @@ $light-gray: #a8a8ab;
     .card-decks-wrapper {
       width: 100%;
       padding: 0 1rem 1rem 1rem;
-      margin-top: 2rem;
-      @media (min-width: 576px) {
-        margin-top: 0rem;
-      }
       @media (min-width: 992px) {
         padding-left: 3rem !important;
         padding-right: 3rem !important;
@@ -383,9 +379,6 @@ $light-gray: #a8a8ab;
         padding: 1rem 0;
         display: flex;
         justify-content: space-between;
-        @media (min-width: 414px) {
-          padding: 2rem 0;
-        }
         @media (min-width: 468px) {
           padding: 3rem 0;
         }
@@ -550,14 +543,11 @@ $light-gray: #a8a8ab;
   }
 }
 .popper-wrapper {
-  display: none;
-  @media (min-width: 992px) {
-    display: block;
-    border-radius: 30%;
-    padding: 1.5rem;
-    width: 16rem;
-    height: 25rem;
-  }
+  display: block;
+  border-radius: 30%;
+  padding: 1.5rem;
+  width: 16rem;
+  height: 25rem;
   .popper-badge {
     display: inline-block;
     white-space: nowrap;
@@ -568,11 +558,11 @@ $light-gray: #a8a8ab;
   }
   .popper-title {
     margin: auto;
-    height: 2rem;
-    line-height: 1rem;
+    height: 2.5rem;
+    line-height: 1.25rem;
     font-size: 1rem;
     font-weight: 700;
-    color: #39393e;
+    color: $gray;
     margin-bottom: 15px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -623,15 +613,15 @@ $light-gray: #a8a8ab;
   }
   .popper-content {
     margin-top: 1rem;
-    min-height: 7.5rem;
-    max-height: 7.5rem;
+    min-height: 6.25rem;
+    max-height: 6.25rem;
     max-width: 100%;
     line-height: 1.25rem;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     visibility: visible;
-    -webkit-line-clamp: 6;
+    -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
   }
   .addToCart {
@@ -645,7 +635,7 @@ $light-gray: #a8a8ab;
   }
   .goToCheckout {
     color: #ffffff;
-    background-color: #10567b;
+    background-color: $navy;
     text-decoration: none;
   }
   .goToCheckout:hover, .goToCheckout:focus, .goToCheckout:active:hover {

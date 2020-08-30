@@ -51,10 +51,10 @@ export default {
 </script>
 
 <style lang="scss">
-$pink: #ee847d;
-$navy: #10567b;
-$blue: #2e90b7;
-$gray: #39393e;
+$pink: #FA7268;
+$navy: #00457C;
+$blue: #0079C1;
+$gray: #484848;
 $light-gray: #a8a8ab;
 .swiper-container {
   width: 100%;

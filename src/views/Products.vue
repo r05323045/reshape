@@ -90,8 +90,7 @@
                       </div>
                     </div>
                   </div>
-                  <b-popover :target="item.id" triggers="hover focus" placement="right" class="product-popper" :ref="`popover-${item.id}`">
-                    <loading :active.sync="isLoading" loader="bars"></loading>
+                  <b-popover :target="item.id" triggers="hover focus" placement="right" v-if="windowWidth >= 992" :ref="`popover-${item.id}`">
                     <div class="popper-wrapper">
                       <div class="popper-title mt-3">
                           {{ item.title }}
@@ -124,11 +123,6 @@
                       <div v-if="cartId.includes(item.id)" :class="{ addToCart: !cartId.includes(item.id), goToCheckout: cartId.includes(item.id) }" class="btn d-flex justify-content-center mt-3 mb-3" @click="$router.push('/cart')">
                         <span>立刻結帳</span>
                       </div>
-                      <!--
-                      <div v-if="cartId.includes(item.id)" class="popper-description mt-2">
-                        {{ item.description }}
-                      </div>
-                      -->
                     </div>
                   </b-popover>
                 </div>
@@ -137,24 +131,6 @@
               </div>
             </div>
             <pagination :pages="pagination" @emit-pages="getProducts" class="pagination-wrapper"></pagination>
-          </div>
-        </div>
-      </div>
-      <div class="modal fade" id="orderModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">完成訂購</h5>
-              <button type="button" class="close" data-dismiss="modal">
-                <span>&times;</span>
-              </button>
-            </div>
-            <div class="modal-body text-center">
-              <p>感謝你的購買，請耐心等候到貨通知</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-            </div>
           </div>
         </div>
       </div>
@@ -177,10 +153,6 @@ export default {
       cart: {},
       pagination: {},
       isLoading: false,
-      randomRating: {
-        rate: [],
-        count: Number
-      },
       windowWidth: window.innerWidth
     }
   },
@@ -306,10 +278,10 @@ export default {
 <style lang="scss">
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import 'node_modules/bootstrap-vue/src/index.scss';
-$pink: #ee847d;
-$navy: #10567b;
-$blue: #2e90b7;
-$gray: #39393e;
+$pink: #FA7268;
+$navy: #00457C;
+$blue: #0079C1;
+$gray: #484848;
 $light-gray: #a8a8ab;
 .home-wrapper {
   display: flex;
@@ -352,7 +324,7 @@ $light-gray: #a8a8ab;
         }
         .title {
           font-size: 1rem;
-          color: #39393e;
+          color: $gray;
           font-weight: 500;
           margin-bottom: 0.5rem;
           @media (min-width: 992px) {
@@ -392,7 +364,7 @@ $light-gray: #a8a8ab;
     }
     .hot-sales {
       width: 100%;
-      margin: 3rem 0;
+      margin: 2rem 0;
       @media (min-width: 768px) {
         margin: 0 0 3rem 0;
       }
@@ -646,14 +618,10 @@ $light-gray: #a8a8ab;
   }
 }
 .popper-wrapper {
-  display: none;
-  @media (min-width: 992px) {
-    display: block;
-    border-radius: 30%;
-    padding: 1.5rem;
-    width: 16rem;
-    height: 25rem;
-  }
+  border-radius: 30%;
+  padding: 1.5rem;
+  width: 16rem;
+  height: 25rem;
   .popper-badge {
     display: inline-block;
     white-space: nowrap;
@@ -664,11 +632,11 @@ $light-gray: #a8a8ab;
   }
   .popper-title {
     margin: auto;
-    height: 2rem;
-    line-height: 1rem;
+    height: 2.5rem;
+    line-height: 1.25rem;
     font-size: 1rem;
     font-weight: 700;
-    color: #39393e;
+    color: $gray;
     margin-bottom: 15px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -719,15 +687,15 @@ $light-gray: #a8a8ab;
   }
   .popper-content {
     margin-top: 1rem;
-    min-height: 7.5rem;
-    max-height: 7.5rem;
+    min-height: 6.25rem;
+    max-height: 6.25rem;
     max-width: 100%;
     line-height: 1.25rem;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     visibility: visible;
-    -webkit-line-clamp: 6;
+    -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
   }
   .addToCart {
@@ -741,7 +709,7 @@ $light-gray: #a8a8ab;
   }
   .goToCheckout {
     color: #ffffff;
-    background-color: #10567b;
+    background-color: $navy;
     text-decoration: none;
   }
   .goToCheckout:hover, .goToCheckout:focus, .goToCheckout:active:hover {

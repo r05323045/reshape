@@ -23,7 +23,7 @@
         <div class="text-align-center">
           <div class="mt-5 text">你的購物車中沒有商品</div>
           <router-link to="/"><div class="btn mt-5 back-to-homepage">回首頁選購</div></router-link>
-          <router-link to="/"><div class="btn mt-5 ml-3 back-to-homepage">我不要</div></router-link>
+          <router-link to="/products"><div class="btn mt-5 ml-3 back-to-products">我不要</div></router-link>
         </div>
       </div>
       <div class="row m-0">
@@ -281,11 +281,15 @@ export default {
 </script>
 
 <style lang="scss">
+$pink: #FA7268;
+$navy: #00457C;
+$blue: #0079C1;
+$gray: #484848;
 .cart-wrapper {
   position: relative;
   overflow: hidden;
   margin: auto;
-  min-height: calc(100vh - 5rem);
+  min-height: calc(100vh - 2rem);
   @media (min-width: 768px) {
     max-width: 768px;
     margin-top: 1rem;
@@ -316,7 +320,7 @@ export default {
       .router {
         width: 100%;
         cursor: pointer;
-        color: #10567b !important;
+        color: $blue !important;
       }
       .router:hover {
         text-decoration: underline;
@@ -350,7 +354,7 @@ export default {
           text-align: center;
           vertical-align: middle;
           line-height: 3rem;
-          background-color: #10567b;
+          background-color: $navy;
           color: #ffffff;
           border-radius: 50%;
           position: absolute;
@@ -425,16 +429,25 @@ export default {
       .text {
         font-size: 1.5rem;
       }
-      .back-to-homepage {
-        color: #39393e;
-        border: 1px solid #a8a8ab;
+      .back-to-homepage{
+        background: $navy;
+        color: #ffffff;
         padding: 8px;
-        border-radius: 0.5rem;
+        border-radius: 0.25rem;
+      }
+      .back-to-products {
+        background: #ffffff;
+        color: #666;
+        padding: 8px;
+        border-radius: 0.25rem;
+        border: 1px solid #666;
       }
       .back-to-homepage:hover, .back-to-homepage:focus, .back-to-homepage:active:hover {
+        background: #919191;
+      }
+      .back-to-products:hover, .back-to-products:focus, .back-to-products:active:hover {
+        background: #919191;
         color: #ffffff;
-        background-color: #919191;
-        border-radius: 5%;
       }
     }
     .row {
@@ -536,7 +549,7 @@ export default {
           }
           .clear-cart {
             cursor: pointer;
-            color: #2e90b7;
+            color: $blue;
             position: absolute;
             right: 1rem;
           }
@@ -596,16 +609,16 @@ export default {
         .use-coupon {
           font-size: 0.9rem;
           font-weight: 500;
-          color: #2e90b7;
+          color: $blue;
         }
         .use-coupon:hover {
           cursor: pointer;
-          color: #10567b;
+          color: $navy;
         }
         #collapseCoupon {
           .apply-coupon {
               z-index: 1;
-              background-color: #10567b;
+              background-color: $navy;
               color: #ffffff;
           }
           .coupon-fail {
@@ -627,7 +640,7 @@ export default {
         }
         .goToCheckout {
           color: #ffffff;
-          background-color: #10567b;
+          background-color: $navy;
           text-decoration: none;
           a {
             color: #ffffff;

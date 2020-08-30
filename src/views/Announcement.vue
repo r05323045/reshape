@@ -44,7 +44,7 @@ export default {
     line-height: 2.5rem;
     vertical-align: middle;
     .text {
-      font-size: 0.9rem;
+      font-size: 0.8rem;
     }
     .fa-bell {
       line-height: 2.5rem;
@@ -52,7 +52,7 @@ export default {
       path {
         fill: #ffedaf;
         stroke: #000000;
-        stroke-width: 10px;
+        stroke-width: 18px;
       }
     }
   }

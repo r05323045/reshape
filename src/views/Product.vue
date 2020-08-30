@@ -5,7 +5,7 @@
       <div class="router-wrapper mt-3">
         <router-link to="/"><span class="mr-2 router">首頁</span></router-link>
         <i class="fas fa-angle-right"></i>
-        <span class="mx-2 router">{{ product.category }}</span>
+        <span class="mx-2 router" @click="$router.push(`/category?n=${categoryList[product.category]}`)">{{ product.category }}</span>
         <i class="fas fa-angle-right"></i>
         <span class="mx-2" v-if="product.options">{{ product.options.subcategory }}</span>
       </div>
@@ -127,6 +127,15 @@ export default {
       randomRating: {
         rate: [],
         count: Number
+      },
+      categoryList: {
+        廚房餐桌: 1,
+        空間佈置: 2,
+        質感生活: 3,
+        品味衣著: 4,
+        文具小物: 5,
+        食品飲料: 6,
+        戶外休閒: 7
       }
     }
   },
@@ -263,10 +272,10 @@ export default {
 <style lang="scss">
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import 'node_modules/bootstrap-vue/src/index.scss';
-$pink: #ee847d;
-$navy: #10567b;
-$blue: #2e90b7;
-$gray: #39393e;
+$pink: #FA7268;
+$navy: #00457C;
+$blue: #0079C1;
+$gray: #484848;
 $light-gray: #a8a8ab;
 .product-wrapper {
   margin: auto;
@@ -288,8 +297,9 @@ $light-gray: #a8a8ab;
        margin: 2rem;
     }
     .router-wrapper {
-      margin: 2rem 0rem;
+      margin-bottom: 2rem;
       .router {
+        cursor: pointer;
         color: $blue;
       }
     }
@@ -322,7 +332,7 @@ $light-gray: #a8a8ab;
         .origin-price {
           height: 2rem;
           vertical-align: middle;
-          height: 2rem;
+          line-height: 2rem;
           text-decoration: line-through;
           font-size: 1rem;
           color: $light-gray;

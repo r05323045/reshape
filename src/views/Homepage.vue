@@ -16,13 +16,13 @@
       </div>
       <div v-if="products.length > 0">
         <div class="section-wrapper">
-          <cardSwiper title="編輯嚴選" :products="products.slice(0, 10)"></cardSwiper>
+          <cardSwiper title="編輯嚴選" :products="products.slice(0, 10)" :cart="cart"></cardSwiper>
         </div>
         <div class="section-wrapper">
-          <cardSwiper title="最近熱門" :products="products.slice(5, 20)"></cardSwiper>
+          <cardSwiper title="最近熱門" :products="products.slice(5, 20)" :cart="cart"></cardSwiper>
         </div>
         <div class="section-wrapper">
-          <cardSwiper title="限時免運" :products="products.slice(15, 25)"></cardSwiper>
+          <cardSwiper title="限時免運" :products="products.slice(15, 25)" :cart="cart"></cardSwiper>
         </div>
       </div>
     </div>
@@ -101,6 +101,11 @@ export default {
 }
 </script>
 <style lang="scss">
+$pink: #FA7268;
+$navy: #00457C;
+$blue: #0079C1;
+$gray: #484848;
+$light-gray: #a8a8ab;
 .homepage{
   overflow: hidden;
   .swiper-container-wrapper {
@@ -158,12 +163,16 @@ export default {
           vertical-align: middle;
           font-size: 2rem;
           line-height: 4rem;
-          color: #39393e;
+          color: $gray;
         }
         .swiper-button-prev:hover,
         .swiper-button-next:hover {
           opacity: 1;
           transform: scale(1.1) translateY(-1.6rem)
+        }
+        .swiper-button-prev:focus,
+        .swiper-button-next:focus {
+          outline: none;
         }
         .swiper-button-prev {
           left: -1.5rem;

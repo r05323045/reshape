@@ -99,10 +99,10 @@ export default {
 }
 </script>
 <style lang="scss">
-$pink: #ee847d;
-$navy: #10567b;
-$blue: #2e90b7;
-$gray: #39393e;
+$pink: #FA7268;
+$navy: #00457C;
+$blue: #0079C1;
+$gray: #484848;
 $light-gray: #a8a8ab;
 .card-section{
   overflow: hidden;
@@ -258,13 +258,17 @@ $light-gray: #a8a8ab;
         text-align: center;
         font-size: 1rem;
         line-height: 2rem;
-        color: #39393e;
+        color: $gray;
       }
       .swiper-button-prev:hover,
       .swiper-button-next:hover {
         transform: scale(1.2) translateY(-1rem);
         opacity: 1;
         box-shadow: 1px 1px 2px 0.5px rgba(0,0,0,0.3);
+      }
+      .swiper-button-prev:focus,
+      .swiper-button-next:focus {
+        outline: none;
       }
       .swiper-button-prev {
         top: 45%;

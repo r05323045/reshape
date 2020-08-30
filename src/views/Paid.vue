@@ -12,15 +12,22 @@
   </div>
 </template>
 <style lang="scss">
+$pink: #FA7268;
+$navy: #00457C;
+$blue: #0079C1;
+$gray: #484848;
 .paid {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   overflow: visible;
   display: flex;
   flex-direction: column;
   .title-wrapper {
+    margin-top: 5rem;
     width: 100%;
-    flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -33,8 +40,8 @@
     }
   }
   .icon-wrapper {
+    margin-top: 3rem;
     width: 100%;
-    flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -47,10 +54,15 @@
     }
   }
   .button-wrapper {
+    margin-top: 3rem;
     text-align: center;
-    flex-grow: 1;
     .btn {
-      border: 1px solid #666;
+      border-radius: 0.25rem;
+      color: #ffffff;
+      background: $navy;
+    }
+    .btn:hover, .btn:focus, .btn:active:hover {
+      background: #919191;
     }
   }
 }

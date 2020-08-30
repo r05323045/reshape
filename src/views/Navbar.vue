@@ -162,8 +162,16 @@
       </nav>
     </div>
     <router-view></router-view>
-    <footer class="w-100 d-flex justify-content-center align-items-center">
-      <p>© 2020-2020 vue-cli-try · <a class="fab fa-github" href="https://github.com/r05323045/vue_cli_try"></a></p>
+    <footer class="w-100 d-flex flex-column justify-content-center align-items-center">
+      <div>
+        <div class="brand-name">
+          <span class="title" @click="$router.push('/')">Reshape </span>
+          <span class="text">| Reshape Your Life</span>
+        </div>
+        <div>
+          <p>© 2020 Reshape. All Rights Reserved</p>
+        </div>
+      </div>
     </footer>
   </div>
 </template>
@@ -224,13 +232,21 @@ export default {
 </script>
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
+$pink: #FA7268;
+$navy: #00457C;
+$blue: #0079C1;
+$gray: #484848;
+$light-gray: #a8a8ab;
 .page-content {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   box-sizing: border-box;
   position: relative;
   z-index: 1;
-  min-height: calc(100% + 5rem)
+  min-height: calc(100% + 5rem);
+  *:focus {
+    outline: none !important
+  }
 }
 .navbar.windowTop {
   height: 3.5rem;
@@ -299,7 +315,7 @@ export default {
     .brand-name {
       font-size: 1.5rem;
       font-family: 'Comfortaa', cursive;
-      color: #10567b !important;
+      color: $navy !important;
       @media (min-width: 768px) {
         height: 3rem;
         margin-right: 3rem;
@@ -383,7 +399,7 @@ export default {
           @media (min-width: 768px) {
             display: inline;
             height: 2rem;
-            background: #10567b;
+            background: $navy;
             font-size: 0.8rem;
             color: #ffffff;
           }
@@ -397,7 +413,7 @@ export default {
             font-size: 0.6rem;
             .text{
               margin-left: 0.5rem;
-              color: #39393e;
+              color: $gray;
             }
             .text:hover {
               text-decoration: underline;
@@ -543,7 +559,7 @@ export default {
             @media (min-width: 768px) {
               font-weight: 700 !important;
               font-size: 0.9rem;
-              color: #39393e !important;
+              color: $gray !important;
             }
           }
         }
@@ -583,17 +599,17 @@ export default {
                 top: 33%;
                 right: 2rem;
                 path {
-                  fill: #39393e;
-                  stroke: #39393e;
+                  fill: $gray;
+                  stroke: $gray;
                   stroke-width: 0;
                 }
               }
               .router-link {
-                color: #39393e !important;
+                color: $gray !important;
                 font-weight: 100;
                 position: relative;
                 .badge {
-                  background: #10567b;
+                  background: $navy;
                   color: #ffffff;
                   width: 2.5rem;
                   position: absolute;
@@ -606,14 +622,14 @@ export default {
             }
             .list-group-item:hover {
               .router-link {
-                color: #ee847d !important;
+                color: $pink !important;
                 font-weight: 100;
                 text-decoration: none;
               }
               .svg-inline--fa {
                 path {
-                  stroke: #ee847d;
-                  fill: #ee847d;
+                  stroke: $pink;
+                  fill: $pink;
                 }
               }
             }
@@ -640,15 +656,32 @@ footer {
   margin-top: 3rem;
   height: 5rem;
   background-color: #f7f7f8;
-  p {
-    height: 5rem;
-    margin: auto;
-    line-height: 5rem;
+  .brand-name {
+    line-height: 2rem;
+    margin-bottom: 0;
     vertical-align: middle;
-    a {
-      color: black;
+    height: 2rem;
+    .title {
+      font-size: 1rem;
+      font-family: 'Comfortaa', cursive;
+      color: $navy;
+      font-weight: 500;
       cursor: pointer;
     }
+    .text {
+      color: #666;
+      font-size: 0.8rem;
+      font-weight: 400;
+    }
+  }
+  p {
+    font-size: 0.8rem;
+    font-weight: 400;
+    height: 2rem;
+    line-height: 2rem;
+    margin-bottom: 0;
+    vertical-align: middle;
+    font-family: initial;
   }
 }
 </style>

@@ -14,7 +14,19 @@
             </ul>
           </div>
         </div>
-        <div class="col-12 col-md-9 col-lg-10 card-decks-wrapper d-flex flex-column justify-content-center" :class="{'only-one': products.length <= numCardsRow}">
+        <div class="col-12 col-md-9 col-lg-10 notFound" v-if="products.length === 0">
+          <div class="title-wrapper">
+            <div class="title">{{ `找不到與"${$route.query.key}"相關的商品` }}</div>
+          </div>
+          <div class="button-wrapper">
+            <button class="btn" @click="$router.push('/products')">探索更多商品</button>
+          </div>
+        </div>
+        <div
+          v-if="products.length > 0"
+          class="col-12 col-md-9 col-lg-10 card-decks-wrapper d-flex flex-column justify-content-center"
+          :class="{'only-one': products.length <= numCardsRow}"
+        >
           <div class="title">{{ `找到${products.length}件"${$route.query.key}"的商品` }}</div>
           <div v-for="i in 5" :key="`row_${i}`">
             <div class="card-deck" v-if="products.slice((i - 1) * numCardsRow, i * numCardsRow).length > 0">
@@ -37,7 +49,7 @@
                     </div>
                   </div>
                 </div>
-                <b-popover :target="item.id" triggers="hover focus" placement="right" class="product-popper" :ref="`popover-${item.id}`">
+                <b-popover :target="item.id" triggers="hover focus" placement="right" v-if="windowWidth >= 992" :ref="`popover-${item.id}`">
                   <div class="popper-wrapper">
                     <div class="popper-title">
                         {{ item.title }}
@@ -84,9 +96,6 @@
           </div>
           <pagination :pages="pagination" @emit-pages="getProducts" class="pagination-wrapper"></pagination>
         </div>
-      </div>
-      <div class="row w-100">
-        <div class="col-0 col-xl-2"></div>
       </div>
     </div>
   </div>
@@ -217,25 +226,27 @@ export default {
 <style lang="scss">
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import 'node_modules/bootstrap-vue/src/index.scss';
-$pink: #ee847d;
-$navy: #10567b;
-$blue: #2e90b7;
-$gray: #39393e;
+$pink: #FA7268;
+$navy: #00457C;
+$blue: #0079C1;
+$gray: #484848;
 $light-gray: #a8a8ab;
 .home {
-  min-height: calc(100vh - 5rem) !important;
+  min-height: calc(100vh - 2rem) !important;
   width: 100%;
   overflow: hidden;
   @media (min-width: 768px) {
-    min-height: calc(100vh - 15.5rem) !important;
+    min-height: calc(100vh - 18.5rem) !important;
   }
   .search {
+    min-height: calc(100vh - 2rem);
     margin: 5rem auto 2rem auto;
     @media (min-width: 576px) {
-      margin-top: 4rem;
+      margin-top: 5.5rem;
     }
     @media (min-width: 768px) {
-      margin: 1rem auto;
+      min-height: calc(100vh - 18.5rem) !important;
+      margin: 0 auto;
       max-width: 992px;
     }
     @media (min-width: 1200px) {
@@ -247,7 +258,7 @@ $light-gray: #a8a8ab;
     .row {
       margin: 0;
       @media (min-width: 576px) {
-        padding: 1rem;
+        padding: 2rem;
       }
     }
     .category-wrapper{
@@ -259,7 +270,7 @@ $light-gray: #a8a8ab;
       .side-category {
         .title {
           font-size: 1rem;
-          color: #39393e;
+          color: $gray;
           font-weight: 500;
           margin-bottom: 0.5rem;
           @media (min-width: 992px) {
@@ -306,10 +317,6 @@ $light-gray: #a8a8ab;
     .card-decks-wrapper {
       width: 100%;
       padding: 0 1rem 1rem 1rem;
-      margin-top: 2rem;
-      @media (min-width: 576px) {
-        margin-top: 0rem;
-      }
       @media (min-width: 992px) {
         padding-left: 3rem !important;
         padding-right: 3rem !important;
@@ -505,17 +512,43 @@ $light-gray: #a8a8ab;
         }
       }
     }
+    .notFound {
+      min-height: calc(100vh - 2rem);
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      @media (min-width: 768px) {
+        min-height: calc(100vh - 22.5rem);
+      }
+      .title-wrapper {
+        padding-bottom: 2rem;
+        .title {
+          font-size: 1rem;
+          font-weight: 500;
+          @media (min-width: 576px) {
+            font-size: 1.25rem;
+          }
+        }
+      }
+      .button-wrapper {
+        .btn {
+          border-radius: 0.25rem;
+          color: #ffffff;
+          background: $navy;
+        }
+        .btn:hover, .btn:focus, .btn:active:hover {
+          background: #919191;
+        }
+      }
+    }
   }
 }
 .popper-wrapper {
-  display: none;
-  @media (min-width: 992px) {
-    display: block;
-    border-radius: 30%;
-    padding: 1.5rem;
-    width: 16rem;
-    height: 25rem;
-  }
+  border-radius: 30%;
+  padding: 1.5rem;
+  width: 16rem;
+  height: 25rem;
   .popper-badge {
     display: inline-block;
     white-space: nowrap;
@@ -526,11 +559,11 @@ $light-gray: #a8a8ab;
   }
   .popper-title {
     margin: auto;
-    height: 2rem;
-    line-height: 1rem;
+    height: 2.5rem;
+    line-height: 1.25rem;
     font-size: 1rem;
     font-weight: 700;
-    color: #39393e;
+    color: $gray;
     margin-bottom: 15px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -581,15 +614,15 @@ $light-gray: #a8a8ab;
   }
   .popper-content {
     margin-top: 1rem;
-    min-height: 7.5rem;
-    max-height: 7.5rem;
+    min-height: 6.25rem;
+    max-height: 6.25rem;
     max-width: 100%;
     line-height: 1.25rem;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     visibility: visible;
-    -webkit-line-clamp: 6;
+    -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
   }
   .addToCart {
@@ -603,7 +636,7 @@ $light-gray: #a8a8ab;
   }
   .goToCheckout {
     color: #ffffff;
-    background-color: #10567b;
+    background-color: $navy;
     text-decoration: none;
   }
   .goToCheckout:hover, .goToCheckout:focus, .goToCheckout:active:hover {
