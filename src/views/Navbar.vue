@@ -32,6 +32,9 @@
           <button class="navbar-toggler d-md-none" type="button" data-toggle="collapse" data-target="#searchBar">
             <span><i class="fas fa-search"></i></span>
           </button>
+          <button class="login d-none d-md-block" type="button" @click="$router.push('/admin/')">
+            我要登入
+          </button>
           <button class="fa-wrapper navbar-toggler" type="button" @click="$router.push('/cart')">
             <i class="fas fa-shopping-cart"></i>
             <div class="badge">
@@ -54,12 +57,12 @@
               <router-link to="/category?n=3" class="router-link mr-3">質感生活</router-link>
               <router-link to="/category?n=4" class="router-link mr-3">品味衣著</router-link>
               <router-link to="/products" class="router-link mr-3">所有分類</router-link>
-              <router-link to="/" class="router-link mr-3">關於我們</router-link>
+              <router-link to="/about" class="router-link mr-3">關於我們</router-link>
             </div>
             <div class="mobile">
               <ul class="list-group section">
                 <li class="list-group-item">
-                  <router-link to="/" class="router-link mr-3">登入 / 註冊</router-link>
+                  <router-link to="/admin/" class="router-link mr-3">登入 / 註冊</router-link>
                 </li>
               </ul>
               <ul class="list-group section">
@@ -144,11 +147,11 @@
               </ul>
               <ul class="list-group section">
                 <div class="section-title">
-                  <li class="list-group-item">
-                      關於我們
+                  <li class="list-group-item" @click="$router.push('/about')">
+                    關於我們
                   </li>
                 </div>
-                <li class="list-group-item" @click="$router.push('/')">
+                <li class="list-group-item" @click="$router.push('/about')">
                   <router-link to="/" class="router-link mr-3">品牌故事</router-link>
                 </li>
                 <li class="list-group-item" @click="$router.push('/')">
@@ -169,7 +172,7 @@
           <span class="text">| Reshape Your Life</span>
         </div>
         <div>
-          <p>© 2020 Reshape. All Rights Reserved</p>
+          <p>&copy; 2020 Reshape. All Rights Reserved</p>
         </div>
       </div>
     </footer>
@@ -448,24 +451,19 @@ $light-gray: #a8a8ab;
         vertical-align: middle;
         font-size: 0.9rem;
       }
-      .badge {
-        top: 0.5rem;
-        right: 2.5rem;
-        position: absolute;
-        @media (min-width: 768px) {
-          top: -0.25rem;
-          right: 0;
-        }
-        .badge-wrapper {
-          display: inline-block;
-          background-color: #f16c5d;
-          color: #ffffff;
-          border-radius: 50%;
-          width: 1rem;
-          height: 1rem;
-          line-height: 1rem;
-          vertical-align: middle;
-        }
+      .login {
+        font-size: 0.9rem;
+        color: #666;
+        margin-right: 1rem;
+        background: #ffffff;
+        border-radius: 0.25rem;
+        border: 1px solid #666;
+      }
+      .login:hover {
+        color: #ffffff;
+        font-weight: 500;
+        background: $navy;
+        border: 1px solid $blue;
       }
       .fa-wrapper {
         background: none;
@@ -476,6 +474,25 @@ $light-gray: #a8a8ab;
             fill: #ffffff;
             stroke: #666;
             stroke-width: 3rem;
+          }
+        }
+        .badge {
+          top: 0.5rem;
+          right: 2.5rem;
+          position: absolute;
+          @media (min-width: 768px) {
+            top: -0.25rem;
+            right: 0;
+          }
+          .badge-wrapper {
+            display: inline-block;
+            background-color: #f16c5d;
+            color: #ffffff;
+            border-radius: 50%;
+            width: 1rem;
+            height: 1rem;
+            line-height: 1rem;
+            vertical-align: middle;
           }
         }
       }

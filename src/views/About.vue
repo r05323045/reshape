@@ -1,0 +1,105 @@
+<template>
+  <div class="about-wrapper">
+    <div class="about" ref="about">
+      <div class="router-wrapper">
+        <router-link to="/"><span class="mr-2 router">首頁</span></router-link>
+        <i class="fas fa-angle-right"></i>
+        <span class="ml-2">關於我們</span>
+      </div>
+      <div class="row content ">
+        <div class="col-0 col-xl-2"></div>
+        <div class="col-12 col-xl-10">
+          <div class="title">
+            關於我們
+          </div>
+          <div class="img"></div>
+          <div class="text">
+            Reshape 於 2020 年成立，為用戶嚴選設計、居家、等質感商品，將時尚美學注入大眾的日常，連結設計、創意品牌與個人生活需求，重塑每個人的生活。我們透過嚴選商品、數據分析與客製化服務，致力於為用戶創造精緻的體驗，滿足大眾對「美」的需求，為設計創造價值。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+export default {
+  created () {
+    const loader = this.$loading.show({
+      isFullPage: true,
+      opacity: 1
+    }, { default: this.$createElement('MyLoading') })
+    setTimeout(() => { loader.hide() }, 1000)
+  }
+}
+</script>
+<style lang="scss">
+$pink: #FA7268;
+$navy: #00457C;
+$blue: #0079C1;
+$gray: #484848;
+.about-wrapper {
+  position: relative;
+  overflow: hidden;
+  margin: auto;
+  min-height: calc(100vh - 2rem);
+  @media (min-width: 768px) {
+    max-width: 768px;
+    min-height: calc(100vh - 18.5rem);
+  }
+  @media (min-width: 992px) {
+    max-width: 992px;
+  }
+  @media (min-width: 1200px) {
+    max-width: 992px;
+  }
+  @media (min-width: 1441px) {
+    max-width: 1200px;
+  }
+  .about {
+    margin: 5rem 1rem 2rem 1rem;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: visible;
+    background: #ffffff;
+    position: relative;
+    @media (min-width: 576px) {
+      margin-top: 7.5rem;
+    }
+    @media (min-width: 768px) {
+      margin: 2rem;
+    }
+    .router-wrapper {
+      .router {
+        width: 100%;
+        cursor: pointer;
+        color: $blue !important;
+      }
+      .router:hover {
+        text-decoration: underline;
+      }
+    }
+    .content {
+      margin-top: 2rem;
+      .title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        @media (min-width: 768px) {
+          font-size: 1.75rem;
+        }
+      }
+      .img {
+        margin: 2rem 0;
+        width: 100%;
+        padding-top: 25%;
+        background: url(https://images.unsplash.com/photo-1589606024345-6e1441cc949b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2207&q=80) no-repeat center/contain;
+      }
+      .text {
+        font-size: 1rem;
+        @media (min-width: 768px) {
+          font-size: 1.25rem;
+        }
+      }
+    }
+  }
+}
+</style>

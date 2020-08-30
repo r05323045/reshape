@@ -167,7 +167,7 @@ export default {
         opacity: 1,
         isFullPage: true,
         zIndex: 999
-      })
+      }, { default: this.$createElement('MyLoading') })
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/orders`
       const order = { ...this.form }
       if (this.coupon.enabled) {

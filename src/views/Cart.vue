@@ -143,7 +143,16 @@
         </div>
       </div>
     </div>
-    <checkout :cart="cart" :cartTotal="cartTotal" :checkoutTotal="checkoutTotal" :coupon="coupon" v-show="checkingout" @backtocart="cartOrCheckout" ref="checkout"></checkout>
+    <checkout
+      :cart="cart"
+      :cartTotal="cartTotal"
+      :checkoutTotal="checkoutTotal"
+      :coupon="coupon"
+      v-show="checkingout"
+      @backtocart="cartOrCheckout"
+      ref="checkout"
+    >
+    </checkout>
   </div>
 </template>
 
@@ -166,10 +175,9 @@ export default {
   },
   created () {
     const loader = this.$loading.show({
-      container: this.$refs.cart,
-      opacity: 1,
-      isFullPage: true
-    })
+      isFullPage: true,
+      opacity: 1
+    }, { default: this.$createElement('MyLoading') })
     this.getCart(loader)
   },
   computed: {
@@ -207,6 +215,7 @@ export default {
       const loader = this.$loading.show({
         container: this.$refs.cartboard,
         opacity: 0.8,
+        loader: 'bars',
         isFullPage: true
       })
       if (!/^[0-9]+$/.test(num) || num < 1) {
@@ -237,7 +246,8 @@ export default {
       const loader = this.$loading.show({
         container: this.$refs.cartboard,
         opacity: 0.8,
-        isFullPage: true
+        isFullPage: true,
+        loader: 'bars'
       })
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/shopping/${id}`
       this.$http.delete(url).then(() => {
@@ -292,7 +302,7 @@ $gray: #484848;
   min-height: calc(100vh - 2rem);
   @media (min-width: 768px) {
     max-width: 768px;
-    margin-top: 1rem;
+    min-height: calc(100vh - 18.5rem);
   }
   @media (min-width: 992px) {
     max-width: 992px;

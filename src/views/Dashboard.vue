@@ -203,7 +203,7 @@ export default {
       background: #f5f5f5;
       box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
       .logo {
-        background: url(https://vuejs.org/images/logo.png);
+        background: url('../assets/logo.png');
         background-size: contain;
         background-repeat: no-repeat;
         height: 52px;

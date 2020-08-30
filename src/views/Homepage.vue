@@ -4,8 +4,18 @@
       <div class="swiper-container-wrapper">
         <div class="swiper-container jumbo-swiper-container">
           <div class="swiper-wrapper">
-            <div v-for="i in 3" class="swiper-slide" :key="`silder-${i}`">
-              <img class="w-100" src='https://images.unsplash.com/photo-1558661092-f9ad8c1c63c1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'>
+            <div class="swiper-slide">
+              <img class="w-100" src='https://hexschool-api.s3.us-west-2.amazonaws.com/custom/0MmTvxlbN47F1yN0PnduoTF7jPCkuqu8dwQawndwEY1PQ2zH1h65BO9dcFVw0jbNTvtwNz9ZdHupme1BkF5VAkJ2rhnGlQKlp0lcoyFK0tTfEs3lb740c3rFUdtWHTv7.png'>
+              <div class="swiper-button-next"></div>
+              <div class="swiper-button-prev"></div>
+            </div>
+            <div class="swiper-slide">
+              <img class="w-100" src='https://hexschool-api.s3.us-west-2.amazonaws.com/custom/AtMhV5NbdUgzwqYjNaVvaPOSqHAenZrM3EMiUrYbzCUsLAPmUFjQP4yBAzdeCwRSI9FdgeyB44dnDaxnKVLNdJdGPfEx15a8pCZJ3GQd7lF5g9dHrGk78P2tl2ctsskU.png'>
+              <div class="swiper-button-next"></div>
+              <div class="swiper-button-prev"></div>
+            </div>
+            <div class="swiper-slide">
+              <img class="w-100" src='https://hexschool-api.s3.us-west-2.amazonaws.com/custom/0ZAWW5aTeTMTAjZqCCKjSTtd79mcOpkwcwQWiUNWmi2D5O7i9ceAzuMVoEhpcYfSSRFx8FyMl5CRqz7mTsJssVS2lQB2dXWPZOn08t2NWuCSnjJMhWEy3npkM6kWbsK8.png'>
               <div class="swiper-button-next"></div>
               <div class="swiper-button-prev"></div>
             </div>
@@ -16,13 +26,13 @@
       </div>
       <div v-if="products.length > 0">
         <div class="section-wrapper">
-          <cardSwiper title="編輯嚴選" :products="products.slice(0, 10)" :cart="cart"></cardSwiper>
+          <cardSwiper title="編輯精選" :products="eventProducts.filter(item => item.options.event.split(' ').includes('編輯精選'))" :cart="cart"></cardSwiper>
         </div>
         <div class="section-wrapper">
-          <cardSwiper title="最近熱門" :products="products.slice(5, 20)" :cart="cart"></cardSwiper>
+          <cardSwiper title="最近熱門" :products="eventProducts.filter(item => item.options.event.split(' ').includes('本月熱門'))" :cart="cart"></cardSwiper>
         </div>
         <div class="section-wrapper">
-          <cardSwiper title="限時免運" :products="products.slice(15, 25)" :cart="cart"></cardSwiper>
+          <cardSwiper title="限時免運" :products="eventProducts.filter(item => item.options.event.split(' ').includes('免運'))" :cart="cart"></cardSwiper>
         </div>
       </div>
     </div>
@@ -36,6 +46,7 @@ export default {
   data () {
     return {
       products: [],
+      eventProducts: [],
       cart: {},
       mySwiper: {}
     }
@@ -79,11 +90,12 @@ export default {
       const loader = this.$loading.show({
         isFullPage: true,
         opacity: 1
-      })
+      }, { default: this.$createElement('MyLoading') })
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/products`
       this.$http.get(url)
         .then((res) => {
           this.products = res.data.data
+          this.eventProducts = this.products.filter(item => !(!item.options.event || item.options.event.length === 0))
           loader.hide()
         })
     },

@@ -115,7 +115,6 @@
               </div>
             </div>
           </div>
-          <pagination :pages="pagination" @emit-pages="getProducts" class="pagination-wrapper"></pagination>
         </div>
       </div>
       <div class="row w-100">
@@ -128,7 +127,6 @@
 <script>
 import { BPopover } from 'bootstrap-vue'
 import 'swiper/swiper-bundle.css'
-import pagination from '@/components/Pagination'
 export default {
   name: 'category',
   data () {
@@ -144,7 +142,6 @@ export default {
       },
       products: [],
       cart: {},
-      pagination: {},
       randomRating: {
         rate: [],
         count: Number
@@ -153,7 +150,6 @@ export default {
     }
   },
   components: {
-    pagination,
     'b-popover': BPopover
   },
   computed: {
@@ -191,7 +187,7 @@ export default {
         container: this.$refs.overlayLoading,
         isFullPage: true,
         opacity: 1
-      })
+      }, { default: this.$createElement('MyLoading') })
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/products`
       this.$http.get(url)
         .then((res) => {
@@ -200,7 +196,6 @@ export default {
           this.products.forEach(item => {
             item.rating = this.rating()
           })
-          this.pagination = res.data.meta.pagination
           loader.hide()
         })
     },
@@ -219,10 +214,10 @@ export default {
     },
     addToCart (item, quantity = 1) {
       const loader = this.$loading.show({
-        container: this.$refs.homeWrapper,
+        container: this.$refs.overlayLoading,
         isFullPage: true,
         opacity: 1
-      })
+      }, { default: this.$createElement('MyLoading') })
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/shopping`
       const cart = {
         product: item.id,

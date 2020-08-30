@@ -39,6 +39,11 @@ const routes = [
         name: '搜尋',
         component: () => import('../views/Search.vue'),
         props: (route) => ({ query: route.query.key })
+      },
+      {
+        path: '/about',
+        name: '簡介',
+        component: () => import('../views/About.vue')
       }
     ]
   },

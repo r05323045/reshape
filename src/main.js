@@ -13,6 +13,7 @@ import '@fortawesome/fontawesome-free/js/all.js'
 import { ValidationObserver, ValidationProvider, localize, configure, extend } from 'vee-validate'
 import * as rules from 'vee-validate/dist/rules'
 import 'vue-loading-overlay/dist/vue-loading.css'
+import MyLoading from '@/components/MyLoading'
 import App from './App.vue'
 import router from './router'
 import './bus'
@@ -34,6 +35,7 @@ configure({
 })
 localize('tw', zh)
 
+Vue.component('MyLoading', MyLoading)
 Vue.component('Loading', Loading)
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)
@@ -44,7 +46,7 @@ Vue.use(Loading, {
   isFullPage: false,
   height: 32,
   width: 32,
-  color: '#10567b'
+  color: '#00457C'
 })
 
 Vue.filter('priceFormat', function (value) {

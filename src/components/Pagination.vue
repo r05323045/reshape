@@ -128,11 +128,19 @@ export default {
 }
 </script>
 <style lang="scss">
+$pink: #FA7268;
+$navy: #00457C;
+$blue: #0079C1;
+$gray: #484848;
+$light-gray: #a8a8ab;
 .page-item.active.disabled {
   .page-link {
-    background-color: #2E90B7 !important;
-    border-color: #2E90B7 !important;
+    background-color: $blue!important;
+    border-color: $blue !important;
     color: #ffffff;
   }
+}
+*:focus {
+  outline: none !important
 }
 </style>

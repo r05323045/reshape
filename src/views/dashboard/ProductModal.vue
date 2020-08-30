@@ -94,12 +94,13 @@
                         <validation-provider v-slot="{ errors, classes }" rules="required">
                           <label for="subcategory">子分類</label>
                           <input
-                          id="subcategory"
-                          v-model="options.subcategory"
-                          type="text" class="form-control"
-                          :class="classes"
-                          placeholder="請輸入子分類"
-                          @change="optionsChange">
+                            id="subcategory"
+                            v-model="options.subcategory"
+                            type="text" class="form-control"
+                            :class="classes"
+                            placeholder="請輸入子分類"
+                            @change="optionsChange"
+                          >
                           <span v-if="errors[0]" class="text-danger">{{ `子分類${errors[0].slice(12, errors[0].length)}` }}</span>
                         </validation-provider>
                       </div>
@@ -257,7 +258,6 @@ export default {
     },
     optionsChange () {
       this.tempProduct.options = this.options
-      console.log(this.tempProduct.options)
     },
     uploadFile () {
       const uploadedFile = this.$refs.file.files[0]

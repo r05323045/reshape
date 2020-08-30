@@ -34,6 +34,7 @@ export default {
     // eslint-disable-next-line no-unused-vars
     const mySwiper = new Swiper('.swiper-container', {
       centeredSlides: true,
+      spaceBetween: '1%',
       autoplay: {
         delay: 2500,
         disableOnInteraction: false

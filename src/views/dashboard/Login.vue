@@ -28,7 +28,7 @@
         取得資料
       </button>
       <p class="mt-5 mb-3 text-muted">
-        &copy; 2020~∞ - 六角學院
+        &copy; 2020 Reshape. All Rights Reserved
       </p>
     </form>
   </div>
@@ -95,5 +95,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.text-muted {
+  font-size: 0.8rem;
 }
 </style>

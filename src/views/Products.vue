@@ -207,17 +207,25 @@ export default {
         container: this.$refs.overlayLoading,
         isFullPage: true,
         opacity: 1
-      })
+      }, { default: this.$createElement('MyLoading') })
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/products?paged=16&page=${page}`
       this.$http.get(url)
         .then((res) => {
           this.products = res.data.data
-          if (page === 1) {
-            this.hotProducts = this.products.slice(0, 5)
-          }
           this.products.forEach(item => {
             item.rating = this.rating()
           })
+          if (page === 1) {
+            for (let i = 0; i < 5; i++) {
+              const randomProduct = this.products[Math.floor(Math.random() * this.products.length)]
+              const hotProductsId = this.hotProducts.map(item => item.id)
+              if (hotProductsId.includes(randomProduct.id)) {
+                i -= 1
+              } else {
+                this.hotProducts.push(randomProduct)
+              }
+            }
+          }
           this.getSwiper()
           this.pagination = res.data.meta.pagination
           loader.hide()
@@ -238,10 +246,10 @@ export default {
     },
     addToCart (item, quantity = 1) {
       const loader = this.$loading.show({
-        container: this.$refs.homeWrapper,
+        container: this.$refs.overlayLoading,
         isFullPage: true,
         opacity: 1
-      })
+      }, { default: this.$createElement('MyLoading') })
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/shopping`
       const cart = {
         product: item.id,

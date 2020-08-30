@@ -190,10 +190,10 @@ export default {
     },
     addToCart () {
       const loader = this.$loading.show({
-        container: this.$refs.product,
-        opacity: 0.8,
+        container: this.$refs.overlayLoading,
+        opacity: 1,
         isFullPage: true
-      })
+      }, { default: this.$createElement('MyLoading') })
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/shopping`
       let method = 'post'
       const indexOfPatch = this.cartId.indexOf(this.cartPatch.product)
@@ -236,7 +236,7 @@ export default {
         container: this.$refs.overlayLoading,
         opacity: 1,
         isFullPage: true
-      })
+      }, { default: this.$createElement('MyLoading') })
       this.cartPatch.product = id
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/product/${id}`
       this.$http.get(url)

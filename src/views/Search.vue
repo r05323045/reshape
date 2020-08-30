@@ -27,7 +27,7 @@
           class="col-12 col-md-9 col-lg-10 card-decks-wrapper d-flex flex-column justify-content-center"
           :class="{'only-one': products.length <= numCardsRow}"
         >
-          <div class="title">{{ `找到${products.length}件"${$route.query.key}"的商品` }}</div>
+          <div class="title">{{ `找到 ${products.length} 件"${$route.query.key}"的商品` }}</div>
           <div v-for="i in 5" :key="`row_${i}`">
             <div class="card-deck" v-if="products.slice((i - 1) * numCardsRow, i * numCardsRow).length > 0">
               <div v-for="item in products.slice((i - 1) * numCardsRow, i * numCardsRow)" :key="item.id" class="card my-5" :id="item.id"  @click="$router.push(`/product/${item.id}`)"> <!-- @mouseover="getDescription(item)" -->
@@ -94,7 +94,6 @@
               </div>
             </div>
           </div>
-          <pagination :pages="pagination" @emit-pages="getProducts" class="pagination-wrapper"></pagination>
         </div>
       </div>
     </div>
@@ -104,14 +103,12 @@
 <script>
 import { BPopover } from 'bootstrap-vue'
 import 'swiper/swiper-bundle.css'
-import pagination from '@/components/Pagination'
 export default {
   name: 'search',
   data () {
     return {
       products: [],
       cart: {},
-      pagination: {},
       randomRating: {
         rate: [],
         count: Number
@@ -120,7 +117,6 @@ export default {
     }
   },
   components: {
-    pagination,
     'b-popover': BPopover
   },
   computed: {
@@ -156,7 +152,7 @@ export default {
         container: this.$refs.overlayLoading,
         isFullPage: true,
         opacity: 1
-      })
+      }, { default: this.$createElement('MyLoading') })
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/products`
       this.$http.get(url)
         .then((res) => {
@@ -170,7 +166,6 @@ export default {
           this.products.forEach(item => {
             item.rating = this.rating()
           })
-          this.pagination = res.data.meta.pagination
           loader.hide()
         })
     },
@@ -186,10 +181,10 @@ export default {
     },
     addToCart (item, quantity = 1) {
       const loader = this.$loading.show({
-        container: this.$refs.homeWrapper,
+        container: this.$refs.overlayLoading,
         isFullPage: true,
         opacity: 1
-      })
+      }, { default: this.$createElement('MyLoading') })
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/shopping`
       const cart = {
         product: item.id,
