@@ -163,6 +163,8 @@ export default {
             item.options.subcategory.includes(this.$route.query.key))
           )
           this.products.push(...eventProducts.filter(item => item.options.event.split(' ').includes(this.$route.query.key)))
+          const noRepeat = [...new Set(this.products.map(item => item.id))]
+          this.products = this.products.filter(item => noRepeat.includes(item.id))
           this.products.forEach(item => {
             item.rating = this.rating()
           })

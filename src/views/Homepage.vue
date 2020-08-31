@@ -4,18 +4,30 @@
       <div class="swiper-container-wrapper">
         <div class="swiper-container jumbo-swiper-container">
           <div class="swiper-wrapper">
-            <div class="swiper-slide" @click="$router.push('/category?n=1')">
-              <img class="w-100" src='https://hexschool-api.s3.us-west-2.amazonaws.com/custom/0MmTvxlbN47F1yN0PnduoTF7jPCkuqu8dwQawndwEY1PQ2zH1h65BO9dcFVw0jbNTvtwNz9ZdHupme1BkF5VAkJ2rhnGlQKlp0lcoyFK0tTfEs3lb740c3rFUdtWHTv7.png'>
+            <div class="swiper-slide">
+              <img
+                class="w-100"
+                @click="$router.push('/search?key=夏日嚴選')"
+                src='https://hexschool-api.s3.us-west-2.amazonaws.com/custom/0MmTvxlbN47F1yN0PnduoTF7jPCkuqu8dwQawndwEY1PQ2zH1h65BO9dcFVw0jbNTvtwNz9ZdHupme1BkF5VAkJ2rhnGlQKlp0lcoyFK0tTfEs3lb740c3rFUdtWHTv7.png'
+              >
               <div class="swiper-button-next"></div>
               <div class="swiper-button-prev"></div>
             </div>
-            <div class="swiper-slide" @click="$router.push('/category?n=4')">
-              <img class="w-100" src='https://hexschool-api.s3.us-west-2.amazonaws.com/custom/Zt5Ebl4HCveSAbLyggmF4wf8B0P8J2KctMp01huq1FHajKSLh3TpjmFjnTsVtZb2SbaTUWuHtGOElxjbFiN4pqNEOIu4HOOp4EYbSjJdqR275aBoTuvxaifDDau4i1FK.png'>
+            <div class="swiper-slide">
+              <img
+                class="w-100"
+                @click="$router.push('/category?n=2')"
+                src='https://hexschool-api.s3.us-west-2.amazonaws.com/custom/Zt5Ebl4HCveSAbLyggmF4wf8B0P8J2KctMp01huq1FHajKSLh3TpjmFjnTsVtZb2SbaTUWuHtGOElxjbFiN4pqNEOIu4HOOp4EYbSjJdqR275aBoTuvxaifDDau4i1FK.png'
+              >
               <div class="swiper-button-next"></div>
               <div class="swiper-button-prev"></div>
             </div>
-            <div class="swiper-slide" @click="$router.push('/category?n=2')">
-              <img class="w-100" src='https://hexschool-api.s3.us-west-2.amazonaws.com/custom/lOz7ks7pLTf5u3btisI2SXHHLDddIS68RXjNplzUQTFcJQEuFDCnLRNY3YOO5Y5C2ks6HvWwQIxXozUKED7QCFxFVsdkkn99zOCpejH8tAAIdRFUC7bDFDTIAN5V7rx0.png'>
+            <div class="swiper-slide">
+              <img
+                class="w-100"
+                src='https://hexschool-api.s3.us-west-2.amazonaws.com/custom/lOz7ks7pLTf5u3btisI2SXHHLDddIS68RXjNplzUQTFcJQEuFDCnLRNY3YOO5Y5C2ks6HvWwQIxXozUKED7QCFxFVsdkkn99zOCpejH8tAAIdRFUC7bDFDTIAN5V7rx0.png'
+                @click="$router.push('/category?n=4')"
+              >
               <div class="swiper-button-next"></div>
               <div class="swiper-button-prev"></div>
             </div>
@@ -161,6 +173,7 @@ $light-gray: #a8a8ab;
         .swiper-button-next {
           display: none;
           @media (min-width: 768px) {
+            z-index: 2;
             display: inline-block;
             transform: translate(0,-50%);
             box-shadow: -1px 1px 2px 0 rgba(0,0,0,0.1);

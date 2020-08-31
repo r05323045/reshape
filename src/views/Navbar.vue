@@ -19,7 +19,7 @@
               </button>
             </div>
             <div class="search-advice">
-              <span class="text" @click="$router.push(`/search?key=玻璃杯`)">玻璃杯</span>
+              <span class="text" @click="$router.push(`/search?key=外套`)">外套</span>
               <span class="text" @click="$router.push(`/search?key=夏日嚴選`)">夏日嚴選</span>
               <span class="text" @click="$router.push(`/search?key=免運`)">免運</span>
               <span class="text" @click="$router.push(`/search?key=抒壓小物`)">抒壓小物</span>
