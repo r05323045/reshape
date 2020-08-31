@@ -14,7 +14,10 @@
           </div>
           <div class="img"></div>
           <div class="text">
-            Reshape 於 2020 年成立，為用戶嚴選設計、居家、等質感商品，將時尚美學注入大眾的日常，連結設計、創意品牌與個人生活需求，重塑每個人的生活。我們透過嚴選商品、數據分析與客製化服務，致力於為用戶創造精緻的體驗，滿足大眾對「美」的需求，為設計創造價值。
+            Reshape 於 2020 年成立，為用戶嚴選設計、居家、等質感商品，將時尚美學注入大眾的日常，連結設計、創意品牌與個人生活需求，重塑每個人的生活。我們透過嚴選商品、數據分析與客製化服務，致力於為用戶創造精緻的購物體驗，滿足大眾對「美」的需求，為設計創造價值。
+          </div>
+          <div class="text en">
+            Reshape was founded in 2020, strictly merchandising for our user, put beauty into everyone's daily, creating a connection between personal demand and design brand, we reshape people's life. Reshape aims to make delicate shopping experience, via strictly merchandising, data analysis, and customization service, we satisfy the need of aesthetic and create value for the design.
           </div>
         </div>
       </div>
@@ -88,16 +91,20 @@ $gray: #484848;
         }
       }
       .img {
-        margin: 2rem 0;
+        margin-top: 2rem;
         width: 100%;
         padding-top: 25%;
         background: url(https://images.unsplash.com/photo-1589606024345-6e1441cc949b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2207&q=80) no-repeat center/contain;
       }
       .text {
+        margin-top: 2rem;
         font-size: 1rem;
         @media (min-width: 768px) {
           font-size: 1.25rem;
         }
+      }
+      .en {
+        color: $gray;
       }
     }
   }

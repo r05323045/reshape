@@ -1,4 +1,4 @@
-.loading{font-size:.8rem;font-weight:500;font-family:Comfortaa,cursive;color:#00457c;margin:0 1rem}@media (min-width:768px){.loading{font-size:.9rem}}.loading .quick-spin{-webkit-animation:fa-spin 1s linear infinite;animation:fa-spin 1s linear infinite}
+.loading{font-size:.8rem;font-weight:400;color:#00457c;line-height:1rem;height:1rem;vertical-align:center;margin:0 1rem}@media (min-width:768px){.loading{font-size:.9rem}}.loading .quick-spin{-webkit-animation:fa-spin 1s linear infinite;animation:fa-spin 1s linear infinite}
 
 /*!
  * Bootstrap v4.5.0 (https://getbootstrap.com/)

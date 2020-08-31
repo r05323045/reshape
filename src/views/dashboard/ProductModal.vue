@@ -91,7 +91,7 @@
                     </div>
                     <div class="form-row">
                       <div class="form-group col-md-6">
-                        <validation-provider v-slot="{ errors, classes }" rules="required">
+                        <validation-provider v-slot="{ errors, classes }">
                           <label for="subcategory">子分類</label>
                           <input
                             id="subcategory"

@@ -32,7 +32,7 @@
           <button class="navbar-toggler d-md-none" type="button" data-toggle="collapse" data-target="#searchBar">
             <span><i class="fas fa-search"></i></span>
           </button>
-          <button class="login d-none d-md-block" type="button" @click="$router.push('/admin/')">
+          <button class="login d-none d-md-block disabled" type="button" @click="$router.push('/admin/')">
             我要登入
           </button>
           <button class="fa-wrapper navbar-toggler" type="button" @click="$router.push('/cart')">
@@ -77,14 +77,14 @@
                     <span class="text">熱門排行</span>
                   </router-link>
                 </li>
-                <li class="list-group-item" @click="$router.push('/')">
-                  <router-link to="/" class="router-link mr-3">
-                    <span class="badge new">New</span>
-                    <span class="text">新品上架</span>
+                <li class="list-group-item" @click="$router.push(`/search?key=夏日嚴選`)">
+                  <router-link to="/search?key=夏日嚴選" class="router-link mr-3">
+                    <span class="badge new">new</span>
+                    <span class="text">夏日嚴選</span>
                   </router-link>
                 </li>
-                <li class="list-group-item" @click="$router.push('/')">
-                  <router-link to="/" class="router-link mr-3">
+                <li class="list-group-item" @click="$router.push(`/search?key=免運`)">
+                  <router-link to="/search?key=免運" class="router-link mr-3">
                     免運專區
                   </router-link>
                 </li>
@@ -634,6 +634,12 @@ $light-gray: #a8a8ab;
                 }
                 .text {
                   margin-left: 3rem;
+                }
+                .hot {
+                  background: $pink;
+                }
+                .new {
+                  background: $navy;
                 }
               }
             }

@@ -216,7 +216,8 @@ export default {
         container: this.$refs.cartboard,
         opacity: 0.8,
         loader: 'bars',
-        isFullPage: true
+        isFullPage: true,
+        color: '#00457C'
       })
       if (!/^[0-9]+$/.test(num) || num < 1) {
         num = 1
@@ -234,7 +235,9 @@ export default {
       const loader = this.$loading.show({
         container: this.$refs.cartboard,
         opacity: 0.8,
-        isFullPage: true
+        isFullPage: true,
+        loader: 'bars',
+        color: '#00457C'
       })
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/shopping/all/product`
       this.$http.delete(url)
@@ -247,7 +250,8 @@ export default {
         container: this.$refs.cartboard,
         opacity: 0.8,
         isFullPage: true,
-        loader: 'bars'
+        loader: 'bars',
+        color: '#00457C'
       })
       const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/shopping/${id}`
       this.$http.delete(url).then(() => {

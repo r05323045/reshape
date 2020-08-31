@@ -215,7 +215,7 @@ export default {
           this.products.forEach(item => {
             item.rating = this.rating()
           })
-          if (page === 1) {
+          if (page === 1 && this.hotProducts.length === 0) {
             for (let i = 0; i < 5; i++) {
               const randomProduct = this.products[Math.floor(Math.random() * this.products.length)]
               const hotProductsId = this.hotProducts.map(item => item.id)

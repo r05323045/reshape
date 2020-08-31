@@ -53,11 +53,11 @@
               </validation-observer>
             </div>
           </div>
-          <div class="put-in-cart">
-            <div v-if="!alreadyPut" class="add-to-cart btn d-flex justify-content-center mt-3 mb-3" @click="addToCart">
+          <div class="put-in-cart" v-if="cart">
+            <div v-if="!cartId.includes(product.id)" class="add-to-cart btn d-flex justify-content-center mt-3 mb-3" @click="addToCart">
               <span>放入購物車</span>
             </div>
-            <div v-if="alreadyPut" class="go-to-checkout btn d-flex justify-content-center mt-3 mb-3" @click="$router.push('/cart')">
+            <div v-if="cartId.includes(product.id)" class="go-to-checkout btn d-flex justify-content-center mt-3 mb-3" @click="$router.push('/cart')">
               <span>立刻結帳</span>
             </div>
           </div>
@@ -123,7 +123,6 @@ export default {
         quantity: 1
       },
       cartQuantity: 1,
-      alreadyPut: false,
       randomRating: {
         rate: [],
         count: Number

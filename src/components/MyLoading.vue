@@ -17,9 +17,11 @@ $gray: #484848;
 $light-gray: #a8a8ab;
 .loading {
   font-size: 0.8rem;
-  font-weight: 500;
-  font-family: 'Comfortaa', cursive;
+  font-weight: 400;
   color: $navy;
+  line-height: 1rem;
+  height: 1rem;
+  vertical-align: center;
   margin: 0 1rem;
   @media (min-width: 768px) {
     font-size: 0.9rem;
