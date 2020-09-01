@@ -82,7 +82,7 @@
               訂單摘要
             </div>
             <div class="card-body d-flex flex-column">
-              <loading :active.sync="isLoading" loader="bars" :is-full-page="false" :opacity="1" :z-index="2"></loading>
+              <loading :active.sync="isLoading" loader="bars" :color="'#00457C'" :is-full-page="false" :opacity="1" :z-index="2"></loading>
               <ul class="list-group h-100">
                 <li class="list-group-item d-flex justify-content-between">
                   <span>商品總計</span>

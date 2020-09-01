@@ -217,14 +217,13 @@ $gray: #484848;
     .router {
       width: 100%;
       cursor: pointer;
-      color: $navy;
+      color: $blue;
     }
     .router:hover {
       text-decoration: underline;
     }
     .fa-angle-left {
       cursor: pointer;
-      color: $navy;
     }
   }
   .cart-step-wrapper {

@@ -251,7 +251,7 @@ export default {
       })
     },
     getProducts (loader) {
-      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/products`
+      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/products?paged=999`
       this.$http.get(url)
         .then((res) => {
           this.products = res.data.data
