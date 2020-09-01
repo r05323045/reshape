@@ -1,7 +1,8 @@
 # Reshape 
 
-A platform aims to satisfy your need of aesthetic and create value for the design.
-
+<p align="center">
+  A platform aims to satisfy your need of aesthetic and create value for the design.
+</p>
 <p align="center">
   <a  href="https://r05323045.github.io/reshape/dist/">Explore The Website</a>
 </p>
@@ -9,10 +10,11 @@ A platform aims to satisfy your need of aesthetic and create value for the desig
 <p align="center">
   <img src="./public/images/demo_frontend_homepage.png" />
 </p>
+<br/><br/>
 
 ---
 
-### User Interface
+## User Interface
 
 **Visitor**
 <br/><br/>
@@ -23,12 +25,12 @@ A platform aims to satisfy your need of aesthetic and create value for the desig
 **Admin Dashboard**
 <br/><br/>
 <p align="center">
-  <img src="./public/images/demo_backend_products.gif" />
+  <img src="./public/images/demo_backend_tour.gif" />
 </p>
 
 ---
 
-### Features
+## Features
 
 **Visitor**
 
@@ -49,7 +51,7 @@ As a admin, you can:
 
 ---
 
-### Third-party APIs and Open source used in this project
+## Third-party APIs and Open source used in this project
 
 - Using [vue-chartkick](https://github.com/ankane/vue-chartkick) in admin dashboard to visualize data
 - Using [Vuelidate](https://github.com/vuelidate/vuelidate) for form validation
@@ -62,7 +64,7 @@ As a admin, you can:
 
 ---
 
-### REST APIs
+## REST APIs
 
 Backend APIs are provided by [hexschool](https://courses.hexschool.com/)
 
