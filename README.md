@@ -2,25 +2,31 @@
 
 A platform aims to satisfy your need of aesthetic and create value for the design.
 
-<a align="center" href="https://r05323045.github.io/reshape/dist/">Explore The Website</a>
-
+<p align="center">
+  <a  href="https://r05323045.github.io/reshape/dist/">Explore The Website</a>
+</p>
+<br/><br/>
 <p align="center">
   <img src="./public/images/demo_frontend_homepage.png" />
 </p>
 
+---
+
 ### User Interface
 
 **Visitor**
-
+<br/><br/>
 <p align="center">
   <img src="./public/images/demo_frontend_product.gif" />
 </p>
 
 **Admin Dashboard**
-
+<br/><br/>
 <p align="center">
   <img src="./public/images/demo_backend_products.gif" />
 </p>
+
+---
 
 ### Features
 
@@ -40,6 +46,8 @@ As a admin, you can:
 1. Review sales perfoormance by infographic
 2. Manage your image resource and copy image url to use it
 3. Edit your products, coupons and orders information
+
+---
 
 ### Third-party APIs and Open source used in this project
 
