@@ -62,7 +62,7 @@
             <div class="mobile">
               <ul class="list-group section">
                 <li class="list-group-item">
-                  <div to="/admin/" class="router-link mr-3">登入 / 註冊</div>
+                  <router-link to="" class="router-link mr-3">登入 / 註冊</router-link>
                 </li>
               </ul>
               <ul class="list-group section">
@@ -72,21 +72,21 @@
                   </li>
                 </div>
                 <li class="list-group-item" @click="$router.push('/products')">
-                  <div to="/products" class="router-link mr-3">
+                  <router-link to="/products" class="router-link mr-3">
                     <span class="badge hot">Hot</span>
                     <span class="text">熱門排行</span>
-                  </div>
+                  </router-link>
                 </li>
                 <li class="list-group-item" @click="$router.push(`/search?key=夏日嚴選`)">
-                  <div to="/search?key=夏日嚴選" class="router-link mr-3">
+                  <router-link to="/search?key=夏日嚴選" class="router-link mr-3">
                     <span class="badge new">new</span>
                     <span class="text">夏日嚴選</span>
-                  </div>
+                  </router-link>
                 </li>
                 <li class="list-group-item" @click="$router.push(`/search?key=免運`)">
-                  <div to="/search?key=免運" class="router-link mr-3">
+                  <router-link to="/search?key=免運" class="router-link mr-3">
                     免運專區
-                  </div>
+                  </router-link>
                 </li>
               </ul>
               <ul class="list-group section">
@@ -97,51 +97,51 @@
                 </div>
                 <li class="list-group-item" @click="$router.push('/category?n=1')">
                   <i class="fas fa-utensils"></i>
-                  <div to="/category?n=1" class="router-link mr-3">
+                  <router-link to="/category?n=1" class="router-link mr-3">
                     廚房餐桌
-                  </div>
+                  </router-link>
                   <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/category?n=2')">
                   <i class="fas fa-couch"></i>
-                  <div to="/category?n=2" class="router-link mr-3">
+                  <router-link to="/category?n=2" class="router-link mr-3">
                     空間佈置
-                  </div>
+                  </router-link>
                   <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/category?n=3')">
                   <i class="fas fa-laptop-house"></i>
-                  <div to="/category?n=3" class="router-link mr-3">
+                  <router-link to="/category?n=3" class="router-link mr-3">
                     質感生活
-                  </div>
+                  </router-link>
                   <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/category?n=4')">
                   <i class="fas fa-tshirt"></i>
-                  <div to="/category?n=4" class="router-link mr-3">
+                  <router-link to="/category?n=4" class="router-link mr-3">
                     品味衣著
-                  </div>
+                  </router-link>
                   <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/category?n=5')">
                   <i class="fas fa-pencil-ruler"></i>
-                  <div to="/category?n=5" class="router-link mr-3">
+                  <router-link to="/category?n=5" class="router-link mr-3">
                     文具小物
-                  </div>
+                  </router-link>
                   <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/category?n=6')">
                   <i class="fas fa-cocktail"></i>
-                  <div to="/category?n=6" class="router-link mr-3">
+                  <router-link to="/category?n=6" class="router-link mr-3">
                     食品飲料
-                  </div>
+                  </router-link>
                   <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/category?n=7')">
                   <i class="fas fa-hiking"></i>
-                  <div to="/category?n=7" class="router-link mr-3">
+                  <router-link to="/category?n=7" class="router-link mr-3">
                     戶外休閒
-                  </div>
+                  </router-link>
                   <i class="fas fa-angle-right"></i>
                 </li>
               </ul>
@@ -152,10 +152,10 @@
                   </li>
                 </div>
                 <li class="list-group-item" @click="$router.push('/about')">
-                  <div to="/" class="router-link mr-3">品牌故事</div>
+                  <router-link to="/" class="router-link mr-3">品牌故事</router-link>
                 </li>
                 <li class="list-group-item" @click="goToGithub">
-                  <div to="" class="router-link mr-3">作者</div>
+                  <router-link to="" class="router-link mr-3">作者</router-link>
                 </li>
               </ul>
             </div>
