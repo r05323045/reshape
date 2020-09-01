@@ -211,7 +211,8 @@ $gray: #484848;
     padding-top: 7.5rem;
   }
   @media (min-width: 768px) {
-    padding-top: 2rem;
+    padding-top: 0rem;
+    margin-top: 2rem;
   }
   .router-wrapper {
     .router {

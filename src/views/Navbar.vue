@@ -62,7 +62,7 @@
             <div class="mobile">
               <ul class="list-group section">
                 <li class="list-group-item">
-                  <router-link to="/admin/" class="router-link mr-3">登入 / 註冊</router-link>
+                  <div to="/admin/" class="router-link mr-3">登入 / 註冊</div>
                 </li>
               </ul>
               <ul class="list-group section">
@@ -72,21 +72,21 @@
                   </li>
                 </div>
                 <li class="list-group-item" @click="$router.push('/products')">
-                  <router-link to="/products" class="router-link mr-3">
+                  <div to="/products" class="router-link mr-3">
                     <span class="badge hot">Hot</span>
                     <span class="text">熱門排行</span>
-                  </router-link>
+                  </div>
                 </li>
                 <li class="list-group-item" @click="$router.push(`/search?key=夏日嚴選`)">
-                  <router-link to="/search?key=夏日嚴選" class="router-link mr-3">
+                  <div to="/search?key=夏日嚴選" class="router-link mr-3">
                     <span class="badge new">new</span>
                     <span class="text">夏日嚴選</span>
-                  </router-link>
+                  </div>
                 </li>
                 <li class="list-group-item" @click="$router.push(`/search?key=免運`)">
-                  <router-link to="/search?key=免運" class="router-link mr-3">
+                  <div to="/search?key=免運" class="router-link mr-3">
                     免運專區
-                  </router-link>
+                  </div>
                 </li>
               </ul>
               <ul class="list-group section">
@@ -97,51 +97,51 @@
                 </div>
                 <li class="list-group-item" @click="$router.push('/category?n=1')">
                   <i class="fas fa-utensils"></i>
-                  <router-link to="/category?n=1" class="router-link mr-3">
+                  <div to="/category?n=1" class="router-link mr-3">
                     廚房餐桌
-                  </router-link>
+                  </div>
                   <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/category?n=2')">
                   <i class="fas fa-couch"></i>
-                  <router-link to="/category?n=2" class="router-link mr-3">
+                  <div to="/category?n=2" class="router-link mr-3">
                     空間佈置
-                  </router-link>
+                  </div>
                   <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/category?n=3')">
                   <i class="fas fa-laptop-house"></i>
-                  <router-link to="/category?n=3" class="router-link mr-3">
+                  <div to="/category?n=3" class="router-link mr-3">
                     質感生活
-                  </router-link>
+                  </div>
                   <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/category?n=4')">
                   <i class="fas fa-tshirt"></i>
-                  <router-link to="/category?n=4" class="router-link mr-3">
+                  <div to="/category?n=4" class="router-link mr-3">
                     品味衣著
-                  </router-link>
+                  </div>
                   <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/category?n=5')">
                   <i class="fas fa-pencil-ruler"></i>
-                  <router-link to="/category?n=5" class="router-link mr-3">
+                  <div to="/category?n=5" class="router-link mr-3">
                     文具小物
-                  </router-link>
+                  </div>
                   <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/category?n=6')">
                   <i class="fas fa-cocktail"></i>
-                  <router-link to="/category?n=6" class="router-link mr-3">
+                  <div to="/category?n=6" class="router-link mr-3">
                     食品飲料
-                  </router-link>
+                  </div>
                   <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/category?n=7')">
                   <i class="fas fa-hiking"></i>
-                  <router-link to="/category?n=7" class="router-link mr-3">
+                  <div to="/category?n=7" class="router-link mr-3">
                     戶外休閒
-                  </router-link>
+                  </div>
                   <i class="fas fa-angle-right"></i>
                 </li>
               </ul>
@@ -152,10 +152,10 @@
                   </li>
                 </div>
                 <li class="list-group-item" @click="$router.push('/about')">
-                  <router-link to="/" class="router-link mr-3">品牌故事</router-link>
+                  <div to="/" class="router-link mr-3">品牌故事</div>
                 </li>
-                <li class="list-group-item" @click="$router.push('/')">
-                  <router-link to="/" class="router-link mr-3">作者</router-link>
+                <li class="list-group-item" @click="goToGithub">
+                  <div to="" class="router-link mr-3">作者</div>
                 </li>
               </ul>
             </div>
@@ -168,7 +168,7 @@
     <footer class="w-100 d-flex flex-column justify-content-center align-items-center">
       <div>
         <div class="brand-name">
-          <span class="title" @click="$router.push('/')">Reshape </span>
+          <span class="title" @click="goToGithub">Reshape </span>
           <span class="text">| Reshape Your Life</span>
         </div>
         <div>
@@ -229,6 +229,9 @@ export default {
     },
     onScroll (e) {
       this.scrollY = window.top.scrollY
+    },
+    goToGithub () {
+      window.location.href = 'https://github.com/r05323045/reshape'
     }
   }
 }

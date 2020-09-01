@@ -19,6 +19,12 @@
           <div class="text en">
             Reshape was founded in 2020, strictly merchandising for our user, put beauty into everyone's daily, creating a connection between personal demand and design brand, we reshape people's life. Reshape aims to make delicate shopping experience, via strictly merchandising, data analysis, and customization service, we satisfy the need of aesthetic and create value for the design.
           </div>
+          <div class="know-more">
+            <div class="text" @click="goToGithub">
+              了解更多
+              <i class="fas fa-angle-right"></i>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -32,6 +38,11 @@ export default {
       opacity: 1
     }, { default: this.$createElement('MyLoading') })
     setTimeout(() => { loader.hide() }, 1000)
+  },
+  methods: {
+    goToGithub () {
+      window.location.href = 'https://github.com/r05323045/reshape'
+    }
   }
 }
 </script>
@@ -105,6 +116,30 @@ $gray: #484848;
       }
       .en {
         color: $gray;
+      }
+      .know-more {
+        display: none;
+        @media (min-width: 768px) {
+          display: block;
+          margin-top: 2rem;
+        }
+        .text {
+          width: 8rem;
+          cursor: pointer;
+          font-weight: 500;
+          font-size: 1rem;
+          height: 2rem;
+          line-height: 2rem;
+          vertical-align: center;
+          color: $blue;
+          .fa-angle-right {
+            margin-left: 0.5rem;
+            color: $gray;
+          }
+        }
+        .text:hover {
+          text-decoration: underline;
+        }
       }
     }
   }

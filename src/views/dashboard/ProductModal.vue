@@ -107,11 +107,11 @@
                       <div class="form-group col-md-6">
                         <label for="event">活動</label>
                         <input id="event"
-                        v-model="options.event"
-                        type="text"
-                        class="form-control"
-                        placeholder="請使用空白鍵分隔"
-                        @change="optionsChange">
+                          v-model="options.event"
+                          type="text"
+                          class="form-control"
+                          placeholder="請使用空白鍵分隔"
+                          @change="optionsChange">
                       </div>
                     </div>
                   </div>
@@ -205,19 +205,19 @@ export default {
   methods: {
     clearTempProduct () {
       this.tempProduct = { imageUrl: [], enabled: false, options: {} }
+      this.options = { subcategory: '', event: '' }
       this.$refs.form.reset()
     },
     getProduct (id) {
-      this.options = { subcategory: '', event: '' }
-      this.$refs.form.reset()
+      this.clearTempProduct()
       if (!this.isNew) {
         this.modalTitle = '編輯產品'
       }
       const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/admin/ec/product/${id}`
       this.$http.get(api)
         .then((res) => {
-          $('#productModal').modal('show')
           this.tempProduct = res.data.data
+          $('#productModal').modal('show')
           if (!this.tempProduct.options) {
             this.tempProduct.options = {}
           } else {
