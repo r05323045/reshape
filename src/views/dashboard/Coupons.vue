@@ -227,7 +227,6 @@
 
 <script>
 import $ from 'jquery'
-
 export default {
   name: 'Coupons',
   data () {

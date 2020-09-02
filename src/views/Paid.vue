@@ -11,6 +11,9 @@
     </div>
   </div>
 </template>
+<script>
+export default {}
+</script>
 <style lang="scss">
 $pink: #FA7268;
 $navy: #00457C;

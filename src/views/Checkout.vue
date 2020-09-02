@@ -133,7 +133,7 @@
 </template>
 
 <script>
-import paid from './Paid'
+import paid from '@/views/Paid'
 export default {
   name: 'Checkout',
   data () {

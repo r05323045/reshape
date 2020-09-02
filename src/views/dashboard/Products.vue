@@ -64,8 +64,8 @@
 
 <script>
 import $ from 'jquery'
-import productModal from './ProductModal'
-import delProductModal from './DelProductModal'
+import productModal from '@/views/dashboard/ProductModal'
+import delProductModal from '@/views/dashboard/DelProductModal'
 import pagination from '@/components/Pagination'
 export default {
   name: 'Products',

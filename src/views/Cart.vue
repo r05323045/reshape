@@ -157,7 +157,7 @@
 </template>
 
 <script>
-import checkout from './Checkout.vue'
+import checkout from '@/views/Checkout.vue'
 export default {
   name: 'Cart',
   data () {

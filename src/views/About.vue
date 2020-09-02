@@ -25,6 +25,12 @@
               <i class="fas fa-angle-right"></i>
             </div>
           </div>
+          <div class="notice">
+            <hr>
+            <div class="text">
+              商品圖片來源自Pinkoi、citysocial等購物網站，此網站僅供學習使用，無任何商業利益行為。
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -139,6 +145,16 @@ $gray: #484848;
         }
         .text:hover {
           text-decoration: underline;
+        }
+      }
+      .notice {
+        margin-top: 2rem;
+        .text{
+          font-size: 0.8rem;
+          color: #666;
+          @media (min-width: 768px) {
+            font-size: 0.9rem;
+          }
         }
       }
     }

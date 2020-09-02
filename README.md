@@ -45,7 +45,7 @@ As a visitor, you can:
 
 As a admin, you can:
 
-1. Review sales perfoormance by infographic
+1. Review sales performance by infographic
 2. Manage your image resource and copy image url to use it
 3. Edit your products, coupons and orders information
 
@@ -93,3 +93,4 @@ npm run lint
 #### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
+---
