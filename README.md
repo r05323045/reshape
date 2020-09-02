@@ -1,7 +1,7 @@
 # Reshape 
 
 <p align="center">
-  A platform aims to satisfy your need of aesthetic and create value for the design.
+  A platform aims to satisfy your need for aesthetics and create value for the design.
 </p>
 <p align="center">
   <a  href="https://r05323045.github.io/reshape/dist/">Explore The Website</a>
@@ -36,18 +36,23 @@
 
 As a visitor, you can:
 
-1. Explore what you want by browsing and searching, also, we created some categories which can help you to get product you need
-2. No matter you want to buy something immediately or not, you can add products into shopping cart at first
+1. Explore what you want by browsing and searching, also, we created some categories which can help you to get the product you need
+2. No matter you want to buy something immediately or not, you can add products into the shopping cart at first
 3. Check out the detail of products is available
 4. Apply coupons on checkout to save your money ( you can try coupon code **LOVE88** to get some discount )
 
 **Admin**
 
-As a admin, you can:
+As an admin, you can:
 
 1. Review sales performance by infographic
-2. Manage your image resource and copy image url to use it
+2. Manage your image resource and copy image URL to use it
 3. Edit your products, coupons and orders information
+
+**Upcoming Features**
+
+1. Favorites list to store your desire
+2. Event pages for product promotion and enrich the website
 
 ---
 

@@ -49,7 +49,7 @@
             <span class="mx-2">{{ name[$route.query.n] }}</span>
           </div>
           <div class="title">{{ name[$route.query.n] }}</div>
-          <div v-for="i in 5" :key="`row_${i}`">
+          <div v-for="i in Math.ceil(products.length/numCardsRow)" :key="`row_${i}`">
             <div class="card-deck" v-if="products.slice((i - 1) * numCardsRow, i * numCardsRow).length > 0">
               <div v-for="item in products.slice((i - 1) * numCardsRow, i * numCardsRow)" :key="item.id" class="card my-5" :id="item.id"  @click="$router.push(`/product/${item.id}`)"> <!-- @mouseover="getDescription(item)" -->
                 <div class="img-wrapper">

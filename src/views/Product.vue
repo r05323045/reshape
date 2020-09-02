@@ -70,7 +70,7 @@
         <div class="card-decks-wrapper col-12">
           <div class="card-decks-wrapper">
             <div class="title">類似商品</div>
-            <div v-for="i in 5" :key="`row_${i}`">
+            <div v-for="i in Math.ceil(products.length/numCardsRow)" :key="`row_${i}`">
               <div class="card-deck" v-if="products.slice((i - 1) * numCardsRow, i * numCardsRow).length > 0">
                 <div
                   v-for="item in products.slice((i - 1) * numCardsRow, i * numCardsRow)"

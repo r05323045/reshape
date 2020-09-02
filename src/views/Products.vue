@@ -69,7 +69,7 @@
           <div class="col-0 col-xl-2"></div>
           <div class="card-decks-wrapper col-12 col-xl-10">
             <div class="title">熱賣商品</div>
-            <div v-for="i in 5" :key="`row_${i}`">
+            <div v-for="i in Math.ceil(products.length/numCardsRow)" :key="`row_${i}`">
               <div class="card-deck" v-if="products.slice((i - 1) * numCardsRow, i * numCardsRow).length > 0">
                 <div v-for="item in products.slice((i - 1) * numCardsRow, i * numCardsRow)" :key="item.id" class="card my-5" :id="item.id"  @click="$router.push(`/product/${item.id}`)"> <!-- @mouseover="getDescription(item)" -->
                   <div class="img-wrapper">
@@ -229,6 +229,7 @@ export default {
           this.getSwiper()
           this.pagination = res.data.meta.pagination
           loader.hide()
+          window.scrollTo(0, 0)
         })
     },
     getCart (loader) {
@@ -414,7 +415,7 @@ $light-gray: #a8a8ab;
           }
         }
         .list-group-item:hover {
-          -webkit-filter: opacity(0.8)
+          filter: opacity(0.8)
         }
         .list-group-item {
           margin: 0.1rem 0;
