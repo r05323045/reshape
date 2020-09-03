@@ -19,7 +19,7 @@
 **Visitor**
 <br/><br/>
 <p align="center">
-  <img src="./public/images/demo_frontend_product.gif" />
+  <img src="./public/images/demo_frontend_tour.gif" />
 </p>
 
 **Admin Dashboard**
