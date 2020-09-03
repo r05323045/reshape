@@ -44,7 +44,7 @@
         </div>
         <div class="col-12 col-md-9 col-lg-10 card-decks-wrapper d-flex flex-column justify-content-center" :class="{'only-one': products.length <= numCardsRow}">
           <div class="router-wrapper">
-            <router-link to="/"><span class="mr-2 router">首頁</span></router-link>
+            <router-link to="/products"><span class="mr-2 router">所有分類</span></router-link>
             <i class="fas fa-angle-right"></i>
             <span class="mx-2">{{ name[$route.query.n] }}</span>
           </div>
@@ -267,9 +267,9 @@ $light-gray: #a8a8ab;
     min-height: calc(100vh - 18.5rem) !important;
   }
   .category {
-    margin: 5rem auto 2rem auto;
+    margin: 3.5rem auto 2rem auto;
     @media (min-width: 576px) {
-      margin-top: 4rem;
+      margin-top: 3.5rem;
     }
     @media (min-width: 768px) {
       margin: 1rem auto;
@@ -342,21 +342,32 @@ $light-gray: #a8a8ab;
     }
     .card-decks-wrapper {
       width: 100%;
-      padding: 0 1rem 1rem 1rem;
+      padding: 2rem 1rem 1rem 1rem;
+      @media (min-width: 468px) {
+        padding-top: 3rem;
+      }
+      @media (min-width: 576px) {
+        padding-top: 1.5rem;
+      }
+      @media (min-width: 667px) {
+        padding-top: 2.5rem;
+      }
+      @media (min-width: 768px) {
+        padding-top: 0rem;
+      }
       @media (min-width: 992px) {
         padding-left: 3rem !important;
         padding-right: 3rem !important;
       }
       .router-wrapper {
-        margin-bottom: 2rem;
-        .router {
-          color: $blue;
-        }
-        @media (min-width: 576px) {
-          margin-top: 3rem;
-        }
+        display: none;
         @media (min-width: 768px) {
-          display: none;
+          display: block;
+          margin-bottom: 2rem;
+          .router {
+            cursor: pointer;
+            color: $blue;
+          }
         }
       }
       .title {

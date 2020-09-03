@@ -325,7 +325,7 @@ $gray: #484848;
     background: #ffffff;
     position: relative;
     @media (min-width: 576px) {
-      margin-top: 7.5rem;
+      margin-top: 5.5rem;
     }
     @media (min-width: 768px) {
       margin: 2rem;

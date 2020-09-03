@@ -72,19 +72,19 @@
                   </li>
                 </div>
                 <li class="list-group-item" @click="$router.push('/products')">
-                  <router-link to="/products" class="router-link mr-3">
+                  <router-link to="" class="router-link mr-3">
                     <span class="badge hot">Hot</span>
                     <span class="text">熱門排行</span>
                   </router-link>
                 </li>
                 <li class="list-group-item" @click="$router.push(`/search?key=夏日嚴選`)">
-                  <router-link to="/search?key=夏日嚴選" class="router-link mr-3">
+                  <router-link to="" class="router-link mr-3">
                     <span class="badge new">new</span>
                     <span class="text">夏日嚴選</span>
                   </router-link>
                 </li>
                 <li class="list-group-item" @click="$router.push(`/search?key=免運`)">
-                  <router-link to="/search?key=免運" class="router-link mr-3">
+                  <router-link to="" class="router-link mr-3">
                     免運專區
                   </router-link>
                 </li>
@@ -97,49 +97,49 @@
                 </div>
                 <li class="list-group-item" @click="$router.push('/category?n=1')">
                   <i class="fas fa-utensils"></i>
-                  <router-link to="/category?n=1" class="router-link mr-3">
+                  <router-link to="" class="router-link mr-3">
                     廚房餐桌
                   </router-link>
                   <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/category?n=2')">
                   <i class="fas fa-couch"></i>
-                  <router-link to="/category?n=2" class="router-link mr-3">
+                  <router-link to="" class="router-link mr-3">
                     空間佈置
                   </router-link>
                   <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/category?n=3')">
                   <i class="fas fa-laptop-house"></i>
-                  <router-link to="/category?n=3" class="router-link mr-3">
+                  <router-link to="" class="router-link mr-3">
                     質感生活
                   </router-link>
                   <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/category?n=4')">
                   <i class="fas fa-tshirt"></i>
-                  <router-link to="/category?n=4" class="router-link mr-3">
+                  <router-link to="" class="router-link mr-3">
                     品味衣著
                   </router-link>
                   <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/category?n=5')">
                   <i class="fas fa-pencil-ruler"></i>
-                  <router-link to="/category?n=5" class="router-link mr-3">
+                  <router-link to="" class="router-link mr-3">
                     文具小物
                   </router-link>
                   <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/category?n=6')">
                   <i class="fas fa-cocktail"></i>
-                  <router-link to="/category?n=6" class="router-link mr-3">
+                  <router-link to="" class="router-link mr-3">
                     食品飲料
                   </router-link>
                   <i class="fas fa-angle-right"></i>
                 </li>
                 <li class="list-group-item" @click="$router.push('/category?n=7')">
                   <i class="fas fa-hiking"></i>
-                  <router-link to="/category?n=7" class="router-link mr-3">
+                  <router-link to="" class="router-link mr-3">
                     戶外休閒
                   </router-link>
                   <i class="fas fa-angle-right"></i>
@@ -152,7 +152,7 @@
                   </li>
                 </div>
                 <li class="list-group-item" @click="$router.push('/about')">
-                  <router-link to="/" class="router-link mr-3">品牌故事</router-link>
+                  <router-link to="" class="router-link mr-3">品牌故事</router-link>
                 </li>
                 <li class="list-group-item" @click="goToGithub">
                   <router-link to="" class="router-link mr-3">作者</router-link>
@@ -256,21 +256,15 @@ $light-gray: #a8a8ab;
 }
 .navbar.windowTop {
   height: 3.5rem;
-  @media (min-width: 576px) {
-    height: 6rem;
-  }
   @media (min-width: 768px) {
     height: 10.5rem;
   }
   .nav-header {
-    @media (min-width: 576px) {
+    @media (min-width: 768px) {
       margin-top: 2.5rem;
     }
     .search-expand {
       .search-bar {
-        @media (min-width: 576px) {
-          top: 2.5rem;
-        }
         @media (min-width: 768px) {
           top: 30%;
         }
@@ -310,7 +304,7 @@ $light-gray: #a8a8ab;
     @media (min-width: 768px) {
       margin: 2rem 2rem 1rem 2rem !important;
       height: 2rem;
-      max-width: 768px;
+      max-width: 992px;
     }
     @media (min-width: 1200px) {
       max-width: 992px;
@@ -530,7 +524,7 @@ $light-gray: #a8a8ab;
       @media (min-width: 768px) {
         position: static !important;
         z-index: 1;
-        max-width: 768px;
+        max-width: 992px;
         margin: auto;
         padding: 0 2rem;
       }

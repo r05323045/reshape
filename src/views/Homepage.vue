@@ -133,7 +133,7 @@ $light-gray: #a8a8ab;
 .homepage{
   overflow: hidden;
   .swiper-container-wrapper {
-    margin-top: 5rem;
+    margin-top: 3.5rem;
     margin-bottom: 2rem;
     @media (min-width: 768px) {
       margin-top: 0;

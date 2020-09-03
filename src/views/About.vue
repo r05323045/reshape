@@ -63,14 +63,8 @@ $gray: #484848;
   margin: auto;
   min-height: calc(100vh - 2rem);
   @media (min-width: 768px) {
-    max-width: 768px;
+    max-width: 992px;
     min-height: calc(100vh - 18.5rem);
-  }
-  @media (min-width: 992px) {
-    max-width: 992px;
-  }
-  @media (min-width: 1200px) {
-    max-width: 992px;
   }
   @media (min-width: 1441px) {
     max-width: 1200px;
@@ -83,7 +77,7 @@ $gray: #484848;
     background: #ffffff;
     position: relative;
     @media (min-width: 576px) {
-      margin-top: 7.5rem;
+      margin-top: 5.5rem;
     }
     @media (min-width: 768px) {
       margin: 2rem;

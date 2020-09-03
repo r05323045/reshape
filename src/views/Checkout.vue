@@ -185,6 +185,7 @@ export default {
           })
           loader.hide()
           this.paid = true
+          window.scrollTo(0, 0)
         }).catch((error) => {
           console.log(error)
           this.$router.push('/')
@@ -208,7 +209,7 @@ $gray: #484848;
   background: #ffffff;
   min-height: calc(100vh - 7rem);
   @media (min-width: 576px) {
-    padding-top: 7.5rem;
+    padding-top: 5.5rem;
   }
   @media (min-width: 768px) {
     padding: 0rem;

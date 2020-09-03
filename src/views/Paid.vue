@@ -29,11 +29,14 @@ $gray: #484848;
   display: flex;
   flex-direction: column;
   .title-wrapper {
-    margin-top: 5rem;
+    margin-top: 10rem;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: flex-end;
+    @media (min-width: 768px) {
+      margin-top: 5rem;
+    }
     .title {
       font-size: 1.5rem;
       font-weight: 500;

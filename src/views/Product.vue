@@ -3,66 +3,70 @@
     <div class="overlay-loading" ref="overlay-loading"></div>
     <div class="product" ref="product">
       <div class="router-wrapper mt-3">
-        <router-link to="/"><span class="mr-2 router">首頁</span></router-link>
+        <router-link to="/products"><span class="mr-2 router">所有分類</span></router-link>
         <i class="fas fa-angle-right"></i>
         <span class="mx-2 router" @click="$router.push(`/category?n=${categoryList[product.category]}`)">{{ product.category }}</span>
         <i class="fas fa-angle-right"></i>
         <span class="mx-2" v-if="product.options">{{ product.options.subcategory }}</span>
       </div>
       <div class="row" v-if="product.title">
-        <div class="col-12 col-md-6 col-xl-7 images">
+        <div class="col-12 col-md-7 images">
           <div class="main-img">
             <div class="image" :style="`background: url(${product.imageUrl[0]}) no-repeat center/contain;`"></div>
           </div>
         </div>
-        <div class="col-12 col-md-6 col-xl-5 info">
-          <div class="title">{{ product.title }}</div>
-          <div class="price-wrapper">
-            <div class="price">{{ product.price | priceFormat }}</div>
-            <div class="origin-price" v-show="0.85 > product.price/product.origin_price">{{ product.origin_price | priceFormat }}</div>
-          </div>
-          <div class="discount" v-show="0.85 > product.price/product.origin_price">
-            <div class="badge">
-              {{ `${(product.price/product.origin_price).toFixed(1) * 10} 折` }}
+        <div class="col-12 col-md-5 info">
+          <div>
+            <div class="title">{{ product.title }}</div>
+            <div class="price-wrapper">
+              <div class="price">{{ product.price | priceFormat }}</div>
+              <div class="origin-price" v-show="0.85 > product.price/product.origin_price">{{ product.origin_price | priceFormat }}</div>
             </div>
-            <div class="save-money">
-              省下{{ product.origin_price - product.price | priceFormat }}
+            <div class="discount" v-show="0.85 > product.price/product.origin_price">
+              <div class="badge">
+                {{ `${(product.price/product.origin_price).toFixed(1) * 10} 折` }}
+              </div>
+              <div class="save-money">
+                省下{{ product.origin_price - product.price | priceFormat }}
+              </div>
             </div>
-          </div>
-          <div class="content">
-            <div v-html="product.content"></div>
-          </div>
-          <div class="rating">
-            <span v-for="(score, index) in randomRating.rate" :class="score" class="star-item" :key="index"></span>
-            <span class="count">{{ `(${randomRating.count})`  }}</span>
-          </div>
-          <div class="quantity">
-            <div>數量</div>
-            <div class="input-area">
-              <select class="form-control" v-if="cartPatch.quantity <= 4" v-model="cartQuantity">
-                <option v-for="integer in Array.from(Array(4).keys())" :key="integer">
-                    {{ integer + 1 }}
-                </option>
-                <option value="5">5+</option>
-              </select>
-              <validation-observer>
-                <validation-provider v-slot="{ errors }" rules="required|numeric|min_value:1">
-                  <input :ref="`quantity-input-${product.id}`" type="text" class="form-control" v-model.lazy="cartQuantity" v-show="cartPatch.quantity > 4">
-                  <span v-if="errors[0]" class="text-danger quantity-error">{{ `數量${errors[0].slice((product.id.length + 16), errors[0].length)}` }}</span>
-                </validation-provider>
-              </validation-observer>
+            <div class="content">
+              <div v-html="product.content"></div>
             </div>
           </div>
-          <div class="put-in-cart" v-if="cart">
-            <div v-if="!cartId.includes(product.id)" class="add-to-cart btn d-flex justify-content-center mt-3 mb-3" @click="addToCart">
-              <span>放入購物車</span>
+          <div>
+            <div class="rating">
+              <span v-for="(score, index) in randomRating.rate" :class="score" class="star-item" :key="index"></span>
+              <span class="count">{{ `(${randomRating.count})`  }}</span>
             </div>
-            <div v-if="cartId.includes(product.id)" class="go-to-checkout btn d-flex justify-content-center mt-3 mb-3" @click="$router.push('/cart')">
-              <span>立刻結帳</span>
+            <div class="quantity">
+              <div>數量</div>
+              <div class="input-area">
+                <select class="form-control" v-if="cartPatch.quantity <= 4" v-model="cartQuantity">
+                  <option v-for="integer in Array.from(Array(4).keys())" :key="integer">
+                      {{ integer + 1 }}
+                  </option>
+                  <option value="5">5+</option>
+                </select>
+                <validation-observer>
+                  <validation-provider v-slot="{ errors }" rules="required|numeric|min_value:1">
+                    <input :ref="`quantity-input-${product.id}`" type="text" class="form-control" v-model.lazy="cartQuantity" v-show="cartPatch.quantity > 4">
+                    <span v-if="errors[0]" class="text-danger quantity-error">{{ `數量${errors[0].slice((product.id.length + 16), errors[0].length)}` }}</span>
+                  </validation-provider>
+                </validation-observer>
+              </div>
             </div>
-          </div>
-          <div class="description">
-            {{ product.description }}
+            <div class="put-in-cart" v-if="cart">
+              <div v-if="!cartId.includes(product.id)" class="add-to-cart btn d-flex justify-content-center mt-3 mb-3" @click="addToCart">
+                <span>放入購物車</span>
+              </div>
+              <div v-if="cartId.includes(product.id)" class="go-to-checkout btn d-flex justify-content-center mt-3 mb-3" @click="$router.push('/cart')">
+                <span>立刻結帳</span>
+              </div>
+            </div>
+            <div class="description">
+              {{ product.description }}
+            </div>
           </div>
         </div>
       </div>
@@ -279,7 +283,7 @@ $light-gray: #a8a8ab;
 .product-wrapper {
   margin: auto;
   @media (min-width: 768px) {
-    max-width: 768px;
+    max-width: 992px;
   }
   @media (min-width: 1200px) {
     max-width: 992px;
@@ -288,26 +292,30 @@ $light-gray: #a8a8ab;
     max-width: 1200px;
   }
   .product {
-    margin: 5rem 1rem 2rem 1rem;
+    margin: 3.5rem 1rem 2rem 1rem;
     height: 100%;
     overflow: visible;
     max-height: none;
-    @media (min-width: 576px) {
+    @media (min-width: 768px) {
        margin: 2rem;
     }
     .router-wrapper {
-      margin-bottom: 2rem;
-      .router {
-        cursor: pointer;
-        color: $blue;
+      display: none;
+      @media (min-width: 768px) {
+        display: block;
+        margin-bottom: 2rem;
+        .router {
+          cursor: pointer;
+          color: $blue;
+        }
       }
     }
     .info {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       padding: 1rem;
       @media (min-width: 576px) {
-        padding: 3rem;
-      }
-      @media (min-width: 768px) {
         padding: 1rem;
       }
       .title {
@@ -440,9 +448,7 @@ $light-gray: #a8a8ab;
       display: flex;
       align-items: center;
       justify-content: center;
-      @media (min-width: 576px) {
-        padding: 3rem;
-      }
+      padding: 0;
       @media (min-width: 768px) {
         padding: 1rem;
       }

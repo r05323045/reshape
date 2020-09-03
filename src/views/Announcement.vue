@@ -35,7 +35,7 @@ export default {
   height: 2.5rem;
   padding: 10px;
   background-color: #ffedaf;
-  @media (min-width: 576px) {
+  @media (min-width: 768px) {
     display: flex;
     justify-content: center;
     align-items: center;

@@ -373,7 +373,7 @@ $light-gray: #a8a8ab;
     }
     .hot-sales {
       width: 100%;
-      margin: 2rem 0;
+      margin: 1rem 0;
       @media (min-width: 768px) {
         margin: 0 0 3rem 0;
       }

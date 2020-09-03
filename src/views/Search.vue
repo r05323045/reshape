@@ -239,7 +239,7 @@ $light-gray: #a8a8ab;
     min-height: calc(100vh - 2rem);
     margin: 5rem auto 2rem auto;
     @media (min-width: 576px) {
-      margin-top: 5.5rem;
+      margin-top: 3.5rem;
     }
     @media (min-width: 768px) {
       min-height: calc(100vh - 18.5rem) !important;
