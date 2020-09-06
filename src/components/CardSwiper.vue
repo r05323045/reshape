@@ -5,7 +5,7 @@
       <div class="swiper-container card-swiper-container">
         <div class="swiper-wrapper">
           <div
-            v-for="item in products.slice(0, 10)"
+            v-for="item in products"
             class="swiper-slide"
             :key="`silder-${item.id}`"
             @click="$router.push(`/product/${item.id}`)"

@@ -673,6 +673,7 @@ $light-gray: #a8a8ab;
   }
 }
 footer {
+  z-index: 999;
   margin-top: 3rem;
   height: 5rem;
   background-color: #f7f7f8;
