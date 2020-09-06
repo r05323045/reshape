@@ -43,11 +43,6 @@
           </div>
         </div>
         <div class="col-12 col-md-9 col-lg-10 card-decks-wrapper d-flex flex-column justify-content-center" :class="{'only-one': products.length <= numCardsRow}">
-          <div class="router-wrapper">
-            <router-link to="/products"><span class="mr-2 router">所有分類</span></router-link>
-            <i class="fas fa-angle-right"></i>
-            <span class="mx-2">{{ name[$route.query.n] }}</span>
-          </div>
           <div class="title">{{ name[$route.query.n] }}</div>
           <div v-for="i in Math.ceil(products.length/numCardsRow)" :key="`row_${i}`">
             <div class="card-deck" v-if="products.slice((i - 1) * numCardsRow, i * numCardsRow).length > 0">
@@ -358,17 +353,6 @@ $light-gray: #a8a8ab;
       @media (min-width: 992px) {
         padding-left: 3rem !important;
         padding-right: 3rem !important;
-      }
-      .router-wrapper {
-        display: none;
-        @media (min-width: 768px) {
-          display: block;
-          margin-bottom: 2rem;
-          .router {
-            cursor: pointer;
-            color: $blue;
-          }
-        }
       }
       .title {
         margin: 0 1rem 1rem 1rem;
