@@ -65,46 +65,7 @@
                     </div>
                   </div>
                 </div>
-                <b-popover :target="item.id" triggers="hover focus" placement="right" v-if="windowWidth >= 992" :ref="`popover-${item.id}`">
-                  <div class="popper-wrapper">
-                    <div class="popper-title mt-3">
-                        {{ item.title }}
-                    </div>
-                    <div v-if="!item.options.event">
-                      <span class="btn btn-light popper-badge" @click="$router.push(`/search?key=${item.options.subcategory}`)"> {{ item.options.subcategory }} </span>
-                    </div>
-                    <div v-if="item.options.event">
-                      <span class="btn btn-light popper-badge" @click="$router.push(`/search?key=${item.options.subcategory}`)"> {{ item.options.subcategory }} </span>
-                      <span
-                        v-for="(event, index) in item.options.event.split(' ')"
-                        class="btn btn-light popper-badge"
-                        :key="`event_${index}`"
-                        @click="$router.push(`/search?key=${event}`)"
-                      > {{ event }} </span>
-                    </div>
-                    <div class="popper-content mt-2">
-                      <div v-html="item.content"></div>
-                    </div>
-                    <div class="popper-star mt-3">
-                      <span v-for="(score, index) in item.rating.rate" :class="score" class="star-item" :key="index"></span>
-                    </div>
-                    <div class="popper-price mt-3">
-                      <span class="price">{{ item.price | priceFormat }}</span>
-                      <span class="original-price" v-show="item.origin_price > item.price">{{ item.origin_price | priceFormat }}</span>
-                    </div>
-                    <div v-if="!cartId.includes(item.id)" :class="{ addToCart: !cartId.includes(item.id), goToCheckout: cartId.includes(item.id) }" class="btn d-flex justify-content-center mt-3 mb-3" @click="addToCart(item)">
-                      <span>放入購物車</span>
-                    </div>
-                    <div v-if="cartId.includes(item.id)" :class="{ addToCart: !cartId.includes(item.id), goToCheckout: cartId.includes(item.id) }" class="btn d-flex justify-content-center mt-3 mb-3" @click="$router.push('/cart')">
-                      <span>立刻結帳</span>
-                    </div>
-                    <!--
-                    <div v-if="cartId.includes(item.id)" class="popper-description mt-2">
-                      {{ item.description }}
-                    </div>
-                    -->
-                  </div>
-                </b-popover>
+                <popover :product="item" :windowWidth="windowWidth" :cartId="cartId" @getCart="getCart"></popover>
               </div>
               <div class="card my-5 border-0 no-use" v-for="i in numCardsRow - products.slice((i - 1) * numCardsRow, i * numCardsRow).length" :key="`surplus_${i}`">
               </div>
@@ -120,8 +81,8 @@
 </template>
 
 <script>
-import { BPopover } from 'bootstrap-vue'
 import 'swiper/swiper-bundle.css'
+import popover from '@/components/Popover'
 export default {
   name: 'category',
   data () {
@@ -145,7 +106,7 @@ export default {
     }
   },
   components: {
-    'b-popover': BPopover
+    popover
   },
   computed: {
     cartId: function () {
@@ -205,26 +166,6 @@ export default {
           if (loader) {
             loader.hide()
           }
-        })
-    },
-    addToCart (item, quantity = 1) {
-      const loader = this.$loading.show({
-        container: this.$refs.overlayLoading,
-        isFullPage: true,
-        opacity: 1
-      }, { default: this.$createElement('MyLoading') })
-      const url = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_UUID}/ec/shopping`
-      const cart = {
-        product: item.id,
-        quantity
-      }
-      this.$http.post(url, cart)
-        .then(() => {
-          this.getCart(loader)
-          this.$refs[`popover-${item.id}`][0].$emit('close')
-        })
-        .catch((error) => {
-          console.log(error)
         })
     },
     rating () {
@@ -530,107 +471,6 @@ $light-gray: #a8a8ab;
         }
       }
     }
-  }
-}
-.popper-wrapper {
-  display: block;
-  border-radius: 30%;
-  padding: 1.5rem;
-  width: 16rem;
-  height: 25rem;
-  .popper-badge {
-    display: inline-block;
-    white-space: nowrap;
-    font-size: 12px;
-    margin: 1px 3px 3px 3px;
-    padding: 3px 6px;
-    color: #919191;
-  }
-  .popper-title {
-    margin: auto;
-    height: 2.5rem;
-    line-height: 1.25rem;
-    font-size: 1rem;
-    font-weight: 700;
-    color: $gray;
-    margin-bottom: 15px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    visibility: visible;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-  }
-  .popper-star {
-    margin: 1rem 0;
-    font-size: 0;
-    .star-item{
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      margin-right: 3px;
-      background-repeat: no-repeat;
-      background-size: 10px 10px;
-    }
-    .star-item:last-child{
-      margin-right: 0;
-    }
-    .on{
-      background-image: url('../../public/images/star/star24_on@2x.png')
-    }
-    .off{
-      background-image: url('../../public/images/star/star24_off@2x.png')
-    }
-    .half{
-      background-image: url('../../public/images/star/star24_half@2x.png')
-    }
-  }
-  .popper-price {
-    .price {
-      vertical-align: middle;
-      font-weight: 500;
-      font-size: 1rem;
-      margin-right: 6px;
-      color: $navy;
-    }
-    .original-price {
-      vertical-align: middle;
-      text-decoration: line-through;
-      font-size: 0.9rem;
-      line-height: 0.9rem;
-      color: $light-gray;
-    }
-  }
-  .popper-content {
-    margin-top: 1rem;
-    min-height: 6.25rem;
-    max-height: 6.25rem;
-    max-width: 100%;
-    line-height: 1.25rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    visibility: visible;
-    -webkit-line-clamp: 5;
-    -webkit-box-orient: vertical;
-  }
-  .addToCart {
-    color: #ffffff;
-    background-color: #ec5252;
-    text-decoration: none;
-  }
-  .addToCart:hover, .add-to-cartaddToCart:focus, .addToCart:active:hover {
-    color: #ffffff;
-    background-color: #c93232;
-  }
-  .goToCheckout {
-    color: #ffffff;
-    background-color: $navy;
-    text-decoration: none;
-  }
-  .goToCheckout:hover, .goToCheckout:focus, .goToCheckout:active:hover {
-    color: #ffffff;
-    background-color: #092c3f;
   }
 }
 .overlay-loading {
