@@ -4,7 +4,8 @@
   A platform aims to satisfy your need for aesthetics and create value for the design.
 </p>
 <p align="center">
-  <a  href="https://r05323045.github.io/reshape/dist/">Explore The Website</a>
+  <a  href="https://r05323045.github.io/reshape/">
+  Explore The Website</a>
 </p>
 <br/><br/>
 <p align="center">

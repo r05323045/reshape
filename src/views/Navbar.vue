@@ -32,7 +32,7 @@
           <button class="navbar-toggler d-md-none" type="button" data-toggle="collapse" data-target="#searchBar">
             <span><i class="fas fa-search"></i></span>
           </button>
-          <button class="login d-none d-md-block disabled" type="button" @click="$router.push('/admin/')">
+          <button class="login d-none d-md-block disabled" type="button" @click="$router.push('/admin/')" disabled>
             我要登入
           </button>
           <button class="fa-wrapper navbar-toggler" type="button" @click="$router.push('/cart')">
